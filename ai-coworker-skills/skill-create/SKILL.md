@@ -3,7 +3,8 @@ name: ai-coworker-skill-create
 description: |
   Use when creating a new skill for the skill-factory project. Use when a
   reusable workflow needs to be captured as a self-contained SKILL.md with
-  quality gates and reuse audit.
+  quality gates and reuse audit. Searches local skills, GitHub repos,
+  and the web for existing patterns before creating.
 license: MIT
 compatibility: opencode
 metadata:
@@ -16,7 +17,8 @@ metadata:
     - create ai-coworker skill
   when_to_use: |
     When the user wants to create a new skill file for any AI agent harness
-    supported by the skill-factory project.
+    supported by the skill-factory project. When the user wants to search
+    for existing skill patterns before building.
   when_not_to_use: |
     For editing an existing skill, use ai-coworker-skill-edit (when available) or edit
     the file directly. For one-off workflows that won't be reused, write
@@ -40,7 +42,8 @@ skills are optional — the core process runs standalone.
 
 - You want to create a new skill for any AI agent harness
 - You have a reusable workflow that needs to be captured as a skill
-- You want the reuse audit (check if a similar skill already exists)
+- You want the reuse audit (check if a similar skill already exists locally, on GitHub, or on the web)
+- You want inspiration from existing skill patterns before building your own
 - You want structured quality gates before publishing
 
 ## When NOT to Use
@@ -60,18 +63,47 @@ skills are optional — the core process runs standalone.
 
 ## Process
 
-### Phase 0: Search & Reuse Audit
+### Phase 0: Search and Reuse Audit
 
-**MUST:**
-1. List existing skills: `ls ai-coworker-skills/` in the target project
+Search for existing skills and inspiration BEFORE creating anything new.
+
+**Step 1 — Local Scan (MUST):**
+1. List existing skills: `ls ai-coworker-skills/`, `ls personal-skills/`, `ls import-skills/`
 2. Read each SKILL.md frontmatter (`name`, `description`, `metadata.triggers`)
-3. If user-provided query matches any existing skill's triggers or description ≥70%:
-   - **STOP** — tell user: "Found existing skill `X` at path Y. Edit it instead? Use ai-coworker-skill-edit (if available) or edit the file directly following CONVENTIONS.md."
-4. If no match, continue to Phase 1
+3. If user-provided description matches any existing skill's triggers or description ≥70%:
+   - Report the match with name and path
+   - Offer: "(a) import and modify it, (b) absorb inspiration and create fresh, (c) edit it with ai-coworker-skill-edit"
 
-**NICE:**
-- Webfetch GitHub to find similar skills (optional, may be slow)
-- Note promising patterns for Phase 2's Sources section
+**Step 2 — GitHub Search (MUST):**
+1. Search GitHub for `SKILL.md skill <user-keywords>` — target ≥10 repos
+2. For each repo found, read the SKILL.md frontmatter (name, description, triggers)
+3. Score relevance (0-100%) against the user's intent:
+   - 70-100%: strong match — report as candidate for import
+   - 40-69%: partial match — extract patterns and ideas
+   - <40%: weak match — note only if patterns are novel
+
+**Step 3 — Web/Google Search (MUST):**
+1. Search for: `<user-keywords> agent skill pattern best practice`
+2. Identify common patterns, anti-patterns, and architectural decisions
+3. Note any novel approaches not found in local or GitHub search
+
+**Step 4 — Present Findings (MUST):**
+For each high-relevance finding (≥70%), present:
+- Repo name, author, star count
+- What it does and how it matches
+- What it does well (patterns worth borrowing)
+- What could be improved (gaps)
+
+Then ask the user one question:
+
+> "I found {N} strong matches and {M} partial matches. For each match, you can:
+> (a) **import it** with ai-coworker-skill-import, then modify with ai-coworker-skill-edit
+> (b) **absorb inspiration** — adopt patterns and ideas, but create fresh with this skill
+>
+> Which approach for which matches?"
+
+If zero matches found, continue to Phase 1.
+If no related skill patterns found at all, note this in Sources and continue.
 
 ### Phase 1: Interview
 
@@ -202,6 +234,7 @@ Before publishing, run these checks in order. **MUST** items block publish.
 - [ ] No references to non-existent `scripts/` or `schemas/` directories
 - [ ] No `deploy/` concept (single version per skill — per CONVENTIONS.md)
 - [ ] No references to non-existent skills
+- [ ] Phase 0 search completed: local scan, GitHub (≥10 repos), web search
 - [ ] No `## Changelog` section (use git log)
 - [ ] No `## Convention Notes` section (use project CONVENTIONS.md)
 - [ ] No concrete-context leaks: real org names, Slack domains, GitHub orgs, colleague handles
@@ -273,9 +306,11 @@ Walk through each scenario manually when verifying a new skill.
 
 ### Scenario 1: Simple git helper skill
 **Input:** "create a skill that helps me write good git commit messages"
-**Expected:** Phase 0 finds no match — Phase 1 captures developer focus — Phase 2
-produces `ai-coworker-skills/git-commit-helper/SKILL.md` < 100 lines — Phase 3 all MUST gates
-pass — Phase 4 committed.
+**Expected:** Phase 0 searches local + GitHub + web for git commit skill patterns —
+finds several repos with commit-message conventions — presents findings with
+import-vs-inspire options — Phase 1 captures developer focus — Phase 2
+produces `ai-coworker-skills/git-commit-helper/SKILL.md` < 100 lines —
+Phase 3 all MUST gates pass — Phase 4 committed.
 
 ### Scenario 2: API caller skill
 **Input:** "I need a skill to query the GitHub API for issue lists"
@@ -289,12 +324,21 @@ actual `gh` CLI commands — Phase 3 includes live test of commands.
 
 ### Scenario 4: Conflicting skill (reuse audit test)
 **Input:** "I want a new git helper, similar to my existing one"
-**Expected:** Phase 0 finds ≥70% match — **STOPS** with message about existing skill
-and suggestion to use ai-coworker-skill-edit instead.
+**Expected:** Phase 0 local scan finds ≥70% match in existing skills — presents
+options: import-and-modify, absorb-inspiration, or edit existing — waits for
+user choice before proceeding.
+
+### Scenario 5: GitHub search inspiration
+**Input:** "create a skill for debugging async race conditions"
+**Expected:** Phase 0 GitHub search finds ≥10 repos with debug/diagnose skill
+patterns — presents top matches with star counts and what they do well —
+user chooses "absorb inspiration" — Phase 2 incorporates patterns from
+mattpocock/skills:diagnose and obra/superpowers:systematic-debugging into a
+new factory-native skill — Phase 3 MUST pass.
 
 ## Sources
 
-- Phase 0 (Search) design: confidence high — modeled on v1's reuse audit, adapted for flat skill structure
+- Phase 0 (Search) design: confidence high — local + GitHub (≥10 repos) + web search with relevance scoring and import-vs-inspire decision flow
 - Phase 1 (Interview) design: confidence high — based on v1's factor weight analysis + obra's brainstorming pattern
 - Phase 2 (Build) design: confidence high — opencode 5-field frontmatter per official docs; CSO from obra's writing-skills
 - Phase 3 (Verify) design: confidence high — skill-forge's MUST/NICE gates + obra's verification patterns
