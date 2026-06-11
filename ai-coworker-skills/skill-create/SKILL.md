@@ -143,6 +143,7 @@ skills are optional — the core process runs standalone.
 > - Use `obra/superpowers:writing-skills` for both of the above
 
 **NICE:**
+- Write a philosophy-driven overview: the `# <name>` section should capture the skill's core philosophy (why it exists, what problem it solves), not just describe mechanics
 - If the skill is for a discipline (rules enforcement), add a "Common Rationalizations" table
 - Include one excellent example (not multi-language)
 
@@ -196,6 +197,7 @@ Before publishing, run these checks in order. **MUST** items block publish.
 - [ ] `description` not in first person ("I can..." ❌)
 - [ ] `description` does not summarize workflow
 - [ ] No references to non-existent `scripts/` or `schemas/` directories
+- [ ] No `deploy/` concept (single version per skill — per CONVENTIONS.md)
 - [ ] No references to non-existent skills
 - [ ] No `## Changelog` section (use git log)
 - [ ] No `## Convention Notes` section (use project CONVENTIONS.md)
@@ -209,7 +211,10 @@ Before publishing, run these checks in order. **MUST** items block publish.
 ### NICE (warn but don't block)
 
 - [ ] `description` starts with "Use when..."
-- [ ] Body < 500 lines
+- [ ] `description` ≤ 500 characters
+- [ ] Body < 150 lines
+- [ ] `## Quality Gates` section present with MUST/NICE checkboxes
+- [ ] `## Anti-Patterns` section present (≥1 anti-pattern documented)
 - [ ] Optional skill references marked as "optional enhancement"
 - [ ] `## Sources` section present with confidence levels (high/med/low)
 - [ ] At least 4 test scenarios
