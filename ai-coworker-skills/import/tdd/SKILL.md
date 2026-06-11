@@ -25,6 +25,8 @@ metadata:
     has no test infrastructure and user doesn't want to set it up.
   audience:
     - developers
+  source_author: mattpocock
+  source_url: https://github.com/mattpocock/skills/blob/main/skills/engineering/tdd/SKILL.md
 ---
 
 # tdd

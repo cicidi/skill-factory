@@ -2,8 +2,9 @@
 name: skill-import
 description: |
   Use when importing an external SKILL.md from a GitHub URL or another
-  repository into skill-factory. Use when converting a skill from a
-  non-opencode format to skill-factory conventions.
+  repository into skill-factory under the import/ directory. Use when
+  converting a skill from a non-opencode format to skill-factory
+  conventions while preserving original authorship.
 license: MIT
 compatibility: opencode, claude-code
 metadata:
@@ -17,11 +18,13 @@ metadata:
     - migrate skill
   when_to_use: |
     When the user provides a URL to an external SKILL.md and wants to
-    import it into skill-factory as a CONVENTIONS.md-compliant skill.
+    import it into skill-factory under the import/ directory as a
+    CONVENTIONS.md-compliant skill with original authorship preserved.
   when_not_to_use: |
-    When the skill already exists in ai-coworker-skills/. When the source
-    is not a valid SKILL.md. When the conversion requires substantial
-    content rewriting beyond format mapping — use skill-create instead.
+    When the skill already exists in ai-coworker-skills/ or
+    ai-coworker-skills/import/. When the source is not a valid SKILL.md.
+    When the conversion requires substantial content rewriting beyond
+    format mapping — use skill-create instead.
   factor_weights:
     accuracy: 0.4
     tool_integration: 0.25
@@ -50,7 +53,7 @@ only when unambiguous mapping fails.
 
 ## When NOT to Use
 
-- The skill already exists in `ai-coworker-skills/` by name or trigger match
+- The skill already exists in `ai-coworker-skills/` or `ai-coworker-skills/import/` by name or trigger match
 - The URL points to rendered HTML, not raw markdown
 - The source has no frontmatter or is not markdown
 - The conversion requires rewriting core instructions — use skill-create
@@ -59,9 +62,9 @@ only when unambiguous mapping fails.
 
 ### Phase 0: Reuse Audit
 
-1. List existing skills: `ls ai-coworker-skills/`
+1. List existing skills: `ls ai-coworker-skills/` and `ls ai-coworker-skills/import/`
 2. Read frontmatter of each for `name` and `metadata.triggers`
-3. If the source name matches an existing skill, STOP and report conflict
+3. If the source name matches an existing skill (including in import/), STOP and report conflict
 4. If clear, proceed to Phase 1
 
 ### Phase 1: Fetch and Parse
@@ -85,6 +88,8 @@ Apply conversion rules without asking. Only pause for ambiguity.
 | — | `metadata.triggers` | Infer from description and body patterns |
 | — | `metadata.when_to_use` | Summarize source description intent |
 | — | `metadata.when_not_to_use` | Infer from source limitations |
+| Source repo/author | `metadata.source_url` | Original repo URL (from user input) |
+| Source repo/author | `metadata.source_author` | Original author or organization |
 
 #### Body Section Mapping
 
@@ -111,11 +116,11 @@ Apply conversion rules without asking. Only pause for ambiguity.
 
 ### Phase 3: Write and Commit
 
-1. Create directory: `ai-coworker-skills/<name>/`
+1. Create directory: `ai-coworker-skills/import/<name>/`
 2. Write SKILL.md to that path
-3. Stage: `git add ai-coworker-skills/<name>/`
-4. Commit: `skill: import <name> from <source-repo>`
-5. Report: "Imported as `ai-coworker-skills/<name>/SKILL.md`, commit `<hash>`"
+3. Stage: `git add ai-coworker-skills/import/<name>/`
+4. Commit: `skill: import <name> from <source-repo> by <author>`
+5. Report: "Imported as `ai-coworker-skills/import/<name>/SKILL.md`, commit `<hash>`"
 
 ## Quality Gates
 
@@ -131,6 +136,8 @@ Apply conversion rules without asking. Only pause for ambiguity.
 - [ ] No concrete-context leaks
 - [ ] No TBD/TODO/truncated sentences
 - [ ] No decorative emoji in body
+- [ ] `metadata.source_author` present with original author name
+- [ ] `metadata.source_url` present with original source URL
 - [ ] Body passes CONVENTIONS.md compliance scan
 
 ### NICE (warn but don't block)
@@ -169,6 +176,18 @@ Apply conversion rules without asking. Only pause for ambiguity.
 
 **Why wrong:** Overwrites or collides with an existing skill.
 **Fix:** Stop and report the conflict.
+
+### 5. Losing original authorship
+
+**Symptom:** Imported skill lacks `metadata.source_author` or
+`metadata.source_url`.
+
+**Why wrong:** Attribution is lost. Skills travel across projects and
+teams — without provenance the original author gets no credit and future
+readers lose context.
+
+**Fix:** Always record `source_author` and `source_url` in the imported
+skill's frontmatter metadata.
 
 ## Sources
 
