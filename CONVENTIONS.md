@@ -5,13 +5,13 @@ Project-wide rules for every skill in this repository.
 ## File Structure
 
 ```
-skills/<skill-name>/SKILL.md    # The skill (required)
-skills/<skill-name>/README.md   # User-facing docs (optional)
+ai-coworker-skills/<skill-name>/SKILL.md    # The skill (required)
+ai-coworker-skills/<skill-name>/README.md   # User-facing docs (optional)
 ```
 
 - **SKILL.md** must be uppercase (opencode requirement)
 - Folder name must match frontmatter `name` field
-- Each skill lives in its own folder under `skills/`
+- Each skill lives in its own folder under `ai-coworker-skills/`
 - One skill per folder
 - Single version per skill (no `deploy/` concept)
 

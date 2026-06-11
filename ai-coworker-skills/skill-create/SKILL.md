@@ -62,7 +62,7 @@ skills are optional — the core process runs standalone.
 ### Phase 0: Search & Reuse Audit
 
 **MUST:**
-1. List existing skills: `ls skills/` in the target project
+1. List existing skills: `ls ai-coworker-skills/` in the target project
 2. Read each SKILL.md frontmatter (`name`, `description`, `metadata.triggers`)
 3. If user-provided query matches any existing skill's triggers or description ≥70%:
    - **STOP** — tell user: "Found existing skill `X` at path Y. Edit it instead? Use skill-edit."
@@ -105,7 +105,7 @@ skills are optional — the core process runs standalone.
    - Format: `{verb}-{object}` or `{domain}-{action}`
    - Drop filler words (the, a, for, when, with, in, on, of)
    - Max 4-5 words
-2. **Folder:** Create `skills/<name>/` directory
+2. **Folder:** Create `ai-coworker-skills/<name>/` directory
 3. **Frontmatter:** Write 5-field opencode format:
    ```yaml
    ---
@@ -172,9 +172,9 @@ skills are optional — the core process runs standalone.
 
 **MUST:**
 1. Confirm only the new skill is changed: `git status`
-2. Stage only the new skill: `git add skills/<name>/`
+2. Stage only the new skill: `git add ai-coworker-skills/<name>/`
 3. Commit with conventional message: `skill: add <name> — <one-line description>`
-4. Tell user: "Created at `skills/<name>/SKILL.md`, committed as `<hash>`. Push? (y/n)"
+4. Tell user: "Created at `ai-coworker-skills/<name>/SKILL.md`, committed as `<hash>`. Push? (y/n)"
 
 **NICE:**
 - If user says yes, run `git push`
@@ -191,7 +191,7 @@ Before publishing, run these checks in order. **MUST** items block publish.
 ### MUST (block publish on failure)
 
 - [ ] Frontmatter 5 fields complete: `name`, `description`, `license`, `compatibility`, `metadata`
-- [ ] `name` matches folder name `skills/<name>/`
+- [ ] `name` matches folder name `ai-coworker-skills/<name>/`
 - [ ] `description` ≤ 1024 characters
 - [ ] `description` not in first person ("I can..." ❌)
 - [ ] `description` does not summarize workflow
@@ -266,7 +266,7 @@ Walk through each scenario manually when verifying a new skill.
 ### Scenario 1: Simple git helper skill
 **Input:** "create a skill that helps me write good git commit messages"
 **Expected:** Phase 0 finds no match — Phase 1 captures developer focus — Phase 2
-produces `skills/git-commit-helper/SKILL.md` < 100 lines — Phase 3 all MUST gates
+produces `ai-coworker-skills/git-commit-helper/SKILL.md` < 100 lines — Phase 3 all MUST gates
 pass — Phase 4 committed.
 
 ### Scenario 2: API caller skill

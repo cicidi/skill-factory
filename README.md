@@ -10,7 +10,7 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 
 | Skill | Description |
 |-------|-------------|
-| [skill-create](skills/skill-create/) | 4-phase workflow to create new skills — search, interview, build, verify, publish |
+| [skill-create](ai-coworker-skills/skill-create/) | 4-phase workflow to create new skills — search, interview, build, verify, publish |
 
 ## Install
 
@@ -21,7 +21,7 @@ git clone https://github.com/<org>/skill-factory.git ~/.config/opencode/skills/s
 Or copy individual skills:
 
 ```bash
-cp -r skills/skill-create ~/.config/opencode/skills/
+cp -r ai-coworker-skills/skill-create ~/.config/opencode/skills/
 ```
 
 ## Conventions
