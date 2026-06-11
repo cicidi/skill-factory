@@ -1,10 +1,10 @@
 ---
 name: tdd
 description: |
-  Use when building features or fixing bugs using test-driven development.
-  Use when the user mentions "red-green-refactor", wants integration
-  tests, asks for test-first development, or needs disciplined feedback
-  loops during implementation.
+  Use when building features or fixing bugs that require disciplined
+  feedback loops. Use when the user mentions "red-green-refactor", wants
+  integration tests, asks for test-first development, or needs to ensure
+  behavior survives refactoring.
 license: MIT
 compatibility: opencode, claude-code
 metadata:
@@ -23,17 +23,15 @@ metadata:
     When the user explicitly prefers test-after or no tests. When the
     change is purely cosmetic (formatting, comments). When the codebase
     has no test infrastructure and user doesn't want to set it up.
-  source: https://github.com/mattpocock/skills/blob/main/skills/engineering/tdd/SKILL.md
   audience:
     - developers
 ---
 
 # tdd
 
-Test-driven development with red-green-refactor loop. Tests verify behavior
-through public interfaces, not implementation details. Each cycle: write one
-failing test, write minimal code to pass, refactor — one vertical slice at a
-time.
+Tests verify behavior through public interfaces, not implementation details.
+Code can change entirely; tests shouldn't. One vertical slice at a time —
+never batch all tests before writing any implementation.
 
 ## When to Use
 
