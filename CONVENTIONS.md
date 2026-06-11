@@ -1,0 +1,81 @@
+# skill-factory Conventions
+
+Project-wide rules for every skill in this repository.
+
+## File Structure
+
+```
+skills/<skill-name>/SKILL.md    # The skill (required)
+skills/<skill-name>/README.md   # User-facing docs (optional)
+```
+
+- **SKILL.md** must be uppercase (opencode requirement)
+- Folder name must match frontmatter `name` field
+- Each skill lives in its own folder under `skills/`
+- One skill per folder
+- Single version per skill (no `deploy/` concept)
+
+## Frontmatter
+
+Use opencode's 5 recognized fields:
+
+```yaml
+---
+name: skill-name        # lowercase, kebab-case, matches folder
+description: |          # third person, "Use when...", ≤1024 chars, no workflow summary
+  Use when ...
+license: MIT            # SPDX identifier
+compatibility: opencode # harness name(s), comma-separated
+metadata:               # arbitrary string-to-string map for extensions
+  key: value
+---
+```
+
+### Description rules (per obra CSO)
+
+- Start with "Use when..." to focus on triggering conditions
+- Describe the problem, not the solution
+- Do NOT summarize the skill's workflow in the description
+- Third person only (not "I can help you...")
+- ≤500 chars ideal, ≤1024 max
+
+## Body Structure
+
+| Section | Required? | Notes |
+|---------|-----------|-------|
+| `# <skill-name>` + overview | Required | 1-2 sentence core principle |
+| `## When to Use` | Required | Bullets with symptoms |
+| `## When NOT to Use` | Required | Anti-triggers |
+| `## Skill Dependencies` | Optional | If the skill calls other skills |
+| `## Process` | Required | Steps, decision points, fallbacks |
+| `## Quality Gates` | Optional | MUST/NICE checklist |
+| `## Anti-Patterns` | Optional | What to avoid |
+| `## Test Scenarios` | Optional | Manual verification bullets |
+| `## Sources` | Optional | Provenance per segment (confidence high/med/low) |
+
+## Prohibited
+
+- ❌ No `## Changelog` section in SKILL.md (use git log)
+- ❌ No `## Convention Notes` section (use this file)
+- ❌ No `scripts/` directory reference unless the script exists
+- ❌ No `schemas/` directory reference unless the schema exists
+- ❌ No `deploy/` concept (single version per skill)
+- ❌ No concrete-context leaks (real org names, internal URLs, colleague handles)
+- ❌ No decorative emoji (✅ ❌ 🚀 🔥) in body text
+- ❌ No TBD/TODO placeholders
+- ❌ No truncated sentences
+- ❌ No OCR artifacts (`**>text<**` style markers)
+
+## Skill Naming
+
+- Format: `{verb}-{object}` or `{domain}-{action}`
+- Lowercase, kebab-case
+- Examples: `skill-create`, `skill-edit`, `git-commit-helper`
+- Max 4-5 words
+
+## Quality Gate Policy
+
+Each skill's quality gates are self-contained in its own SKILL.md.
+
+- **MUST gates** (in `## Quality Gates`): block commit until all pass
+- **NICE gates** (in `## Quality Gates`): warn but don't block
