@@ -1,5 +1,5 @@
 ---
-name: skill-create
+name: ai-coworker-skill-create
 description: |
   Use when creating a new skill for the skill-factory project. Use when a
   reusable workflow needs to be captured as a self-contained SKILL.md with
@@ -8,16 +8,17 @@ license: MIT
 compatibility: opencode
 metadata:
   triggers:
-    - create a new skill
+    - create a skill
     - new skill
     - add skill
     - build a skill
     - design a skill
+    - create ai-coworker skill
   when_to_use: |
     When the user wants to create a new skill file for any AI agent harness
     supported by the skill-factory project.
   when_not_to_use: |
-    For editing an existing skill, use skill-edit (when available) or edit
+    For editing an existing skill, use ai-coworker-skill-edit (when available) or edit
     the file directly. For one-off workflows that won't be reused, write
     inline instead of creating a skill.
   phase_count: 4
@@ -28,7 +29,7 @@ metadata:
     - skill-authors
 ---
 
-# skill-create
+# ai-coworker-skill-create
 
 Creates a new skill file following the 4-phase skill-factory pipeline:
 search for prior art, interview for requirements, build the SKILL.md,
@@ -44,7 +45,7 @@ skills are optional — the core process runs standalone.
 
 ## When NOT to Use
 
-- You want to edit an existing skill — use skill-edit (when available) for safe modifications
+- You want to edit an existing skill — use ai-coworker-skill-edit (when available) for safe modifications
 - It's a one-off solution that won't be reused — write inline
 - The "skill" is < 10 lines of instructions — just paste it, don't create a file
 - The workflow is already well-documented elsewhere — link, don't copy
@@ -65,7 +66,7 @@ skills are optional — the core process runs standalone.
 1. List existing skills: `ls ai-coworker-skills/` in the target project
 2. Read each SKILL.md frontmatter (`name`, `description`, `metadata.triggers`)
 3. If user-provided query matches any existing skill's triggers or description ≥70%:
-   - **STOP** — tell user: "Found existing skill `X` at path Y. Edit it instead? Use skill-edit (if available) or edit the file directly following CONVENTIONS.md."
+   - **STOP** — tell user: "Found existing skill `X` at path Y. Edit it instead? Use ai-coworker-skill-edit (if available) or edit the file directly following CONVENTIONS.md."
 4. If no match, continue to Phase 1
 
 **NICE:**
@@ -102,9 +103,11 @@ skills are optional — the core process runs standalone.
 
 **MUST:**
 1. **Naming:** Choose a name in `kebab-case` format, matching project conventions:
-   - Format: `{verb}-{object}` or `{domain}-{action}`
-   - Drop filler words (the, a, for, when, with, in, on, of)
-   - Max 4-5 words
+    - Format: `{verb}-{object}` or `{domain}-{action}`
+    - Drop filler words (the, a, for, when, with, in, on, of)
+    - Max 4-5 words
+    - Skills in `ai-coworker-skills/` or `personal-skills/` MUST use `ai-coworker-` prefix
+    - Skills in `import-skills/` MUST NOT use the prefix (preserve original name)
 2. **Folder:** Create `ai-coworker-skills/<name>/` directory
 3. **Frontmatter:** Write 5-field opencode format:
    ```yaml
@@ -192,7 +195,7 @@ Before publishing, run these checks in order. **MUST** items block publish.
 ### MUST (block publish on failure)
 
 - [ ] Frontmatter 5 fields complete: `name`, `description`, `license`, `compatibility`, `metadata`
-- [ ] `name` matches folder name `ai-coworker-skills/<name>/`
+- [ ] `name` uses `ai-coworker-` prefix if in `ai-coworker-skills/` or `personal-skills/`; no prefix if in `import-skills/`
 - [ ] `description` ≤ 1024 characters
 - [ ] `description` not in first person ("I can..." ❌)
 - [ ] `description` does not summarize workflow
@@ -287,7 +290,7 @@ actual `gh` CLI commands — Phase 3 includes live test of commands.
 ### Scenario 4: Conflicting skill (reuse audit test)
 **Input:** "I want a new git helper, similar to my existing one"
 **Expected:** Phase 0 finds ≥70% match — **STOPS** with message about existing skill
-and suggestion to use skill-edit instead.
+and suggestion to use ai-coworker-skill-edit instead.
 
 ## Sources
 

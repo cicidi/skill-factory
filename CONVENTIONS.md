@@ -5,13 +5,21 @@ Project-wide rules for every skill in this repository.
 ## File Structure
 
 ```
-ai-coworker-skills/<skill-name>/SKILL.md    # The skill (required)
-ai-coworker-skills/<skill-name>/README.md   # User-facing docs (optional)
+ai-coworker-skills/<skill-folder>/SKILL.md      # Factory-native skills (required)
+personal-skills/<skill-folder>/SKILL.md          # Personal custom skills (required)
+import-skills/<skill-folder>/SKILL.md            # Externally imported skills (required)
 ```
 
+Three directories serve different purposes:
+
+| Directory | Purpose | Naming |
+|-----------|---------|--------|
+| `ai-coworker-skills/` | Factory-native skills | `name` MUST use `ai-coworker-` prefix |
+| `personal-skills/` | User's personal skills | `name` MUST use `ai-coworker-` prefix |
+| `import-skills/` | Externally imported skills | `name` MUST NOT use prefix (preserve original) |
+
 - **SKILL.md** must be uppercase (opencode requirement)
-- Folder name must match frontmatter `name` field
-- Each skill lives in its own folder under `ai-coworker-skills/`
+- Each skill lives in its own folder under the appropriate directory
 - One skill per folder
 - Single version per skill (no `deploy/` concept)
 
@@ -21,7 +29,7 @@ Use opencode's 5 recognized fields:
 
 ```yaml
 ---
-name: skill-name        # lowercase, kebab-case, matches folder
+name: skill-name        # lowercase, kebab-case, ai-coworker- prefix for ai-coworker-skills/ and personal-skills/
 description: |          # third person, "Use when...", ≤1024 chars, no workflow summary
   Use when ...
 license: MIT            # SPDX identifier
@@ -68,10 +76,11 @@ metadata:               # arbitrary string-to-string map for extensions
 
 ## Skill Naming
 
-- Format: `{verb}-{object}` or `{domain}-{action}`
+- Format: `ai-coworker-{verb}-{object}` or `ai-coworker-{domain}-{action}` (for ai-coworker-skills/ and personal-skills/)
+- Format: `{verb}-{object}` or `{domain}-{action}` (for import-skills/)
 - Lowercase, kebab-case
-- Examples: `skill-create`, `skill-edit`, `git-commit-helper`
-- Max 4-5 words
+- Examples: `ai-coworker-skill-create`, `ai-coworker-skill-edit`, `skill-import`, `tdd`
+- Max 4-5 words (excluding prefix)
 
 ## Quality Gate Policy
 

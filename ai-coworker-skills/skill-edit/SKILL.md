@@ -1,5 +1,5 @@
 ---
-name: skill-edit
+name: ai-coworker-skill-edit
 description: |
   Use when modifying, fixing, or updating an existing skill in the
   skill-factory project. Use when you need to change a skill's
@@ -11,16 +11,16 @@ metadata:
     - edit a skill
     - fix skill
     - update skill
-    - modify skill
-    - change skill
+    - edit ai-coworker skill
+    - fix ai-coworker skill
   when_to_use: |
     When modifying an existing skill's instructions, workflow, quality
     gates, or frontmatter — any targeted change that does not replace
     the entire file.
   when_not_to_use: |
-    When creating a new skill from scratch (use skill-create). When the
+    When creating a new skill from scratch (use ai-coworker-skill-create). When the
     change is a complete rewrite replacing ≥80% of the file (use
-    skill-create instead). When editing non-skill files.
+    ai-coworker-skill-create instead). When editing non-skill files.
   phase_count: 6
   requires: []
   audience:
@@ -28,7 +28,7 @@ metadata:
     - skill-maintainers
 ---
 
-# skill-edit
+# ai-coworker-skill-edit
 
 Safely edits existing skill files in the skill-factory project with full
 process enforcement. Every edit goes through audit, plan, apply, verify,
@@ -44,10 +44,10 @@ and publish — no changes are committed without quality gate verification.
 
 ## When NOT to Use
 
-- Creating a new skill from scratch — use skill-create
-- The change replaces ≥80% of the file — use skill-create for a fresh start
+- Creating a new skill from scratch — use ai-coworker-skill-create
+- The change replaces ≥80% of the file — use ai-coworker-skill-create for a fresh start
 - Editing non-skill files (source code, docs, configs)
-- The target skill file doesn't exist — point user to skill-create
+- The target skill file doesn't exist — point user to ai-coworker-skill-create
 
 ## Process
 
@@ -55,7 +55,7 @@ and publish — no changes are committed without quality gate verification.
 
 Confirm the target skill exists at `ai-coworker-skills/<name>/SKILL.md`.
 Read its frontmatter to verify identity. If the file doesn't exist, STOP
-and direct the user to skill-create.
+and direct the user to ai-coworker-skill-create.
 
 ### Step 2: Load Target Skill
 
@@ -70,7 +70,7 @@ Ask one question at a time:
 3. Does this change affect the skill's core behavior or surface details?
 
 If the user describes a complete rewrite (≥80% of the file would change),
-STOP and redirect to skill-create.
+STOP and redirect to ai-coworker-skill-create.
 
 ### Step 4: Plan Changes
 
@@ -133,17 +133,17 @@ Tell the user the commit hash and ask whether to push.
 **Symptom:** User says "update" but describes changes affecting most
 sections.
 
-**Why wrong:** A rewrite should use skill-create to ensure the full
+**Why wrong:** A rewrite should use ai-coworker-skill-create to ensure the full
 audit, interview, and quality gate pipeline runs.
 
-**Fix:** Estimate % of file changed. If ≥80%, redirect to skill-create.
+**Fix:** Estimate % of file changed. If ≥80%, redirect to ai-coworker-skill-create.
 
 ### 2. Creating a new file instead of editing
 
 **Symptom:** Copying content to a new directory or creating a new
 SKILL.md.
 
-**Why wrong:** This is skill-create's job and bypasses the reuse audit.
+**Why wrong:** This is ai-coworker-skill-create's job and bypasses the reuse audit.
 
 **Fix:** Use Edit tool on the existing file only.
 
@@ -175,10 +175,10 @@ skill.
 
 ## Sources
 
-- Process design: confidence high — mirrors skill-create's pipeline
+- Process design: confidence high — mirrors ai-coworker-skill-create's pipeline
   adapted for edit workflow with diff-then-apply pattern
 - Quality gates: confidence high — derived from skill-factory
-  CONVENTIONS.md and skill-create's quality gates
+  CONVENTIONS.md and ai-coworker-skill-create's quality gates
 - Anti-patterns: confidence high — observed in practice, prevents
   common editing mistakes
 - Factor weights: confidence high — user-specified: accuracy 0.4,

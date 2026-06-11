@@ -18,13 +18,13 @@ metadata:
     - migrate skill
   when_to_use: |
     When the user provides a URL to an external SKILL.md and wants to
-    import it into skill-factory under the import/ directory as a
+    import it into skill-factory under the import-skills/ directory as a
     CONVENTIONS.md-compliant skill with original authorship preserved.
   when_not_to_use: |
-    When the skill already exists in ai-coworker-skills/ or
-    ai-coworker-skills/import/. When the source is not a valid SKILL.md.
-    When the conversion requires substantial content rewriting beyond
-    format mapping — use skill-create instead.
+    When the skill already exists in ai-coworker-skills/,
+    personal-skills/, or import-skills/. When the source is not a valid
+    SKILL.md. When the conversion requires substantial content rewriting
+    beyond format mapping — use ai-coworker-skill-create instead.
   factor_weights:
     accuracy: 0.4
     tool_integration: 0.25
@@ -53,16 +53,16 @@ only when unambiguous mapping fails.
 
 ## When NOT to Use
 
-- The skill already exists in `ai-coworker-skills/` or `ai-coworker-skills/import/` by name or trigger match
+- The skill already exists in `ai-coworker-skills/`, `personal-skills/`, or `import-skills/` by name or trigger match
 - The URL points to rendered HTML, not raw markdown
 - The source has no frontmatter or is not markdown
-- The conversion requires rewriting core instructions — use skill-create
+- The conversion requires rewriting core instructions — use ai-coworker-skill-create
 
 ## Process
 
 ### Phase 0: Reuse Audit
 
-1. List existing skills: `ls ai-coworker-skills/` and `ls ai-coworker-skills/import/`
+1. List existing skills: `ls ai-coworker-skills/`, `ls personal-skills/`, `ls import-skills/`
 2. Read frontmatter of each for `name` and `metadata.triggers`
 3. If the source name matches an existing skill (including in import/), STOP and report conflict
 4. If clear, proceed to Phase 1
@@ -116,11 +116,11 @@ Apply conversion rules without asking. Only pause for ambiguity.
 
 ### Phase 3: Write and Commit
 
-1. Create directory: `ai-coworker-skills/import/<name>/`
+1. Create directory: `import-skills/<name>/`
 2. Write SKILL.md to that path
-3. Stage: `git add ai-coworker-skills/import/<name>/`
+3. Stage: `git add import-skills/<name>/`
 4. Commit: `skill: import <name> from <source-repo> by <author>`
-5. Report: "Imported as `ai-coworker-skills/import/<name>/SKILL.md`, commit `<hash>`"
+5. Report: "Imported as `import-skills/<name>/SKILL.md`, commit `<hash>`"
 
 ## Quality Gates
 
@@ -191,7 +191,7 @@ skill's frontmatter metadata.
 
 ## Sources
 
-- Process design: confidence high — mirrors skill-create's pipeline adapted for import
+- Process design: confidence high — mirrors ai-coworker-skill-create's pipeline adapted for import
 - Frontmatter mapping rules: confidence high — derived from CONVENTIONS.md 5-field format
 - Body section mapping: confidence high — based on CONVENTIONS.md section table
 - Ambiguity triggers: confidence medium — may expand as more source formats encountered
