@@ -1,10 +1,9 @@
 ---
 name: skill-create
 description: |
-  Use when creating a new skill for the skill-factory project. Walks through
-  search, interview, build, verify, and publish phases with reuse audit and
-  quality gates. For editing existing skills, use a separate skill-edit
-  workflow instead.
+  Use when creating a new skill for the skill-factory project. Use when a
+  reusable workflow needs to be captured as a self-contained SKILL.md with
+  quality gates and reuse audit.
 license: MIT
 compatibility: opencode
 metadata:
@@ -18,8 +17,9 @@ metadata:
     When the user wants to create a new skill file for any AI agent harness
     supported by the skill-factory project.
   when_not_to_use: |
-    For editing an existing skill, use skill-edit. For one-off workflows
-    that won't be reused, write inline instead of creating a skill.
+    For editing an existing skill, use skill-edit (when available) or edit
+    the file directly. For one-off workflows that won't be reused, write
+    inline instead of creating a skill.
   phase_count: 4
   requires:
     - obra/superpowers:writing-skills
@@ -44,7 +44,7 @@ skills are optional — the core process runs standalone.
 
 ## When NOT to Use
 
-- You want to edit an existing skill — use skill-edit instead
+- You want to edit an existing skill — use skill-edit (when available) for safe modifications
 - It's a one-off solution that won't be reused — write inline
 - The "skill" is < 10 lines of instructions — just paste it, don't create a file
 - The workflow is already well-documented elsewhere — link, don't copy
@@ -65,7 +65,7 @@ skills are optional — the core process runs standalone.
 1. List existing skills: `ls ai-coworker-skills/` in the target project
 2. Read each SKILL.md frontmatter (`name`, `description`, `metadata.triggers`)
 3. If user-provided query matches any existing skill's triggers or description ≥70%:
-   - **STOP** — tell user: "Found existing skill `X` at path Y. Edit it instead? Use skill-edit."
+   - **STOP** — tell user: "Found existing skill `X` at path Y. Edit it instead? Use skill-edit (if available) or edit the file directly following CONVENTIONS.md."
 4. If no match, continue to Phase 1
 
 **NICE:**
@@ -250,7 +250,7 @@ not in a skill library.
 
 **Fix:** Use plain labels: `pass`, `fail`, `done`, `block`, `warn`.
 
-### 4. Verbatim user prompt in Examples
+### 4. Verbatim user prompt in test scenarios or examples
 
 **Symptom:** Example section pastes the exact user prompt with file paths, project
 names, ticket IDs.
