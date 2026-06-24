@@ -1,12 +1,31 @@
 ---
 name: self-analyze
 description: Scan project's .self-healing/traces/, find patterns, inject summary into CLAUDE.md
-aliases: [analyze-traces, analyze, self-improve]
+license: MIT
+compatibility: claude-code,opencode
+metadata:
+  triggers:
+    - self-analyze
+    - analyze traces
+    - self-improve
+  when_to_use: When you need to scan correction traces for patterns and inject rules into CLAUDE.md.
+  audience: ai-coworker
 ---
 
 # Self-Analyze
 
 Read project correction traces, find patterns, generate rules.
+
+## When to Use
+
+- After accumulating several correction traces in `.self-healing/traces/`
+- When the AI keeps making the same mistake across sessions
+- Periodically as part of the self-healing workflow
+
+## When NOT to Use
+
+- When no traces exist yet — nothing to analyze
+- For one-off corrections that haven't repeated
 
 ## Process
 

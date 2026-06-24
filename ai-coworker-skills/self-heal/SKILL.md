@@ -1,12 +1,31 @@
 ---
 name: self-heal
 description: Log user corrections to project's .self-healing/traces/. Auto-installs global hooks for Claude Code and OpenCode.
-aliases: [trace, log-correction, heal]
+license: MIT
+compatibility: claude-code,opencode
+metadata:
+  triggers:
+    - self-heal
+    - log correction
+    - trace
+  when_to_use: When the user corrects the AI and the correction should be logged for future pattern analysis.
+  audience: ai-coworker
 ---
 
 # Self-Heal
 
 Log every user correction for pattern analysis.
+
+## When to Use
+
+- When the user says "no", "don't", "stop", "wrong", "never do that" etc.
+- When the AI makes a mistake that should be prevented in the future
+- When setting up self-healing hooks for the first time
+
+## When NOT to Use
+
+- For trivial stylistic preferences that won't repeat
+- When the user explicitly says not to log the correction
 
 ## Trigger
 

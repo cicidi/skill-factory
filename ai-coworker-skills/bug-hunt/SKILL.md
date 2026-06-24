@@ -14,6 +14,18 @@ metadata:
 
 Systematic scientific debugging. No guessing — form hypothesis, test it, confirm, then fix.
 
+## When to Use
+
+- When encountering a bug, error, or unexpected behavior
+- When a test fails and the cause is not immediately obvious
+- When debugging complex issues that require structured investigation
+
+## When NOT to Use
+
+- For trivial issues with an obvious fix
+- When the error message directly points to the solution
+- For issues already well-understood from prior debugging
+
 ## Model Recommendation
 Use the strongest available model (Opus) for complex debugging.
 

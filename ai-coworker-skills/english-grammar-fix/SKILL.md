@@ -5,15 +5,44 @@ license: MIT
 compatibility: claude-code,opencode,gemini
 metadata:
   triggers:
-    - self-patch
-  when_to_use: When user needs to run the self-patch workflow.
+    - english-grammar-fix
+    - fix grammar
+    - correct english
+  when_to_use: When the user wants to auto-correct minor English grammar errors in AI-generated text.
   audience: ai-coworker
 ---
 
-# Auto Patches
+# English Grammar Fix
 
 Automatically corrects minor English grammar and phrasing errors in AI-written content
 (comments, commit messages, PR descriptions, docs).
+
+## When to Use
+
+- When reviewing AI-generated text before publishing
+- When the user requests grammar correction on a specific piece of text
+- For commit messages, PR descriptions, and documentation
+
+## When NOT to Use
+
+- For technical terminology or variable/function names
+- For code comments that are intentionally terse
+- For language that is correct but informal
+- When the user prefers to review manually
+
+## Process
+
+### 1. Scan
+Read the target text and identify grammar, style, and phrasing issues.
+
+### 2. Classify
+Categorize each issue: grammar (auto-fix silently), style (show in *italics* for review).
+
+### 3. Apply
+Apply corrections inline — the corrected version replaces the original without comment for minor fixes.
+
+### 4. Review
+Style changes shown with original for comparison. User confirms or rejects.
 
 ## What It Fixes
 
@@ -34,19 +63,8 @@ Automatically corrects minor English grammar and phrasing errors in AI-written c
 - Conventional commits format: `type(scope): description`
 - Max 72 chars for subject line
 
-## How It Works
-
-Corrections are applied inline — the corrected version replaces the original without comment.
-
-Minor corrections (grammar): applied silently.
-Style changes (phrasing, structure): shown in *italics* with the original for review.
-
 ## What It Does NOT Change
 - Technical terminology
 - Variable/function names
 - Code comments that are intentionally terse
 - Language that is correct but informal
-
-## Trigger
-Run manually: `/auto-patches` on a specific piece of text
-Or apply to: commit messages, PR descriptions, doc sections before publishing.
