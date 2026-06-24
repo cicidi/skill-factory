@@ -57,10 +57,65 @@ disagreements, and converge on modifications under a judge's final ruling.
 
 - Minor copy-editing (typos, formatting)
 - Documents under 20 lines with no architectural significance
-- When you want quick feedback, not structured debate
 - Purely conversational brainstorming without formal output
+- **Exception:** Mode 1 (lightweight verification) IS appropriate for quick "is this done?" checks on any size of work — it replaces "yeah looks good" with a structured gap report.
 
-## Process
+## Two Modes
+
+This skill operates in two modes. Choose based on context:
+
+### Mode 1: Lightweight Verification Gate (for TDD loops, implement-interview)
+
+**Purpose:** Quick adversarial check — "is the work actually done?" Used as the final gate in auto-tdd and implement-interview loops.
+
+**Process:**
+1. Read the target: PRD.md, all source files, test files, config files.
+2. Challenge every claim: "Is this feature actually implemented?" "Is this test actually covering the edge case?" "Does this config value actually take effect?"
+3. Categorize every gap found: CRITICAL / HIGH / MEDIUM / LOW.
+4. Write `GAPS.md` in the project root with structured findings (see template below).
+5. If GAPS.md is empty → work is truly complete. If not → feed back into the loop.
+
+**GAPS.md template:**
+```markdown
+# Contrarian Gap Report — {project}
+
+## Summary
+- {N} gaps found: {CRITICAL} critical, {HIGH} high, {MEDIUM} medium, {LOW} low
+- Verdict: NOT READY / READY WITH DEFERRALS / READY
+
+## Critical
+| # | Gap | File | Fix |
+|---|-----|------|-----|
+
+## High
+| # | Gap | File | Fix |
+|---|-----|------|-----|
+
+## Medium
+...
+
+## Low
+...
+```
+
+**When to use Mode 1:**
+- Final gate in auto-tdd (after all 3 tiers pass)
+- Final gate in implement-interview (after PRD approval)
+- Developer says "check if this is done"
+- Any time you're about to declare "done"
+
+### Mode 2: Full Adversarial Review (for spec documents, architecture decisions)
+
+**Purpose:** Thorough multi-agent debate for important documents. Use when the cost of being wrong is high.
+
+This is the full 5-agent process described below in "Process."
+
+**When to use Mode 2:**
+- Reviewing spec documents before finalizing
+- Architecture decisions with major consequences
+- Cross-document consistency checks across an entire spec tree
+
+## Process (Mode 2 — Full Adversarial Review)
 
 ### Step 0: Setup
 
