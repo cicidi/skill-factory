@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-doc-protect
+name: doc-protect
 description: |
   Use when the user wants to protect a section of a document from AI edits.
   Use when user says "never change this" or "lock this section".

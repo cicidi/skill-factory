@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-issue-report
+name: bug-report
 description: |
   Use when reporting a bug or problem with the AI coworker system itself
   to GitHub Issues. Use when the AI misbehaves, produces wrong output, or

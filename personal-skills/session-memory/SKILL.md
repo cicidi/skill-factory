@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-session-memory
+name: session-memory
 description: |
   Use when summarizing past opencode sessions into structured memory cards for both AI context reuse and personal knowledge management. Use when the user asks to "summarize sessions", "extract memory", "scan session history", or "build knowledge graph from conversations". Periodically runs batch extraction from opencode.db, feeds session content through a local LLM, and writes Markdown memory cards to the Obsidian vault.
 license: MIT

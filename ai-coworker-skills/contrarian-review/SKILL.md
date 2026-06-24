@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-contrarian-review
+name: contrarian-review
 description: |
   Use when reviewing a document or spec with adversarial rigor. Use when
   you need multiple agents to debate, challenge assumptions, search for

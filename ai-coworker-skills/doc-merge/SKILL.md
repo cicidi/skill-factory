@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-doc-merge
+name: doc-merge
 description: |
   Use when merging two versions of a markdown document after upstream sync
   conflicts. Use when reconciling doc versions or resolving merge conflicts

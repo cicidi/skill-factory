@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-self-analyze
+name: self-analyze
 description: |
   Use when analyzing correction traces to find patterns of AI mistakes.
   Use after 2+ correction traces accumulate, for periodic self-improvement

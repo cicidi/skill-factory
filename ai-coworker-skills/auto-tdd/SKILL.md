@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-auto-tdd
+name: auto-tdd
 description: |
   Use when implementing features or fixing bugs with a continuous multi-agent TDD loop that never stops until the work is truly complete. Dispatches Agent-A (impl), Agent-B (test), Agent-C (arbitration judge), and Agent-D (quality judge) in a self-perpetuating cycle. Enforces deterministic fixed-scenario tests before simulated LLM tests. Quality judge evaluates every test round for turn coherence, response quality, and errors.
 license: MIT

@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-self-healing-trace
+name: self-heal
 description: |
   Use when logging a correction trace after AI makes a mistake. Use every
   time the user corrects the AI. Feeds into self-analyze for pattern
