@@ -21,7 +21,7 @@ metadata:
     When creating a new skill from scratch (use ai-coworker-skill-create). When the
     change is a complete rewrite replacing ≥80% of the file (use
     ai-coworker-skill-create instead). When editing non-skill files.
-  phase_count: 6
+  phase_count: 8
   requires: []
   audience:
     - skill-authors
@@ -30,9 +30,10 @@ metadata:
 
 # ai-coworker-skill-edit
 
-Safely edits existing skill files in the skill-factory project with full
-process enforcement. Every edit goes through audit, plan, apply, verify,
-and publish — no changes are committed without quality gate verification.
+Safely edits existing skill files in the skill-factory source code
+repository with full process enforcement. Every edit goes through audit,
+plan, apply, verify, publish, and deploy — no changes are deployed to
+IDE config directories without going through the source repo first.
 
 ## When to Use
 
@@ -49,18 +50,38 @@ and publish — no changes are committed without quality gate verification.
 - Editing non-skill files (source code, docs, configs)
 - The target skill file doesn't exist — point user to ai-coworker-skill-create
 
+## Source Repo
+
+This skill MUST operate on the source code repository, NOT on deployed
+copies. The source repo is the canonical location for skill files.
+
+**Detect the source repo path:**
+1. Check env var `SKILL_FACTORY_SOURCE` — if set, use it.
+2. Check `~/project/skill-factory/` — if it exists and has `.git`, use it.
+3. If neither exists, ask the user: "Where is the skill-factory source repo?"
+4. If source repo not found, STOP — do not edit deployed copies directly.
+
+Store the path as `$SOURCE_REPO` and use it throughout all steps.
+
 ## Process
 
 ### Step 1: Reuse Audit
 
-Confirm the target skill exists at `ai-coworker-skills/<name>/SKILL.md`.
-Read its frontmatter to verify identity. If the file doesn't exist, STOP
-and direct the user to ai-coworker-skill-create.
+Confirm the target skill exists at `$SOURCE_REPO/ai-coworker-skills/<name>/SKILL.md`
+(or `$SOURCE_REPO/personal-skills/<name>/SKILL.md`, or `$SOURCE_REPO/import-skills/<name>/SKILL.md`).
+Read its frontmatter to verify identity.
+
+If the file doesn't exist in the source repo but does exist in the deployed copy
+(`~/.config/opencode/skills/skill-factory/`), WARN the user: "Skill exists in
+deployed copy but not in source repo. It was likely created directly in the
+deployed copy. Backport it to the source repo first, then edit."
+
+If the file doesn't exist anywhere, STOP and direct the user to ai-coworker-skill-create.
 
 ### Step 2: Load Target Skill
 
-Read the full SKILL.md. Note its current structure: sections, quality
-gates, process steps, and line numbers for reference.
+Read the full SKILL.md from the source repo. Note its current structure: sections,
+quality gates, process steps, and line numbers for reference.
 
 ### Step 3: Interview
 
@@ -83,9 +104,13 @@ to Step 3 to clarify.
 
 ### Step 5: Apply Changes
 
-Use the Edit tool for targeted changes. Never use Write on the entire
-file. Never create a new file or duplicate to a new directory. If an edit
-fails (oldString not found), re-read the file and retry.
+Use the Edit tool for targeted changes in the source repo. Never use Write
+on the entire file. Never create a new file or duplicate to a new directory.
+If an edit fails (oldString not found), re-read the file and retry.
+
+If the edit changes the skill's `name` field (rename), check that the new
+name doesn't already exist in the source repo. If it does, STOP — report
+duplicate and ask user to choose a different name or merge.
 
 ### Step 6: Verify
 
@@ -98,27 +123,62 @@ All MUST gates must pass before proceeding. Fix failures and re-verify.
 
 ### Step 7: Publish
 
-Confirm only the edited file is changed (`git status`). Stage and commit:
+Publish to the source code repo's git history.
 
-```
-git add ai-coworker-skills/<name>/SKILL.md
-git commit -m "skill(<name>): <imperative verb> <description>"
+Confirm only the edited file is changed:
+```bash
+git -C "$SOURCE_REPO" status
 ```
 
-Tell the user the commit hash and ask whether to push.
+Stage and commit:
+```bash
+git -C "$SOURCE_REPO" add ai-coworker-skills/<name>/SKILL.md
+git -C "$SOURCE_REPO" commit -m "skill(<name>): <imperative verb> <description>"
+git -C "$SOURCE_REPO" push origin master
+```
+
+Tell the user the commit hash.
+
+### Step 8: Deploy
+
+Sync the edited skill from source repo to deployed copies and IDE configs.
+
+1. **Sync deployed OpenCode copy:**
+   ```bash
+   git -C ~/.config/opencode/skills/skill-factory/ pull --ff-only origin master
+   ```
+   If pull fails, copy the specific file:
+   ```bash
+   cp "$SOURCE_REPO/ai-coworker-skills/<name>/SKILL.md" ~/.config/opencode/skills/skill-factory/ai-coworker-skills/<name>/SKILL.md
+   ```
+
+2. **Deploy to Claude Code:**
+   ```bash
+   cp "$SOURCE_REPO/ai-coworker-skills/<name>/SKILL.md" ~/.claude/commands/<name>.md
+   ```
+
+3. **Deploy to OpenCode instructions:**
+   ```bash
+   cp "$SOURCE_REPO/ai-coworker-skills/<name>/SKILL.md" ~/.opencode/instructions/<name>.md
+   ```
+
+4. Verify each destination file was updated.
 
 ## Quality Gates
 
 ### MUST (block publish on failure)
 
-- [ ] Target skill file exists and was fully read before editing
+- [ ] Source repo detected and verified (`$SOURCE_REPO` exists and is a git repo)
+- [ ] Target skill file exists in source repo and was fully read before editing
 - [ ] No new files or directories were created
 - [ ] No duplicate content was written to a new location
-- [ ] Edit was applied to the target skill only
+- [ ] Edit was applied to the source repo, not deployed copy or IDE config
 - [ ] Target skill's own quality gates pass (if present)
 - [ ] skill-factory universal quality gates pass (per CONVENTIONS.md)
 - [ ] No regressions: skill still handles its original use cases
-- [ ] Only the edited file appears in `git status`
+- [ ] Only the edited file appears in `git -C "$SOURCE_REPO" status`
+- [ ] If name was changed, no existing skill with the new name
+- [ ] Step 8 deploy completed: skill synced to OpenCode + Claude Code config dirs
 
 ### NICE (warn but don't block)
 
@@ -128,7 +188,17 @@ Tell the user the commit hash and ask whether to push.
 
 ## Anti-Patterns
 
-### 1. Complete rewrite disguised as edit
+### 1. Editing deployed copies directly
+
+**Symptom:** Changes made to `~/.config/opencode/skills/skill-factory/`,
+`~/.claude/commands/`, or `~/.opencode/instructions/` instead of the source repo.
+
+**Why wrong:** Deployed copies get overwritten by install/sync. Edits to deployed
+copies are lost on next install. Source repo is canonical.
+
+**Fix:** Always edit in `$SOURCE_REPO`. Deploy only after commit and push.
+
+### 2. Complete rewrite disguised as edit
 
 **Symptom:** User says "update" but describes changes affecting most
 sections.
@@ -138,7 +208,7 @@ audit, interview, and quality gate pipeline runs.
 
 **Fix:** Estimate % of file changed. If ≥80%, redirect to ai-coworker-skill-create.
 
-### 2. Creating a new file instead of editing
+### 3. Creating a new file instead of editing
 
 **Symptom:** Copying content to a new directory or creating a new
 SKILL.md.
@@ -147,7 +217,7 @@ SKILL.md.
 
 **Fix:** Use Edit tool on the existing file only.
 
-### 3. Skipping the full file read
+### 4. Skipping the full file read
 
 **Symptom:** Editing after only reading frontmatter or partial content.
 
@@ -155,7 +225,7 @@ SKILL.md.
 
 **Fix:** Always read the complete file in Step 2 before any editing.
 
-### 4. Bypassing quality gates
+### 5. Bypassing quality gates
 
 **Symptom:** Committing after editing without running quality gates.
 
@@ -164,7 +234,7 @@ SKILL.md.
 **Fix:** Run Step 6 (Verify) before Step 7 (Publish). MUST gates block
 commit.
 
-### 5. Editing non-existent or wrong skill
+### 6. Editing non-existent or wrong skill
 
 **Symptom:** Proceeding with edits when the target file isn't found.
 
@@ -173,14 +243,20 @@ skill.
 
 **Fix:** Step 1 blocks if the file doesn't exist.
 
+### 7. Skipping deploy phase
+
+**Symptom:** Skill committed and pushed but not deployed to IDE configs.
+
+**Why wrong:** The edited skill won't take effect until deployed.
+
+**Fix:** Run Step 8 (Deploy) after Step 7 (Publish).
+
 ## Sources
 
 - Process design: confidence high — mirrors ai-coworker-skill-create's pipeline
-  adapted for edit workflow with diff-then-apply pattern
+  adapted for edit workflow with diff-then-apply pattern, source repo enforcement
 - Quality gates: confidence high — derived from skill-factory
   CONVENTIONS.md and ai-coworker-skill-create's quality gates
 - Anti-patterns: confidence high — observed in practice, prevents
-  common editing mistakes
-- Factor weights: confidence high — user-specified: accuracy 0.4,
-  edge case coverage 0.3, readability 0.15, speed 0.1, tool
-  integration 0.05
+  common editing mistakes including deployed-copy editing
+- Deploy step: confidence high — mirrors install.sh deployment paths

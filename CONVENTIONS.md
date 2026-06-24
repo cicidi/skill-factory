@@ -14,9 +14,9 @@ Three directories serve different purposes:
 
 | Directory | Purpose | Naming |
 |-----------|---------|--------|
-| `ai-coworker-skills/` | Factory-native skills | `name` MUST use `ai-coworker-` prefix |
-| `personal-skills/` | User's personal skills | `name` MUST use `ai-coworker-` prefix |
-| `import-skills/` | Externally imported skills | `name` MUST NOT use prefix (preserve original) |
+| `ai-coworker-skills/` | Factory-native skills | `{verb}-{object}` or `{domain}-{action}`, kebab-case |
+| `personal-skills/` | User's personal skills | `{verb}-{object}` or `{domain}-{action}`, kebab-case |
+| `import-skills/` | Externally imported skills | Preserve original name (no prefix) |
 
 - **SKILL.md** must be uppercase (opencode requirement)
 - Each skill lives in its own folder under the appropriate directory
@@ -29,7 +29,7 @@ Use opencode's 5 recognized fields:
 
 ```yaml
 ---
-name: skill-name        # lowercase, kebab-case, ai-coworker- prefix for ai-coworker-skills/ and personal-skills/
+name: skill-name        # lowercase, kebab-case
 description: |          # third person, "Use when...", ≤1024 chars, no workflow summary
   Use when ...
 license: MIT            # SPDX identifier
@@ -61,6 +61,21 @@ metadata:               # arbitrary string-to-string map for extensions
 | `## Test Scenarios` | Optional | Manual verification bullets |
 | `## Sources` | Optional | Provenance per segment (confidence high/med/low) |
 
+## Source Repo vs Deployed Copies
+
+The **source code repo** (`~/project/skill-factory/`) is the canonical location.
+All skill creation and editing MUST happen in the source repo. After commit and
+push, skills are deployed to:
+
+| Location | Purpose |
+|----------|---------|
+| `~/.config/opencode/skills/skill-factory/` | OpenCode skill-factory plugin (git cloned) |
+| `~/.claude/commands/` | Claude Code custom commands (flattened .md files) |
+| `~/.opencode/instructions/` | OpenCode instruction files (flattened .md files) |
+
+Never create or edit skills directly in deployed copies — changes will be
+lost on next install/sync.
+
 ## Prohibited
 
 - ❌ No `## Changelog` section in SKILL.md (use git log)
@@ -73,14 +88,16 @@ metadata:               # arbitrary string-to-string map for extensions
 - ❌ No TBD/TODO placeholders
 - ❌ No truncated sentences
 - ❌ No OCR artifacts (`**>text<**` style markers)
+- ❌ No creating or editing skills directly in deployed copies
 
 ## Skill Naming
 
-- Format: `ai-coworker-{verb}-{object}` or `ai-coworker-{domain}-{action}` (for ai-coworker-skills/ and personal-skills/)
-- Format: `{verb}-{object}` or `{domain}-{action}` (for import-skills/)
+- Format: `{verb}-{object}` or `{domain}-{action}`
 - Lowercase, kebab-case
-- Examples: `ai-coworker-skill-create`, `ai-coworker-skill-edit`, `skill-import`, `tdd`
-- Max 4-5 words (excluding prefix)
+- Drop filler words (the, a, for, when, with, in, on, of)
+- Examples: `skill-create`, `skill-edit`, `skill-import`, `tdd`, `bug-hunt`, `auto-tdd`
+- Max 4-5 words
+- `import-skills/` skills preserve original name as-is
 
 ## Quality Gate Policy
 
