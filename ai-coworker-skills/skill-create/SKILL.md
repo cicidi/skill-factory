@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-skill-create
+name: skill-create
 description: |
   Use when creating a new skill for the skill-factory project. Use when a
   reusable workflow needs to be captured as a self-contained SKILL.md with

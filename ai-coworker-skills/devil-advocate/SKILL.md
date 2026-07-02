@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-devil-advocate
+name: devil-advocate
 description: |
   Use when reviewing a spec, design doc, or proposal that needs
   adversarial stress-testing. Use when you want to find hidden

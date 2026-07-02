@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-work-review
+name: work-review
 description: |
   Use when completed work needs formal acceptance review against scope,
   design, and PRD. Use when a feature branch is ready for sign-off and

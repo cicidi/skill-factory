@@ -1,5 +1,5 @@
 ---
-name: ai-coworker-skill-edit
+name: skill-edit
 description: |
   Use when modifying, fixing, or updating an existing skill in the
   skill-factory project. Use when you need to change a skill's
