@@ -44,16 +44,16 @@ Works alongside `write-doc` — this skill handles placement, write-doc handles 
 **Evidence** — attach to any doc to provide supporting data:
 
 ```
-docs/dashboard-v2/design/caching-strategy.md
-docs/dashboard-v2/design/caching-strategy.evidence.md   ← benchmarks/screenshots
+docs/dashboard-v2/design/caching-strategy-design.md
+docs/dashboard-v2/design/caching-strategy-design.evidence.md   ← benchmarks/screenshots
 ```
 
 **Design detail** — attach to a design doc for HLD or LLD view:
 
 ```
-docs/dashboard-v2/design/caching-strategy.md                 ← main design doc
-docs/dashboard-v2/design/caching-strategy.hld.md             ← architecture overview
-docs/dashboard-v2/design/caching-strategy.lld.md             ← component detail
+docs/dashboard-v2/design/caching-strategy-design.md                 ← main design doc
+docs/dashboard-v2/design/caching-strategy-design.hld.md             ← architecture overview
+docs/dashboard-v2/design/caching-strategy-design.lld.md             ← component detail
 ```
 
 Rules for both:
@@ -92,7 +92,7 @@ docs/<initiative>/<type>/<specific-topic>.md
 ```
 All 8 main types: `prd`, `design`, `spec`, `impl-plan`, `test-plan`, `decision-history`, `retro`, `how-to`
 Date is in the file's Change Log — no need to repeat in filename.
-**Naming rule**: topic must be descriptive. Initiative-scoped (`sms-agent-design.md`) or topic-specific (`caching-layer.md`) are fine. **Never** generic (`design.md`, `implementation-plan.md`).
+**Naming rule**: `<topic>-<type>.md`. Always include both subject and type. `caching-layer-design.md` ✅, `caching-layer.md` ❌, `design.md` ❌.
 
 **With date** (point-in-time captures, no Change Log):
 ```
@@ -115,53 +115,53 @@ docs/user-profile-v2/
 ├── raw/
 │   └── 2026-07-01-agent-brainstorming.md      ← dated, AI discussion
 ├── prd/
-│   └── user-profile-v2-requirements.md         ← no date
+│   └── user-profile-v2-prd.md         ← no date
 ├── design/
-│   ├── profile-service-architecture.md         ← no date
+│   ├── profile-service-design.md         ← no date
 │   ├── profile-service-architecture.hld.md
 │   └── profile-service-architecture.lld.md
 ├── spec/
-│   └── profile-endpoint-contracts.md
+│   └── profile-endpoint-spec.md
 ├── impl-plan/
-│   └── profile-migration-steps.md
+│   └── profile-migration-impl-plan.md
 ├── test-plan/
-│   └── profile-integration-tests.md
+│   └── profile-integration-test-plan.md
 ├── decision-history/
 │   └── 2026-07-12-why-postgres-over-mongo.md    ← dated
 └── retro/
-    └── 2026-08-01-profile-v2-launch-review.md         ← dated
+    └── 2026-08-01-profile-v2-launch-retro.md         ← dated
 
 # Environment / Setup
 docs/dev-env-setup/
 ├── prd/
-│   └── dockerize-all-services.md
+│   └── dockerize-all-services-prd.md
 ├── design/
-│   └── container-orchestration-plan.md
+│   └── container-orchestration-design.md
 ├── impl-plan/
-│   └── onboarding-scripts-and-docs.md
+│   └── onboarding-impl-plan.md
 ├── decision-history/
-│   └── 2026-06-03-why-docker-compose-not-k8s.md
+│   └── 2026-06-03-why-docker-compose-not-k8s-decision.md
 └── how-to/
-    └── new-hire-setup-checklist.md
+    └── new-hire-setup-how-to.md
 
 # Team Oncall
 docs/team-oncall/
 ├── decision-history/
-│   └── 2026-07-08-why-pagerduty-over-opsgenie.md
+│   └── 2026-07-08-why-pagerduty-over-opsgenie-decision.md
 ├── how-to/
-│   ├── pagerduty-escalation-flow.md
-│   └── database-incident-runbook.md
+│   ├── pagerduty-escalation-how-to.md
+│   └── database-incident-how-to.md
 └── retro/
-    └── 2026-07-15-july-oncall-handoff.md
+    └── 2026-07-15-july-oncall-handoff-retro.md
 
 # Refactoring / Migration
 docs/payment-refactor/
 ├── design/
-│   └── new-payment-provider-interface.md
+│   └── new-payment-provider-design.md
 ├── impl-plan/
-│   └── gradual-migration-phases.md
+│   └── gradual-migration-impl-plan.md
 └── decision-history/
-    └── 2026-07-06-why-big-bang-not-incremental.md
+    └── 2026-07-06-why-big-bang-not-incremental-decision.md
 ```
 
 ---
