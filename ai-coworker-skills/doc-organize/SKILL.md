@@ -67,19 +67,31 @@ Rules for both:
 
 ## Directory Structure
 
+Project docs live in the project repo. Knowledge-repo is a **separate git repo** at a different path.
+
 ```
-project/
+~/project/<project-name>/
 ├── docs/
 │   ├── INDEX.md                     ← Auto-generated directory + move log
 │   ├── <initiative>/
-│   │   └── <type>/
-│   │       └── YYYY-MM-DD-<specific-topic>.md
+│   │   ├── raw/                     ← Temporary AI context dumps
+│   │   ├── prd/
+│   │   ├── design/
+│   │   ├── spec/
+│   │   ├── impl-plan/
+│   │   ├── test-plan/
+│   │   ├── decision-history/
+│   │   ├── retro/
+│   │   ├── how-to/
+│   │   └── state/
 │   └── shared/                      ← Cross-initiative docs
 │       ├── glossary.md
 │       └── conventions.md
-│
-└── knowledge-repo/  (optional, separate git repo)
-    └── (same structure)
+
+~/project/<name>-knowledge-repo/     ← Separate repo, NOT under project/
+└── docs/
+    ├── INDEX.md
+    └── (same 10-type structure)
 ```
 
 ---
