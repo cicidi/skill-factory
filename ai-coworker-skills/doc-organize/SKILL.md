@@ -43,16 +43,16 @@ Works alongside `write-doc` — this skill handles placement, write-doc handles 
 **Evidence** — attach to any doc to provide supporting data:
 
 ```
-docs/dashboard-v2/research/2026-07-02-competitor-analysis.md
-docs/dashboard-v2/research/2026-07-02-competitor-analysis.evidence.md   ← benchmarks/screenshots
+docs/dashboard-v2/design/caching-strategy.md
+docs/dashboard-v2/design/caching-strategy.evidence.md   ← benchmarks/screenshots
 ```
 
 **Design detail** — attach to a design doc for HLD or LLD view:
 
 ```
-docs/dashboard-v2/design/2026-07-05-caching-strategy.md                 ← main design doc
-docs/dashboard-v2/design/2026-07-05-caching-strategy.hld.md             ← architecture overview
-docs/dashboard-v2/design/2026-07-05-caching-strategy.lld.md             ← component detail
+docs/dashboard-v2/design/caching-strategy.md                 ← main design doc
+docs/dashboard-v2/design/caching-strategy.hld.md             ← architecture overview
+docs/dashboard-v2/design/caching-strategy.lld.md             ← component detail
 ```
 
 Rules for both:
