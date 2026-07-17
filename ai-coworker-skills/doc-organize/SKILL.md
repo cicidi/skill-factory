@@ -24,7 +24,7 @@ Works alongside `write-doc` — this skill handles placement, write-doc handles 
 
 ---
 
-## Document Types (9 + evidence suffix)
+## Document Types (10 + evidence/detail suffixes)
 
 | Type | Purpose | Write When |
 |------|---------|------------|
@@ -37,6 +37,7 @@ Works alongside `write-doc` — this skill handles placement, write-doc handles 
 | `decision-history` | Architecture Decision Record (ADR). Covers Context → Options → Decision → Why this option → Consequences | Making key decisions, defending a choice |
 | `retro` | Retrospective / post-mortem | End of phase/milestone |
 | `how-to` | Operational guide / runbook | Documenting repeatable processes |
+| `state` | Progress tracker — current status, blockers, next steps. Dated, no Change Log | Daily/iterative status snapshots |
 
 ### Suffixes (not standalone types)
 
@@ -92,11 +93,18 @@ docs/<initiative>/<type>/<specific-topic>.md
 All 8 main types: `prd`, `design`, `spec`, `impl-plan`, `test-plan`, `decision-history`, `retro`, `how-to`
 Date is in the file's Change Log — no need to repeat in filename.
 
-**With date** (one-off files, no Change Log):
+**With date** (point-in-time captures, no Change Log):
 ```
 docs/<initiative>/<type>/YYYY-MM-DD-<specific-topic>.md
 ```
-`raw/` files, `*.evidence.md`, `*.research.md` — disposable or point-in-time captures.
+`state/` files (progress snapshots), `raw/` files, `*.evidence.md`, `*.research.md`
+
+### state/ rules
+
+- One file per checkpoint — dated, no Change Log
+- **Overwrite in-place**, never append. Like a whiteboard: erase and rewrite.
+- Content: current status, blockers, next steps, decisions made today
+- Old snapshots stay as separate files (don't delete — git tracks history)
 
 Examples:
 
