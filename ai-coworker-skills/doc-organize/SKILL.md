@@ -85,29 +85,18 @@ project/
 
 ## File Naming Convention
 
-Two styles depending on document type:
-
-**Without date** (content evolves, git tracks history):
+**Without date** (has Change Log, git tracks history):
 ```
 docs/<initiative>/<type>/<specific-topic>.md
 ```
-Types: `prd`, `design`, `spec`, `impl-plan`, `test-plan`, `how-to`
+All 8 main types: `prd`, `design`, `spec`, `impl-plan`, `test-plan`, `decision-history`, `retro`, `how-to`
+Date is in the file's Change Log — no need to repeat in filename.
 
-**With date** (time-point matters):
+**With date** (one-off files, no Change Log):
 ```
 docs/<initiative>/<type>/YYYY-MM-DD-<specific-topic>.md
 ```
-Types: `decision-history`, `retro`, everything in `raw/`
-
-**Suffix files** (attached to parent, same date rules as parent):
-```
-*.evidence.md
-```
-
-Rules:
-- Topic: kebab-case, describes the specific problem — NOT the initiative name
-- An initiative can be a product feature, env setup, team oncall, or anything
-- Multiple files of same type in one initiative are normal
+`raw/` files, `*.evidence.md`, `*.research.md` — disposable or point-in-time captures.
 
 Examples:
 
