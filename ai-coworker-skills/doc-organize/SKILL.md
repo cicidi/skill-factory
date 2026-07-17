@@ -168,14 +168,23 @@ docs/payment-refactor/
 
 ## Knowledge Repo vs Project Docs
 
-| Scenario | Where |
-|----------|-------|
-| Small team, docs tightly coupled with code | `docs/` in project repo |
-| Large team, docs merge independently of code | Separate `knowledge-repo/` |
-| Cross-project shared knowledge | `knowledge-repo/` |
-| Single project, active development | Project `docs/` |
+**knowledge-repo is a separate git repo from the project repo.**
 
-**Default advice**: start with project `docs/`. Split to knowledge-repo when you notice doc PRs conflicting with code PRs frequently.
+| Scenario | Where | How AI Finds It |
+|----------|-------|-----------------|
+| Docs tightly coupled with code | Project `docs/` | ai-coworker reads `docs/` directly |
+| Docs shared across projects | Separate `knowledge-repo/` | Referenced in project's `CLAUDE.md` |
+| Large team, doc PRs conflict with code PRs | Separate `knowledge-repo/` | Referenced in `CLAUDE.md` |
+
+**Setup**: If using a knowledge-repo, add this to project's `CLAUDE.md`:
+```markdown
+## Knowledge Repo
+- Path: `~/project/<name>-knowledge-repo/`
+- Index: `~/project/<name>-knowledge-repo/docs/INDEX.md`
+- When writing docs, prefer knowledge-repo. Read INDEX.md first to find existing docs.
+```
+
+**Default advice**: start with project `docs/`. Split to knowledge-repo when doc PRs conflict with code PRs frequently.
 
 ---
 
