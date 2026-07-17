@@ -92,6 +92,7 @@ docs/<initiative>/<type>/<specific-topic>.md
 ```
 All 8 main types: `prd`, `design`, `spec`, `impl-plan`, `test-plan`, `decision-history`, `retro`, `how-to`
 Date is in the file's Change Log — no need to repeat in filename.
+**Naming rule**: topic must be descriptive. Initiative-scoped (`sms-agent-design.md`) or topic-specific (`caching-layer.md`) are fine. **Never** generic (`design.md`, `implementation-plan.md`).
 
 **With date** (point-in-time captures, no Change Log):
 ```
