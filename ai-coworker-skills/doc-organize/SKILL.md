@@ -85,13 +85,27 @@ project/
 
 ## File Naming Convention
 
+Two styles depending on document type:
+
+**Without date** (content evolves, git tracks history):
+```
+docs/<initiative>/<type>/<specific-topic>.md
+```
+Types: `prd`, `design`, `spec`, `impl-plan`, `test-plan`, `how-to`
+
+**With date** (time-point matters):
 ```
 docs/<initiative>/<type>/YYYY-MM-DD-<specific-topic>.md
 ```
+Types: `decision-history`, `retro`, everything in `raw/`
+
+**Suffix files** (attached to parent, same date rules as parent):
+```
+*.evidence.md
+```
 
 Rules:
-- Date: `YYYY-MM-DD` (creation date)
-- Topic: kebab-case, describes the specific problem/subject — NOT the initiative name
+- Topic: kebab-case, describes the specific problem — NOT the initiative name
 - An initiative can be a product feature, env setup, team oncall, or anything
 - Multiple files of same type in one initiative are normal
 
@@ -100,45 +114,56 @@ Examples:
 ```
 # Product feature
 docs/user-profile-v2/
-├── prd/2026-07-01-user-profile-v2-requirements.md
-├── research/2026-07-02-competitor-profile-pages.md
-├── design/2026-07-05-profile-service-architecture.md
-│   ├── design/2026-07-05-profile-service-architecture.hld.md
-│   └── design/2026-07-05-profile-service-architecture.lld.md
-├── design/2026-07-08-profile-api-and-db-schema.md
-├── spec/2026-07-10-profile-endpoint-contracts.md
-├── impl-plan/2026-07-12-profile-migration-steps.md
-├── test-plan/2026-07-14-profile-integration-tests.md
-└── retro/2026-08-01-profile-v2-launch-review.md
+├── raw/
+│   └── 2026-07-01-agent-brainstorming.md      ← dated, AI discussion
+├── prd/
+│   └── user-profile-v2-requirements.md         ← no date
+├── design/
+│   ├── profile-service-architecture.md         ← no date
+│   ├── profile-service-architecture.hld.md
+│   └── profile-service-architecture.lld.md
+├── spec/
+│   └── profile-endpoint-contracts.md
+├── impl-plan/
+│   └── profile-migration-steps.md
+├── test-plan/
+│   └── profile-integration-tests.md
+├── decision-history/
+│   └── 2026-07-12-why-postgres-over-mongo.md    ← dated
+└── retro/
+    └── 2026-08-01-profile-v2-launch-review.md         ← dated
 
 # Environment / Setup
 docs/dev-env-setup/
-├── prd/2026-06-01-dockerize-all-services.md
-├── research/2026-06-02-podman-vs-docker-compose.md
-├── research/2026-06-03-devcontainer-vs-vagrant.md
-├── decision-history/2026-06-03-why-docker-compose-not-k8s.md
-├── design/2026-06-05-container-orchestration-plan.md
-├── impl-plan/2026-06-10-onboarding-scripts-and-docs.md
-└── how-to/2026-06-15-new-hire-setup-checklist.md
+├── prd/
+│   └── dockerize-all-services.md
+├── design/
+│   └── container-orchestration-plan.md
+├── impl-plan/
+│   └── onboarding-scripts-and-docs.md
+├── decision-history/
+│   └── 2026-06-03-why-docker-compose-not-k8s.md
+└── how-to/
+    └── new-hire-setup-checklist.md
 
 # Team Oncall
 docs/team-oncall/
-├── prd/2026-07-01-oncall-rotation-redesign.md
-├── how-to/2026-07-05-pagerduty-escalation-flow.md
-├── how-to/2026-07-06-database-incident-runbook.md
-├── decision-history/2026-07-08-why-pagerduty-over-opsgenie.md
-├── research/2026-07-10-q2-incident-stats-before-after.md
-│   └── research/2026-07-10-q2-incident-stats-before-after.evidence.md
-└── retro/2026-07-15-july-oncall-handoff.md
+├── decision-history/
+│   └── 2026-07-08-why-pagerduty-over-opsgenie.md
+├── how-to/
+│   ├── pagerduty-escalation-flow.md
+│   └── database-incident-runbook.md
+└── retro/
+    └── 2026-07-15-july-oncall-handoff.md
 
 # Refactoring / Migration
 docs/payment-refactor/
-├── research/2026-07-01-stripe-vs-adyen-2026.md
-├── design/2026-07-05-new-payment-provider-interface.md
-├── research/2026-07-06-migration-vs-big-bang-cutover.md
-├── impl-plan/2026-07-10-gradual-migration-phases.md
-└── impl-plan/2026-07-20-migration-performance-benchmarks.md
-│   └── impl-plan/2026-07-20-migration-performance-benchmarks.evidence.md
+├── design/
+│   └── new-payment-provider-interface.md
+├── impl-plan/
+│   └── gradual-migration-phases.md
+└── decision-history/
+    └── 2026-07-06-why-big-bang-not-incremental.md
 ```
 
 ---
