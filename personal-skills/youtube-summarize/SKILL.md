@@ -79,24 +79,54 @@ transcript string with timestamps.
 
 If successful, skip to Step 4.
 
-### Step 3: Tier 2 — Download audio + Whisper (slow)
+### Step 3: Tier 2a — Download audio + Whisper transcription
 
-If no captions are available, use the fallback pipeline:
+If no captions are available, download the audio and transcribe it:
 
-1. Download audio using yt-dlp with the browser's YouTube cookies:
+1. Download audio using yt-dlp with browser cookies:
    ```
    yt-dlp --cookies /tmp/yt_cookies.txt -x --audio-format mp3 \
      -o "/tmp/yt_audio_%(id)s.%(ext)s" <URL>
    ```
 
-2. Transcribe using Whisper:
+2. Transcribe using Whisper (uses GPU if available — much faster):
    ```python
    import whisper
-   model = whisper.load_model("tiny")  # tiny for speed
-   result = model.transcribe("/tmp/yt_audio.mp3", language="zh")
+   model = whisper.load_model("base")  # "tiny|base|small|medium|large"
+   result = model.transcribe("/tmp/yt_audio.mp3")
    ```
 
-3. Use the transcribed text as the transcript.
+3. Use the transcribed text. For multilingual videos, let Whisper
+   auto-detect the language or specify with `language="zh"`.
+
+### Step 3b: Tier 2b — Screenshots + OCR (for burned-in subtitles)
+
+Some videos have hardcoded subtitles burned into the video frames.
+In that case, extract frames and run OCR:
+
+1. Download a short segment of the video and extract frames at
+   regular intervals using ffmpeg:
+   ```
+   ffmpeg -i /tmp/yt_audio.mp3 -vf "fps=1/10" -q:v 2 \
+     /tmp/yt_frames/frame_%04d.jpg
+   ```
+   (1 frame every 10 seconds — adjust based on subtitle cadence)
+
+2. Run OCR on each frame using EasyOCR (supports Chinese + English):
+   ```python
+   import easyocr
+   reader = easyocr.Reader(['ch_sim', 'en'], gpu=True)
+   for img in sorted(frames):
+       result = reader.readtext(img)
+       text = " ".join([item[1] for item in result])
+   ```
+
+3. Combine OCR results chronologically, deduplicate overlapping
+   text, and merge into a subtitle-like transcript.
+
+4. Merge with Whisper output (Tier 2a) for the most complete
+   result — Whisper captures spoken audio, OCR captures burned-in
+   text that Whisper might miss (diagrams, on-screen captions).
 
 ### Step 4: Summarize
 
@@ -127,25 +157,33 @@ Format as clean markdown. Include:
 
 ## Tier Selection Heuristic
 
-| Condition | Tier | Speed |
-|-----------|------|-------|
+| Condition | Tier | Speed (with GPU) |
+|-----------|------|-----------------|
 | Captions available | Tier 1 (API) | Fast (~2s) |
-| No captions, <30 min | Tier 2 (Whisper) | Medium (~30-120s) |
-| No captions, 30min+ | Tier 2 with tiny model | Slow (~2-5min) |
-| Both fail | Tier 3 (metadata fallback) | Fast (~2s) |
+| No captions, has audio | Tier 2a (Whisper base) | Fast (~10-60s with GPU) |
+| Burned-in subs only | Tier 2b (Screenshot+OCR) | Medium (~30-120s) |
+| Both audio + burned-in subs | Tier 2a + 2b combined | Medium (~60-180s) |
+| Everything fails | Tier 3 (metadata) | Fast (~2s) |
+
+Recommendation: For most videos, run Tier 2a (Whisper). Only add Tier 2b
+(OCR) when you know the video has important on-screen text or
+burned-in subtitles that Whisper won't capture.
 
 ## Quality Gates
 
-- MUST attempt captions API before downloading audio
-- MUST report which tier was used in the output
-- MUST handle Chinese and English content
-- MUST clean up temp files after processing
-- NICE: detect video language automatically for Whisper
-- NICE: show processing progress to user
+- MUST attempt Tier 1 (captions API) before any download-based approach
+- MUST report which tier(s) were used in the output
+- MUST handle Chinese and English content for both Whisper and OCR
+- MUST clean up temp files (audio, frames) after processing
+- MUST warn user before processing videos over 1 hour
+- NICE: try combined Whisper + OCR for best results
+- NICE: detect video language automatically
 
 ## Anti-Patterns
 
-- Do NOT download audio when captions are readily available
-- Do NOT process videos over 2 hours without warning the user
+- Do NOT run OCR on every frame — sample at reasonable intervals (1/10s)
+- Do NOT process videos over 2 hours without user confirmation
 - Do NOT fabricate information not present in the transcript
-- Do NOT keep downloaded audio files after processing
+- Do NOT keep downloaded audio or frame files after processing
+- Do NOT attempt Tier 2b (OCR) unless user confirms burned-in subs exist
+  or Tier 2a produced sparse results
