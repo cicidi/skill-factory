@@ -178,6 +178,53 @@ This is the core creative phase. Launch an agent to produce the final HTML:
 - No academic jargon unless explained casually
 - Every data point has a visible source citation (small text/superscript)
 
+**Image Research (for each section, find a supporting visual):**
+For each major section of the article, use web search to find and capture
+a relevant image that would serve as video b-roll or article illustration.
+These should be evocative, real-world images (not illustrations or logos).
+
+| Section Topic | Search Query Example | Image Goal |
+|--------------|--------------------|------------|
+| Housing market / homes | "American suburban homes street view" | Neutral housing stock |
+| AI / technology | "AI data center interior rows of servers" | Tech infrastructure |
+| Office vacancy | "empty office building lobby chairs covered dust" | CRE distress |
+| San Francisco housing | "San Francisco row houses Victorian" | Local housing context |
+| Job cuts / unemployment | "unemployed worker computer office" | Human element |
+| Tech company layoffs | "Oracle headquarters Redwood City" | Corporate context |
+| Data center construction | "data center construction site cranes" | Infrastructure buildout |
+| Florida housing | "Florida beachfront condos development" | Sun Belt oversupply |
+| Federal Reserve / policy | "Federal Reserve building Washington DC" | Policy context |
+
+**How to capture:**
+1. Search via WebSearch for images (use the query above as starting point)
+2. For each image found, use Playwright to navigate to the single image URL
+   (`browser_navigate` → `browser_take_screenshot` with `target: "img"` to capture
+   only the image element, no background)
+3. Save to `screenshots/video-{section-name}.png`
+4. Note the source URL for attribution
+5. Embed in HTML as `<div class="photo-frame"><img ...> <div class="caption">Source</div></div>`
+
+**Image Review Gate — MUST run after capturing:**
+Launch a separate subagent to review ALL captured images for relevance:
+
+```markdown
+Review each image against its intended section. Ask:
+1. Does this image visually communicate the section's core message?
+   - Example: "empty office cubicles" ✓ for CRE vacancy
+   - Example: "tourist landmark Painted Ladies" ✗ for AI housing wealth divide
+2. Is the image specific enough? Generic stock photos are acceptable only
+   when no specific image exists for the topic.
+3. Is the image credible? Avoid AI-generated or obviously staged photos.
+4. Would this work as YouTube video b-roll? (visually interesting, not text-heavy)
+
+For each image, return: PASS / FAIL + reason.
+If FAIL, suggest an alternative search query and re-capture.
+```
+
+**Minimum images:** At least 5-7 supporting images across the article.
+Use images that tell a visual story — empty buildings for CRE, busy tech
+offices for AI boomtowns, suburbia for housing markets.
+
 **Chart Selection (AI autonomous decision):**
 Examine the research data and pick the best visualization:
 
@@ -192,23 +239,45 @@ Examine the research data and pick the best visualization:
 
 All charts use Chart.js with animation (duration: 1000ms, easing: easeOutQuart).
 
-**Technical Requirements:**
+**Design System — Scatterbrain Theme (Default):**
+The HTML uses the Scatterbrain design system — a warm, tactile, post-it-note-and-cork-board aesthetic.
+
+Color Palette:
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `--paper` | `#f7f5f0` | Warm paper background |
+| `--ink` | `#2d2a26` | Primary text (warm charcoal) |
+| `--ink-light` | `#5c5750` | Secondary text |
+| `--yellow` | `#ffe066` → `#ffd43b` | Primary post-it (gradient) |
+| `--blue` | `#a5d8ff` → `#74c0fc` | Secondary post-it |
+| `--pink` | `#ffc9c9` → `#ff9f9f` | Warm accent |
+| `--green` | `#b2f2bb` → `#8ce99a` | Cool accent |
+| `--orange` | `#ffcc80` | Flat fill |
+| `--purple` | `#d0bfff` | Flat fill |
+
+Typography:
+- Display headings: `Shrikhand` (Google Font, chunky serif)
+- Body text: `Zilla Slab` (friendly slab serif)
+- Handwritten accents: `Caveat` (casual cursive)
+- CJK display: `ZCOOL KuaiLe` (站酷快乐体) — Shrikhand equivalent
+
+Background: Cork board texture (radial gradients on warm brown tones) + SVG noise grain overlay at 4% opacity.
+
+Components:
+- Content sections rendered as colored `<div class="post-it post-it-{color}">` with soft drop shadows
+- Key post-its get pin decoration (`::before`) and/or tape decoration (`::after`)
+- Subtle rotation (±0.5° to ±3°) for organic hand-placed feel
+- Screenshots in polaroid-style photo frames with rotation
+- Charts in white card with shadow + slight rotation
+- Doodle SVG decorations (circles, squiggles) at 15% opacity on page edges
+- Scatterbrain CSS variables all use `--ink` (not black) for warm feel
+
 ```html
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Topic — YouTube Research</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    /* Mobile-first responsive design */
-    /* Large readable fonts (18px+ body text) */
-    /* Smooth scroll behavior */
-    /* Dark/light mode via prefers-color-scheme */
-  </style>
-</head>
+<!-- Required Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Caveat:wght@400;500;600;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 ```
+
+All data visualizations use Chart.js with the Zilla Slab font family for labels.
 
 **Output file:** `prd/presentation.html`
 
