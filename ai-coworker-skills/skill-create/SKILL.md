@@ -23,7 +23,7 @@ metadata:
     For editing an existing skill, use ai-coworker-skill-edit (when available) or edit
     the file directly. For one-off workflows that won't be reused, write
     inline instead of creating a skill.
-  phase_count: 5
+  phase_count: 7
   requires:
     - obra/superpowers:writing-skills
     - obra/superpowers:brainstorming
@@ -33,9 +33,10 @@ metadata:
 
 # ai-coworker-skill-create
 
-Creates a new skill file following the 5-phase skill-factory pipeline:
+Creates a new skill file following the 7-phase skill-factory pipeline:
 search for prior art, interview for requirements, build the SKILL.md,
-verify with quality gates, publish with git, and deploy to IDE
+tighten with a precision pass and illustrative examples,
+then verify with quality gates, publish with git, and deploy to IDE
 config directories. All work happens in the source code repo
 (`~/project/skill-factory/`) — never directly in OpenCode or Claude
 config directories. Skills are deployed after commit and push.
@@ -59,7 +60,7 @@ config directories. Skills are deployed after commit and push.
 
 > **Optional enhancements:** If `obra/superpowers:writing-skills` is available,
 > its CSO (Claude Search Optimization) and anti-rationalization patterns can
-> enhance Phase 2 and Phase 3. If `obra/superpowers:brainstorming` is available,
+> enhance Phase 2 and Phase 4. If `obra/superpowers:brainstorming` is available,
 > it improves interview rhythm in Phase 1. Both are optional — the 5-phase
 > process works without them.
 
@@ -215,9 +216,31 @@ If no related skill patterns found at all, note this in Sources and continue.
 **NICE:**
 - Write a philosophy-driven overview: the `# <name>` section should capture the skill's core philosophy (why it exists, what problem it solves), not just describe mechanics
 - If the skill is for a discipline (rules enforcement), add a "Common Rationalizations" table
-- Include one excellent example (not multi-language)
+- Include a 2-3 example spectrum (lite / standard / full) showing the valid range — see Phase 3
 
-### Phase 3: Verify
+### Phase 3: Precision & Examples
+
+Tighten the draft into legal-clause precision and add a spectrum of examples
+so the AI can exercise judgment within clear bounds.
+
+**MUST:**
+1. **Tighten bounds** — fix scope that is too broad or too loose. Scan each rule for vague hedges and rewrite it as a concrete trigger → action:
+   - vague: `handle edge cases appropriately`
+   - precise: `input file empty → return error; input > 100 MB → chunk then merge`
+2. Replace unbounded scope with explicit limits. Every rule names its trigger and its action; nothing is left to an open-ended hedge or an undefined catch-all.
+3. Confirm `## When NOT to Use` carries at least one concrete anti-trigger — a specific situation the skill refuses — not a restatement of scope.
+4. **Draft examples** — let the AI exercise judgment. Co-draft 2-3 compact examples spanning the range: a lite/minimal application, a standard case, and an edge/full case. Each shows the trigger and the intended behavior, not a fixed script. The point is to reveal the valid range so the AI can interpolate, not to dictate one path.
+5. Keep examples compact (one to a few lines) and use neutral placeholders, never real context (see Anti-Pattern 2).
+6. **Self-check** — read the skill as the AI that must use it. Do the bounds tell you when to stop? Do the examples tell you how far you can go? If either is fuzzy, tighten the rule or add an example.
+
+**Fallback:** If the scope is still too broad after tightening, return to Phase 1
+(Interview) and ask the user for a sharper use case. If the examples feel forced,
+the skill may be too narrow — consider merging it with a sibling skill.
+
+**Sources:**
+- Phase 3 (Precision + examples): confidence high — legal-clause bounds (trigger → action, concrete When-NOT-to-Use anti-trigger) plus a 2-3 example spectrum that lets the AI exercise judgment within the bounds
+
+### Phase 4: Verify
 
 **MUST:**
 1. Run the Quality Gates checklist (see `## Quality Gates` section below) — every MUST item must pass
@@ -227,7 +250,7 @@ If no related skill patterns found at all, note this in Sources and continue.
    - Scope check: is this focused enough for a single skill?
    - Ambiguity check: could any requirement be interpreted two ways?
 3. Present the complete skill to the user
-4. Wait for user approval — do NOT proceed to Phase 4 without it
+4. Wait for user approval — do NOT proceed to Phase 5 without it
 5. If user requests changes, iterate
 
 **NICE:**
@@ -239,7 +262,7 @@ If no related skill patterns found at all, note this in Sources and continue.
 > - Use `obra/superpowers:requesting-code-review` for structured review feedback
 > - Use `obra/superpowers:test-driven-development` for discipline skills
 
-### Phase 4: Publish
+### Phase 5: Publish
 
 Publish to the source code repo's git history.
 
@@ -262,7 +285,7 @@ Publish to the source code repo's git history.
    ```
 5. Tell user: "Created at `$SOURCE_REPO/ai-coworker-skills/<name>/SKILL.md`, committed as `<hash>`, pushed to origin."
 
-### Phase 5: Deploy
+### Phase 6: Deploy
 
 Sync the new skill from source repo to deployed copies and IDE configs.
 
@@ -301,8 +324,8 @@ Sync the new skill from source repo to deployed copies and IDE configs.
 - Optionally run `./setup/install.sh` from the ai-coworker repo for full install
 
 **Sources:**
-- Phase 4 (Publish): confidence high — commit hash is ground truth
-- Phase 5 (Deploy): confidence high — file copy is deterministic
+- Phase 5 (Publish): confidence high — commit hash is ground truth
+- Phase 6 (Deploy): confidence high — file copy is deterministic
 
 ## Quality Gates
 
@@ -330,7 +353,9 @@ Before publishing, run these checks in order. **MUST** items block publish.
 - [ ] No OCR artifacts (`**>text<**` style markers)
 - [ ] No truncated sentences ending in "..."
 - [ ] No TBD, TODO, or "to be determined" placeholders
-- [ ] Phase 5 deploy completed: skill copied to OpenCode + Claude Code config dirs
+- [ ] Every `## Process` rule is a concrete trigger → action — grep the body for `appropriately`, `as needed`, `properly`, `various`, `accordingly`, `suitably`; each hit is rewritten into a concrete trigger → action or explicitly justified
+- [ ] `## When NOT to Use` has at least one concrete anti-trigger (a specific refused situation), not a scope restatement
+- [ ] Phase 6 deploy completed: skill copied to OpenCode + Claude Code config dirs
 
 ### NICE (warn but don't block)
 
@@ -344,6 +369,7 @@ Before publishing, run these checks in order. **MUST** items block publish.
 - [ ] At least 4 test scenarios
 - [ ] Markdown table column names are clear
 - [ ] Code examples are complete and runnable
+- [ ] Example spectrum present: ≥ 2 compact examples spanning lite → full (see Phase 3)
 
 ## Anti-Patterns
 
@@ -404,7 +430,7 @@ names, ticket IDs.
 
 **Why wrong:** The skill won't be usable by AI agents until deployed.
 
-**Fix:** Run Phase 5 (Deploy) after Phase 4 (Publish).
+**Fix:** Run Phase 6 (Deploy) after Phase 5 (Publish).
 
 ## Test Scenarios
 
@@ -416,7 +442,7 @@ Walk through each scenario manually when verifying a new skill.
 finds several repos with commit-message conventions — no exact name match found —
 presents findings with import-vs-inspire options — Phase 1 captures developer focus —
 Phase 2 produces `ai-coworker-skills/git-commit-helper/SKILL.md` < 100 lines in source repo —
-Phase 3 all MUST gates pass — Phase 4 committed and pushed — Phase 5 deployed to IDE configs.
+Phase 4 all MUST gates pass — Phase 5 committed and pushed — Phase 6 deployed to IDE configs.
 
 ### Scenario 2: Duplicate name detection
 **Input:** "create a skill called bug-hunt"
@@ -426,12 +452,12 @@ reports "Skill `bug-hunt` already exists. Use ai-coworker-skill-edit to modify i
 ### Scenario 3: API caller skill
 **Input:** "I need a skill to query the GitHub API for issue lists"
 **Expected:** Phase 1 captures high tool integration weight (0.4) — Phase 2 includes
-actual `gh` CLI commands — Phase 3 includes live test of commands.
+actual `gh` CLI commands — Phase 4 includes live test of commands.
 
 ### Scenario 4: PDF processor skill
 **Input:** "skill for extracting text from PDF files"
 **Expected:** Phase 1 captures high edge case weight (0.4) — Phase 2 references
-`pypdf` — Phase 3 MUST pass.
+`pypdf` — Phase 4 MUST pass.
 
 ### Scenario 5: Conflicting skill (reuse audit test)
 **Input:** "I want a new git helper, similar to my existing one"
@@ -445,15 +471,20 @@ user choice before proceeding.
 patterns — presents top matches with star counts and what they do well —
 user chooses "absorb inspiration" — Phase 2 incorporates patterns from
 mattpocock/skills:diagnose and obra/superpowers:systematic-debugging into a
-new factory-native skill — Phase 3 MUST pass.
+new factory-native skill — Phase 4 MUST pass.
+
+### Scenario 7: Precision pass + example spectrum
+**Input:** "create a skill that summarizes long documents"
+**Expected:** Phase 3 scans the drafted body, rewrites a vague rule like "handle very long input appropriately" into "input > 50k tokens → chunk, summarize per chunk, then merge" — confirms `## When NOT to Use` has a concrete anti-trigger such as "input < 500 words → return as-is" — co-drafts 3 examples (a one-paragraph input, a 20-page doc, a mixed-language PDF) — Phase 4 MUST gate catches any remaining vague-hedge word and blocks publish until rewritten.
 
 ## Sources
 
 - Phase 0 (Search) design: confidence high — local + GitHub (≥10 repos) + web search with relevance scoring, import-vs-inspire decision flow, and exact duplicate name check
 - Phase 1 (Interview) design: confidence high — based on v1's factor weight analysis + obra's brainstorming pattern
 - Phase 2 (Build) design: confidence high — opencode 5-field frontmatter per official docs; CSO from obra's writing-skills; simplified naming (no prefix)
-- Phase 3 (Verify) design: confidence high — skill-forge's MUST/NICE gates + obra's verification patterns
-- Phase 4 (Publish) design: confidence high — conventional commits; source repo git workflow
-- Phase 5 (Deploy) design: confidence high — git pull + file copy to IDE config directories
+- Phase 3 (Precision + examples): confidence high — legal-clause bounds (trigger → action, concrete When-NOT-to-Use anti-trigger) plus a 2-3 example spectrum that lets the AI exercise judgment within the bounds
+- Phase 4 (Verify) design: confidence high — skill-forge's MUST/NICE gates + obra's verification patterns
+- Phase 5 (Publish) design: confidence high — conventional commits; source repo git workflow
+- Phase 6 (Deploy) design: confidence high — git pull + file copy to IDE config directories
 - Anti-patterns: confidence high — cleaned from v1, source-repo-direct-editing added
 - Test scenarios: confidence medium — adequacy depends on usage data
