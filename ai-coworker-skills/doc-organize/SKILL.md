@@ -39,6 +39,58 @@ Works alongside `write-doc` — this skill handles placement, write-doc handles 
 | `how-to` | Operational guide / runbook | Documenting repeatable processes |
 | `state` | Progress tracker — current status, blockers, next steps. Dated, no Change Log | Daily/iterative status snapshots |
 
+---
+
+## Domain Adaptation — Video/Audio Production
+
+When this skill is used in a **video/audio/multimedia production** project (e.g., short-form video generator, podcast producer, animation pipeline), the generic doc types map to production concepts differently:
+
+### Mapping
+
+| Doc Type | Video Production Meaning | Description |
+|----------|------------------------|-------------|
+| `prd` | 总策划 (Overall creative brief) | Video theme planning — target audience, tone, narrative framework, hook/CTA strategy, story bible |
+| `spec` | 分镜/场景规划 (Storyboard / scene plan) | Scene-by-scene breakdown: count, time/location/characters/events, script, examples, plot line (情节), protagonist (主人公/主要事务), clues (线索), scene transitions (场景切换), per-scene details (细节/数据/景色/人物), dialogue |
+| `design` | 架构设计 (Pipeline architecture) | `.hld.md` = system topology, model pipeline, data flow, service boundaries; `.lld.md` = API contracts, recipe internals, prompt assembly, schema details |
+| `impl-plan` | 实现计划 (Implementation plan) | Which models (Gemini/Seedance/etc.), how to run (CLI flags, parallel config), which scripts to run, what gets generated, how things integrate |
+| `test-plan` | 验收计划 (Acceptance plan) | Video review criteria: visual consistency, subtitle accuracy, duration check, scene transitions, character consistency, audio sync |
+| `research` | 模型/工具调研 | Model comparisons (Gemini vs Claude, Seedance vs Veo), paper references, competitor analysis |
+| `decision-history` | 技术决策记录 | Why this model/tool/schema was chosen, tradeoffs evaluated |
+| `how-to` | 操作手册 | How to create a new video project, debug a failed scene, rerun specific steps, regenerate images |
+| `state` | 工作状态 | Current progress on a video project — which scenes done/blocked, what's next |
+
+### Initiative = Creative Theme
+
+In a production project, **initiatives** are templates/projects, not code features:
+
+```
+docs/founder-story/               ← 创业者故事 initiative
+├── spec/
+│   └── six-scene-structure-spec.md
+├── test-plan/
+│   └── acceptance-test-plan.md
+└── state/
+    └── 2026-07-22-production-state.md
+
+docs/comedy-skit/                 ← 搞笑反转 initiative
+├── spec/
+│   └── six-scene-structure-spec.md
+└── test-plan/
+    └── acceptance-test-plan.md
+
+docs/pipeline/                    ← Pipeline 基建 initiative
+├── prd/
+│   └── video-gen-pipeline-prd.md
+├── design/
+│   ├── metadata-design.md
+│   └── workflow-architecture.hld.md
+└── how-to/
+    └── create-new-video-how-to.md
+```
+
+When the user says "write a PRD" in a video production project, generate path as `docs/<template-name>/prd/<template-name>-prd.md`.
+When the user says "write a spec for scene X", generate path as `docs/<initiative>/spec/<scene-topic>-spec.md`.
+
 ### Suffixes (not standalone types)
 
 **Evidence** — attach to any doc to provide supporting data:
@@ -275,8 +327,13 @@ Rules:
 ### When user asks to reorganize docs
 
 1. Scan `docs/` for misplaced files (wrong type dir, wrong naming).
-2. Propose moves before executing.
-3. After each move: update INDEX.md Move Log.
+2. **Scan for orphaned project folders** — Check for top-level directories that were part of old flat layouts and are now orphaned after migration:
+   - Common orphans in video/media projects: `pic/`, `video/`, `jobs/`, `projects/`, `tasks.json`, `metadata.json`
+   - Common orphans in general projects: `node_modules/`, `.env`, `.idea/`, `__pycache__/`
+   - Verify each is gitignored or unused before deleting
+3. Propose moves + deletions before executing.
+4. After each move: update INDEX.md Move Log.
+5. After deletions: add orphan folder names to `.gitignore` if not already present.
 
 ### When user asks where to put something
 
