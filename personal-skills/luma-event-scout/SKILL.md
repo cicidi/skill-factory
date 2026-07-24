@@ -31,8 +31,9 @@ Scout Lu.ma for Bay Area events matching Cicidi's criteria. Output a dual-list (
 These are the default filters. Do not ask to reconfirm each time.
 
 ### Location
-- San Francisco, Peninsula, South Bay (Palo Alto, Mountain View, Stanford, San Jose)
-- East Bay (Berkeley, Oakland) — secondary, only if exceptional
+- **San Francisco** — primary
+- **Peninsula + South Bay** — Palo Alto, Mountain View, Stanford, Menlo Park, Sunnyvale, Cupertino, San Jose, Santa Clara. Equal priority to SF. Many AI companies are HQ'd here.
+- **East Bay** — Berkeley, Oakland — secondary, only if exceptional speaker
 
 ### Time Range
 - Only search events within **1 month** from the current date. Ignore events beyond this window.
@@ -233,36 +234,48 @@ Luma is a Next.js SPA — dates are client-rendered. Use these strategies in pri
 
 ### Strategy 0: Broad AI Category Search (MUST — highest priority)
 
-Do NOT rely only on specific calendars. Search the full AI category:
+Do NOT rely only on specific calendars. Search the full AI category across the ENTIRE Bay Area:
 
 ```
-https://luma.com/sf/ai        — SF AI events, all organizers
-https://luma.com/sf           — SF all events, filter for AI
+https://luma.com/sf/ai              — SF AI events
+https://luma.com/sf                 — SF all events, filter for AI
+https://luma.com/san-jose/ai        — South Bay AI events
+https://luma.com/palo-alto/ai       — Peninsula AI events
+https://luma.com/mountain-view/ai   — Silicon Valley AI events
+https://luma.com/discover           — Luma's main discovery feed (all locations)
 ```
 
-For each event found on the broad listing, fetch the individual event page to get the date. The calendar listing page shows event cards without dates — always drill into individual pages for date/time confirmation.
+Also try these city-specific URLs (Luma may or may not have pages for all):
+- `https://luma.com/sunnyvale/ai`
+- `https://luma.com/menlo-park/ai`
+- `https://luma.com/santa-clara/ai`
+- `https://luma.com/cupertino/ai`
 
-Also check these broader discovery URLs:
-- `https://luma.com/discover` — Luma's main discovery feed
-- Search by topic keywords via individual event lookups
+**CRITICAL**: Luma calendar list pages do NOT show event dates. For every promising event, ALWAYS fetch the individual event page to confirm the date falls within the search window. Skip events where the date cannot be confirmed.
 
 ### Strategy 1: WebFetch individual event pages
 Use the WebFetch tool on `https://lu.ma/{event-id}` (redirects to `luma.com/{event-id}`). The description text contains the agenda which often includes times. Format: markdown.
 
 ### Strategy 2: Browse calendar pages
 Fetch `https://lu.ma/{calendar-url}` for these high-signal calendars:
+
+**SF calendars:**
 | Calendar | URL | Focus |
 |----------|-----|-------|
 | Bond AI SF | genai-sf | Largest AI community, 130k+ |
 | SF Builders Collective | sf-builders-collective | Tech builders |
 | Latent Space | ls | AI paper club, meetups |
-| Big Brain Lectures | Big-Brain-SF | Paid lectures ($25-27), skip if free only |
 | Claude Community | claudecommunity | Claude/Anthropic events |
-| Frontier Tower | frontiertower | Frontier tech in SF |
 | South Park Commons | southparkcommons-events | -1 to 0 community |
-| H Company | hcompany.ai | AI agent research |
 
-Also check: `sf`, `sf-ai`, `ai`
+**South Bay / Peninsula calendars:**
+| Calendar | URL | Focus |
+|----------|-----|-------|
+| Stanford AI | stanford-ai | Stanford AI events |
+| Palo Alto AI | palo-alto-ai | Peninsula AI meetups |
+| AGI House | agi-house | AGI research, Hillsborough |
+
+Also check: `sf`, `sf-ai`, `ai`, `south-bay`, `silicon-valley`, `palo-alto`, `mountain-view`
 
 ### Strategy 3: For exhaustive search, use browser automation
 When the user explicitly asks for exhaustive search, recommend running:
