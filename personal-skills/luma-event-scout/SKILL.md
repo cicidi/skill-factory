@@ -287,6 +287,7 @@ EXTRA_CALENDARS = [
     "cal-8lGTG3I2eA8rS2p",  # HackerSquad (SF Builders Collective)
     "cal-EVJ0XV6EJegxAT7",  # tokens& (SwarmHack)
     "cal-T3QXfRpK0pBwYqX",  # Founders Bay (You.com hackathons)
+    "cal-NqnUgwDcAfKNXHN",  # Robotics & World Models Reading Club (Mountain View)
 ]
 sub_calendars.update(EXTRA_CALENDARS)
 
