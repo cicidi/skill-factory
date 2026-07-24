@@ -50,7 +50,7 @@ These are the default filters. Do not ask to reconfirm each time.
 - Hackathons — acceptable, same bar as talks. Topic must be advanced and relevant. Speaker/judge gate still applies. Additional hackathon-specific gates:
   - **Prize pool**: must include cash or gift cards (Amazon, Visa, etc.). Reject events that only offer "platform credits" or "API credits" as prizes — these are product-testing exercises, not real hackathons.
   - **Host quality**: must be hosted by a 大厂 (FAANG, OpenAI, Nvidia, etc.) or a 知名 startup (Series B+, known product). Reject hackathons from tiny companies using participants as free product testers. Check: would this company exist in 2 years? If not, skip.
-  - **Bounty hunter signal**: high cash prize pool ($10K+) is a positive signal — attracts serious competitors, good networking.
+  - **Bounty hunter signal**: cash prize pool $1K+ is a positive signal — attracts serious competitors, good networking.
 
 ### Speaker Quality — Hard Gate (MUST)
 
