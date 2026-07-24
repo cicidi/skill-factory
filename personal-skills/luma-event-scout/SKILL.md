@@ -138,14 +138,7 @@ When the user approves an event (reply `+N register`), use Playwright to auto-re
 
 ### User Profile for Form Filling
 
-| Field | Value |
-|-------|-------|
-| Name | Walter Chen |
-| Title/Company | Staff Engineer, Intuit |
-| Email | walterchen.ca@gmail.com |
-| GitHub | https://github.com/cicidi/ |
-| Project | https://github.com/cicidi/ai-coworker |
-| Phone | 352-281-8555 |
+Read personal info from `~/.person_info.md`. This file contains Name, Email, Company, Title, GitHub, LinkedIn, Phone, and Project description. Use these values when filling registration forms — do NOT hardcode them.
 
 ### Registration Script
 
@@ -155,14 +148,7 @@ Write and run a Playwright Python script at `~/project/luma/register_event.py`:
 from playwright.sync_api import sync_playwright
 
 EVENT_URL = "https://lu.ma/{event-id}"
-PROFILE = {
-    "name": "Walter Chen",
-    "title": "Staff Engineer, Intuit",
-    "email": "walterchen.ca@gmail.com",
-    "github": "https://github.com/cicidi/",
-    "project": "https://github.com/cicidi/ai-coworker",
-    "phone": "352-281-8555"
-}
+# Load from ~/.person_info.md — do NOT hardcode personal info
 
 def register():
     with sync_playwright() as p:
@@ -178,14 +164,9 @@ def register():
 ### Registration Strategy
 1. Navigate to event URL
 2. Click the register/RSVP button ("Register", "Request to Join", "Save a spot")
-3. Fill the registration form:
-   - Name: "Walter Chen"
-   - Email: walterchen.ca@gmail.com
-   - If asked "What do you do?" or "Company": "Staff Engineer at Intuit"
-   - If asked "Why do you want to attend?" or "About you": "Building ai-coworker (https://github.com/cicidi/ai-coworker) — a deterministic workflow system for AI agents. Interested in {relevant event topic}."
-   - If asked "GitHub": "https://github.com/cicidi/"
-   - If asked "LinkedIn": "https://linkedin.com/in/walterchen"
-   - Phone (if asked): "352-281-8555"
+3. Fill the registration form using values from `~/.person_info.md`:
+   - Name, Email, Company, Title, GitHub, LinkedIn, Phone — all from that file
+   - If asked "Why do you want to attend?" or "About you": use the Project description from `~/.person_info.md`
 4. Submit and confirm registration was successful
 5. Report result to user
 
