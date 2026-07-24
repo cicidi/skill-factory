@@ -231,76 +231,119 @@ Each recommendation must include the speaker credential tag (e.g. "牛校 Stanfo
 
 Each rejected event must include a specific reason (e.g. "AI wrapper, no moat", "speaker背景不够 — no verifiable experience", "被 Claude 可直接替代").
 
-## How to Scrape Luma
+## How to Scrape Luma — Method Evolution
 
-**CRITICAL**: Luma is a Next.js SPA. Dates and event names are NOT in the HTML source — they are client-rendered. WebFetch alone returns event cards without dates. The correct approach:
+Four approaches were tried. Only #4 works comprehensively.
 
-### Strategy 0: __NEXT_DATA__ JSON Extraction (quick, ~20 events per page)
+| # | Method | Result |
+|---|--------|--------|
+| 1 | WebFetch calendar pages | ❌ No dates — Luma is a client-rendered SPA |
+| 2 | `__NEXT_DATA__` JSON extraction | ⚠️ Only first ~20 events (server-rendered). Misses events deeper in the scroll |
+| 3 | Playwright infinite scroll + DOM extraction | ❌ Calendar date headers and event cards live in separate DOM trees — can't reliably associate. Script returned 0 |
+| 4 | **`api.luma.com/calendar/get-items`** | ✅ The endpoint Luma's own frontend calls on scroll. Public (no auth), paginated JSON, all fields included. Combined with calendar chaining (seed → extract sub-calendar IDs → fetch all), finds 150+ events from 39+ calendars |
 
-**LIMITATION**: `featured_items` only contains the first ~20 events rendered server-side. For comprehensive coverage (all events on a calendar), use Strategy 3 (Playwright scroll).
-
-Every Luma page embeds a `<script id="__NEXT_DATA__" type="application/json">` tag...
-
-```bash
-curl -s "https://luma.com/{page}" | python3 -c "
-import sys, json, re
-html = sys.stdin.read()
-match = re.search(r'<script id=\"__NEXT_DATA__\" type=\"application/json\">(.*?)</script>', html)
-data = json.loads(match.group(1))
-fi = data['props']['pageProps']['initialData']['data']['featured_items']
-for item in fi:
-    ev = item.get('event', {})
-    name = ev.get('name', '?')
-    start = item.get('start_at', '?')
-    geo = ev.get('geo_address_json', {}) or {}
-    city = (geo.get('city', '') or '')
-    going = item.get('guest_count', '?')
-    url = ev.get('url', '')
-    cal = (item.get('calendar', {}) or {}).get('name', '')
-    print(f'{start[:10]} | {name} | {city} | {going} going | {cal}')
-    print(f'  https://lu.ma/{url}')
-"
-```
-
-**JSON field reference:**
-- `featured_items[].start_at` — ISO 8601 date (e.g., `2026-07-28T23:00:00.000Z`)
-- `featured_items[].event.name` — event title
-- `featured_items[].event.geo_address_json.city` — city
-- `featured_items[].event.geo_address_json.region` — state
-- `featured_items[].guest_count` — attendee count
-- `featured_items[].event.url` — URL slug
-- `featured_items[].event.description_short` — short description
-- `featured_items[].calendar.name` — host calendar/org
-
-### Strategy 0a: Broad AI Category Search (MUST)
-
-Search the full AI category and filter for Bay Area:
+**Lesson**: don't fight the SPA. Find the API the SPA itself calls. Add `User-Agent` + `Referer` headers to avoid 403.
 
 ```
-https://luma.com/ai        — ALL AI events globally; filter by city
-https://luma.com/sf/ai     — SF AI events
+GET https://api.luma.com/calendar/get-items?calendar_api_id={id}&pagination_limit=50
+Headers: User-Agent: Mozilla/5.0, Referer: https://luma.com/
+Paginates via next_cursor in response.
 ```
 
-**Bay Area city filter**: Parse the JSON, keep only events where `geo_address_json.city` matches:
-`San Francisco`, `Palo Alto`, `Mountain View`, `Menlo Park`, `Sunnyvale`, `Santa Clara`, `San Jose`, `Cupertino`, `Berkeley`, `Oakland`, `Redwood City`, `South San Francisco`, `Foster City`, `Los Altos`, `Campbell`, `Milpitas`, `Fremont`, `San Mateo`, `Burlingame`
+Each event has: `name`, `start_at`, `end_at`, `geo_address_json.city`, `url`, `calendar_api_id`, `guest_count` (on the entry, not the event).
 
-Also check the calendar's location field if geo_address_json.city is empty.
+### Strategy 0: Calendar API — comprehensive (MUST)
 
-### Strategy 0b: Specific calendar pages (fallback)
+This is the primary method. It finds ALL events, not just 20.
 
-Use the same `__NEXT_DATA__` JSON extraction on calendar pages:
+```python
+import urllib.request, json
+
+def fetch_calendar(calendar_id):
+    events = []
+    cursor = None
+    for _ in range(20):
+        url = f"https://api.luma.com/calendar/get-items?calendar_api_id={calendar_id}&pagination_limit=50"
+        if cursor: url += f"&pagination_cursor={cursor}"
+        req = urllib.request.Request(url)
+        req.add_header("User-Agent", "Mozilla/5.0")
+        req.add_header("Referer", "https://luma.com/")
+        data = json.loads(urllib.request.urlopen(req, timeout=15).read())
+        entries = data.get("entries", [])
+        if not entries: break
+        for entry in entries:
+            ev = entry.get("event", {})
+            events.append({
+                "name": ev.get("name","?"),
+                "start": ev.get("start_at","?"),
+                "city": (ev.get("geo_address_json",{}) or {}).get("city",""),
+                "cal_id": ev.get("calendar_api_id",""),
+                "url": f"https://lu.ma/{ev.get('url','')}",
+                "going": entry.get("guest_count", 0)
+            })
+        cursor = data.get("next_cursor")
+        if not cursor: break
+    return events
 ```
-https://luma.com/genai-sf              — Bond AI (largest, 130k+)
-https://luma.com/sf-builders-collective — HackerSquad
-https://luma.com/ls                    — Latent Space
-https://luma.com/claudecommunity       — Claude/Anthropic events
+
+### Strategy 0a: Calendar discovery (chain from aggregators)
+
+Start with these aggregator calendars, then chain-discover sub-calendars:
+
+```python
+# Step 1: Start with Bond AI (largest Bay Area aggregator)
+SEED_CALENDARS = [
+    "cal-JTdFQadEz0AOxyV",  # Bond AI - San Francisco and Bay Area (130k+ members)
+]
+
+# Step 2: Fetch all sub-calendars referenced in Bond AI events
+bond_events = fetch_calendar("cal-JTdFQadEz0AOxyV")
+sub_calendars = set()
+for e in bond_events:
+    if e['cal_id']: sub_calendars.add(e['cal_id'])
+
+# Step 3: Also check these additional known calendars
+EXTRA_CALENDARS = [
+    "cal-8lGTG3I2eA8rS2p",  # HackerSquad (SF Builders Collective)
+    "cal-EVJ0XV6EJegxAT7",  # tokens& (SwarmHack)
+    "cal-T3QXfRpK0pBwYqX",  # Founders Bay (You.com hackathons)
+]
+sub_calendars.update(EXTRA_CALENDARS)
+
+# Step 4: Fetch ALL calendars, deduplicate by URL
+all_events = {}
+for cid in sub_calendars:
+    for e in fetch_calendar(cid):
+        if e['url'] not in all_events:
+            all_events[e['url']] = e
 ```
 
-### Strategy 1: WebFetch individual event pages (for speaker detail)
-Use WebFetch on `https://lu.ma/{event-id}` to get the full description, speaker names, and venue address.
-The description text contains the agenda and speaker info. Format: markdown.
+**Calendar discovery is iterative**: each new calendar you fetch may reference new `calendar_api_id` values. Chain-discover until no new IDs appear.
 
-### Strategy 3: Playwright infinite scroll (comprehensive — gets ALL events)
+### Strategy 0b: Bay Area + date filtering
+
+```python
+WINDOW_DAYS = 10  # from current date
+BAY_AREA_CITIES = ['san francisco','palo alto','mountain view','menlo park',
+    'sunnyvale','santa clara','san jose','cupertino','berkeley','oakland',
+    'redwood city','south san francisco','foster city','los altos','campbell',
+    'milpitas','fremont','san mateo','burlingame']
+
+window_start = datetime.now().strftime('%Y-%m-%d')
+window_end = (datetime.now() + timedelta(days=WINDOW_DAYS)).strftime('%Y-%m-%d')
+
+bay_events = []
+for e in all_events.values():
+    city = e['city'].lower()
+    in_window = window_start <= e['start'][:10] <= window_end
+    in_bay = any(c in city for c in BAY_AREA_CITIES) or city == ''  # include unknown city
+    if in_window and in_bay:
+        bay_events.append(e)
+```
+
+### Strategy 1: Individual event pages (for speaker detail)
+
+The API gives event metadata but NOT speaker/host names. For each event that passes the date + Bay Area filter, use WebFetch on the event URL to get full description, speaker names, bios, and venue.
 
 For full coverage beyond the ~20-event `__NEXT_DATA__` limit. Navigate to a calendar page, scroll until no new events load, then extract.
 
@@ -340,14 +383,6 @@ async def scroll_and_extract(calendar_url, output_file):
         await browser.close()
 
 asyncio.run(scroll_and_extract("https://luma.com/genai-sf", "events.json"))
-```
-
-Run: `python3 ~/project/luma/playwright_scroll.py`
-
-Then fetch individual event pages via `__NEXT_DATA__` for date confirmation.
-
-### Strategy 4: Calendar pages (fallback quick check)
-
 ## Preference Learning
 
 The skill maintains a preference file at `~/project/luma/preferences.json`:
