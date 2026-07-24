@@ -20,7 +20,11 @@ metadata:
 
 # Luma Event Scout
 
-Scout Lu.ma for Bay Area events matching Cicidi's criteria. Output a ranked list to `~/project/luma/events-{YYYY}-{MM}.md`. Learn from feedback to optimize future searches.
+Scout Lu.ma for Bay Area events matching Cicidi's criteria. Output a dual-list (recommended + strongly not recommended) to `~/project/luma/events-{YYYY}-{MM}.md`. Every speaker is background-checked via maigret.
+
+## Skill Dependencies
+
+- `maigret`: used for speaker background checks — searches across social media, GitHub, and forums for username presence. Install: `pip install maigret`. Reference: https://github.com/soxoj/maigret
 
 ## Cicidi's Preferences (Persistent)
 
@@ -44,17 +48,65 @@ These are the default filters. Do not ask to reconfirm each time.
 - NOT: beginner workshops ("Intro to...", "Learn Python/AI from scratch")
 - Hackathons — acceptable if topic is advanced and relevant
 
-### Speaker Quality (the "bullshit filter")
-For each speaker, do at least 2 of these checks:
-1. **GitHub** — active repos, meaningful projects, not just forks/tutorials
-2. **LinkedIn** — role at notable company or founder with traction, not "AI enthusiast"
-3. **Education** — strong CS/AI program (Stanford, Berkeley, MIT, CMU) is a plus
-4. **Publications** — papers, patents, or well-known blog posts
-5. **Company affiliation** — FAANG, top AI lab, well-funded startup (Series A+)
+### Speaker Quality — Hard Gate (MUST)
 
-Passing criteria: At least one of the above is strongly positive. Small company leads are fine if they have GitHub/paper credentials.
+For each speaker and host, run this checklist. Events that fail the hard gate are REJECTED.
 
-### Topic Requirements
+**Hard gate (one must pass):**
+- **牛校**: Stanford, Berkeley, MIT, CMU, Caltech, Harvard, 清华, 北大, Oxford, Cambridge, ETH Zurich, or equivalent top-tier CS/AI program
+- **大厂**: FAANG (Meta/Google/Apple/Amazon/Netflix), Microsoft, OpenAI, Anthropic, DeepMind, Nvidia, top AI labs
+- **知名独角兽/大公司**: senior role (VP+) at a company with real traction (Series B+, known product)
+
+If the speaker has a 牛校 or 大厂 background, a niche/small product is fine — the speaker carries the event.
+
+**Background check (MUST for every speaker/host):**
+1. **maigret username search**: use maigret to search for the speaker's online presence
+   ```bash
+   maigret <username> --all-sites
+   ```
+   Maigret reference: https://github.com/soxoj/maigret
+2. **LinkedIn**: role at notable company, career trajectory. "AI enthusiast" / "prompt engineer" / no verifiable experience → FAIL.
+3. **GitHub**: active repos with original code, not just forks/tutorials. Check contributor graphs.
+4. **Google Scholar / arXiv**: publications with citations.
+5. **Company check**: is the company real? Revenue? Funding? User count? Or just a landing page?
+
+**Automatic rejection signals:**
+- Speaker has NO verifiable online presence beyond a Luma profile → FAIL
+- Company website is a single landing page with no product → FAIL
+- Product is a thin ChatGPT/Claude wrapper with no moat → FAIL
+- Company has < 5 employees and no notable investors or revenue → FAIL
+- Speaker's only credential is "AI founder" with no prior engineering/research role → FAIL
+
+**Documentation**: for every speaker that passes, write evidence in the output card:
+`牛校 Stanford CS PhD` or `大厂 Google Director` or `独角兽 VP at HeyGen (Series B, $100M+)`
+
+### Product/Company Analysis (the "AI wrapper filter")
+
+For events where a company/product is being presented or demoed, evaluate:
+
+**Automatic downgrade signals:**
+- Product is a thin wrapper around ChatGPT/Claude/Gemini API with no proprietary tech
+- Product is easily replaced by a Claude custom instruction or open-source equivalent
+- Company has negligible users/traction (check SimilarWeb, social media, app store ratings)
+- Demo is a "vibe coded" prototype with no production deployment
+- "AI-powered" buzzwords without a specific technical innovation
+
+**Positive signals:**
+- Proprietary models, data, or infrastructure that can't be replicated with an API call
+- Real user base with retention (not just a waitlist or beta signup page)
+- Published research, patents, or technical deep-dives
+- Solving a genuinely hard problem (not "ChatGPT but for X industry")
+- Open-source project with real community adoption
+
+**Examples of rejects:**
+- Notivta + Actionlayer — small user base, easily replaced by Claude Computer Use
+- Magnific AI — narrow image upscaling, replaceable by open-source diffusion models
+- Generic "AI meeting summarizer" — Claude/Gemini already does this natively
+
+**Examples of genuine tech:**
+- eBPF-based observability agents — kernel-level, not API-wrapper
+- Custom speech/vision models trained on proprietary data
+- MCP infrastructure with real security/auth layers
 Must be advanced or intermediate-advanced. Reject these signals of beginner content:
 - Phrase "no experience required" or "beginners welcome"
 - Title starts with "Introduction to..." or "Learn the basics of..."
@@ -160,21 +212,42 @@ Save to `~/project/luma/events-{YYYY}-{MM}.md`. Each event is a **card** using a
 Each card uses a nested `| \| \|` table so cell content can span the full terminal width. Each event gets a horizontal rule separator.
 
 After all cards, add:
+
 ```markdown
-## Excluded
+## 🟢 Recommended — Worth Your Time
+| # | Event | Date | Speaker Credentials | Why |
+|---|-------|------|-------------------|-----|
+
+## 🔴 Strongly NOT Recommended — Waste of Time
 | Event | Reason |
 |-------|--------|
-
-## Reply
-+N = interested, +N register = auto-register, -N = pass
 ```
+
+Each recommendation must include the speaker credential tag (e.g. "牛校 Stanford CS PhD", "大厂 Google Director").
+
+Each rejected event must include a specific reason (e.g. "AI wrapper, no moat", "speaker背景不够 — no verifiable experience", "被 Claude 可直接替代").
 
 ## How to Scrape Luma
 
-Luma is a Next.js SPA — dates are client-rendered. Use these strategies:
+Luma is a Next.js SPA — dates are client-rendered. Use these strategies in priority order:
+
+### Strategy 0: Broad AI Category Search (MUST — highest priority)
+
+Do NOT rely only on specific calendars. Search the full AI category:
+
+```
+https://luma.com/sf/ai        — SF AI events, all organizers
+https://luma.com/sf           — SF all events, filter for AI
+```
+
+For each event found on the broad listing, fetch the individual event page to get the date. The calendar listing page shows event cards without dates — always drill into individual pages for date/time confirmation.
+
+Also check these broader discovery URLs:
+- `https://luma.com/discover` — Luma's main discovery feed
+- Search by topic keywords via individual event lookups
 
 ### Strategy 1: WebFetch individual event pages
-Use the WebFetch tool on `https://lu.ma/{event-id}`. The description text contains the agenda which often includes times. Format: markdown.
+Use the WebFetch tool on `https://lu.ma/{event-id}` (redirects to `luma.com/{event-id}`). The description text contains the agenda which often includes times. Format: markdown.
 
 ### Strategy 2: Browse calendar pages
 Fetch `https://lu.ma/{calendar-url}` for these high-signal calendars:
@@ -226,24 +299,39 @@ After each list is generated:
 
 ## Process
 
-1. Fetch Luma AI category page and Bond AI calendar to discover event IDs
-2. For each candidate event matching topic keywords, fetch the event detail page
+1. Fetch broad AI category pages first (`luma.com/sf/ai`, `luma.com/sf`) — do NOT limit to specific calendars
+2. For each candidate event matching topic keywords, fetch the event detail page to confirm the date
 3. Extract date, time, location, description, speakers from the detail page
-4. For top candidates: search speaker background (LinkedIn, GitHub, Google Scholar)
-5. Apply all filters (timing, cost, speaker quality, topic, culture)
-6. Score and rank remaining events
-7. Write output to `~/project/luma/events-{YYYY}-{MM}.md`
-8. Load `~/project/luma/preferences.json` and apply learning
-9. Present summary to user, ask for feedback
-10. Record feedback and update preferences
+4. **For every speaker and host**: run maigret username search, then check LinkedIn/GitHub/Google Scholar
+5. **Apply hard speaker gate**: 牛校 or 大厂 or 知名独角兽VP+ → PASS. Neither → REJECT immediately
+6. **Product analysis**: is this company real tech or an AI wrapper? Check for moat
+7. Apply all remaining filters (timing, cost, topic, culture)
+8. **Classify every event**: Recommended (with speaker credential tag) or Strongly NOT Recommended (with specific rejection reason)
+9. Write dual-list output to `~/project/luma/events-{YYYY}-{MM}.md`
+10. Load `~/project/luma/preferences.json` and apply learning
+11. Present summary to user, ask for feedback
+12. Record feedback and update preferences
 
 ## Anti-Patterns
 
 - Do not include paid events without clearly calling them out
 - Do not recommend events where speakers have no verifiable background
 - Do not skip speaker background checks — this is the core value prop
+- Do not skip maigret search for any speaker or host — every name must be checked
 - Do not include pure-social events (parties, brunches, bar crawls)
 - Do not recommend beginner-level content
+- Do not recommend "AI wrapper" products (thin API layer, no moat, easily replaced by Claude/open-source)
+- Do not recommend events from tiny companies with no traction unless the speaker has 牛校/大厂 credentials
+- Do not rely only on specific calendars — always start with broad AI category search
+- Do not recommend an event without a speaker credential tag on the output card
+- Do not list an event in "Excluded" without a specific rejection reason
+
+### Concrete Examples of Past Rejects
+
+| Event/Company | Why Rejected |
+|---------------|-------------|
+| Notivta + ActionLayer | Product too small, low user count, easily replaced by Claude Computer Use |
+| Magnific AI | Narrow image upscaling, replaceable by open-source diffusion models, small company |
 
 ## Test Scenarios
 
