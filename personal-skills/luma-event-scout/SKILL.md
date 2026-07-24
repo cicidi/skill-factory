@@ -47,7 +47,10 @@ These are the default filters. Do not ask to reconfirm each time.
 - Lectures, talks, fireside chats, demos, paper discussions
 - NOT: pure networking mixers, parties, happy hours (unless there's a substantive talk)
 - NOT: beginner workshops ("Intro to...", "Learn Python/AI from scratch")
-- Hackathons — acceptable, same bar as talks. Topic must be advanced and relevant. Speaker/judge gate still applies.
+- Hackathons — acceptable, same bar as talks. Topic must be advanced and relevant. Speaker/judge gate still applies. Additional hackathon-specific gates:
+  - **Prize pool**: must include cash or gift cards (Amazon, Visa, etc.). Reject events that only offer "platform credits" or "API credits" as prizes — these are product-testing exercises, not real hackathons.
+  - **Host quality**: must be hosted by a 大厂 (FAANG, OpenAI, Nvidia, etc.) or a 知名 startup (Series B+, known product). Reject hackathons from tiny companies using participants as free product testers. Check: would this company exist in 2 years? If not, skip.
+  - **Bounty hunter signal**: high cash prize pool ($10K+) is a positive signal — attracts serious competitors, good networking.
 
 ### Speaker Quality — Hard Gate (MUST)
 
@@ -348,6 +351,8 @@ After each list is generated:
 - Do not recommend beginner-level content
 - Do not recommend "AI wrapper" products (thin API layer, no moat, easily replaced by Claude/open-source)
 - Do not recommend events from tiny companies with no traction unless the speaker has 牛校/大厂 credentials
+- Do not recommend hackathons that only offer "platform credits" or "API credits" as prizes — these are product-testing exercises
+- Do not recommend hackathons hosted by small/unknown companies — they're using participants as free labor
 - Do not rely only on specific calendars — always start with broad AI category search
 - Do not recommend an event without a speaker credential tag on the output card
 - Do not list an event in "Excluded" without a specific rejection reason
@@ -358,6 +363,8 @@ After each list is generated:
 |---------------|-------------|
 | Notivta + ActionLayer | Product too small, low user count, easily replaced by Claude Computer Use |
 | Magnific AI | Narrow image upscaling, replaceable by open-source diffusion models, small company |
+| Scalekit Build Day | "Build day" for a tiny company — participants as free product testers, no notable prizes |
+| Mind Games AI Hackathon | 0 going, hosted by unknown startup XTrace, prizes unclear |
 
 ## Test Scenarios
 
