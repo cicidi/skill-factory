@@ -161,14 +161,13 @@ def register():
         ...
 ```
 
-### Registration Strategy
-1. Navigate to event URL
-2. Click the register/RSVP button ("Register", "Request to Join", "Save a spot")
-3. Fill the registration form using values from `~/.person_info.md`:
-   - Name, Email, Company, Title, GitHub, LinkedIn, Phone — all from that file
-   - If asked "Why do you want to attend?" or "About you": use the Project description from `~/.person_info.md`
-4. Submit and confirm registration was successful
-5. Report result to user
+### Registration Form Filling Rules
+
+1. **Personal info**: read from `~/.person_info.md`. Resume link = LinkedIn URL. Twitter/X = N/A unless user has one.
+2. **Unknown fields**: guess reasonably based on context. If unsure, fill `N/A`. Never leave a field blank — blank fields block submission.
+3. **Select dropdowns**: try keyword match first, then pick first non-placeholder option, then N/A.
+4. **Checkboxes**: always check terms/consent boxes.
+5. **Verification (MUST)**: after submitting, verify the page shows "You're going", "Pending approval", or "Request submitted". Then go to `https://luma.com/events` (user's my-events page) and confirm the event appears with Approved or Pending status. If not visible, redo the registration.
 
 ### Pre-check before registering
 - Verify event is still within 1 month
