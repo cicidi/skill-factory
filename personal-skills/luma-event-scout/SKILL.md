@@ -235,9 +235,11 @@ Each rejected event must include a specific reason (e.g. "AI wrapper, no moat", 
 
 **CRITICAL**: Luma is a Next.js SPA. Dates and event names are NOT in the HTML source — they are client-rendered. WebFetch alone returns event cards without dates. The correct approach:
 
-### Strategy 0: __NEXT_DATA__ JSON Extraction (MUST — primary method)
+### Strategy 0: __NEXT_DATA__ JSON Extraction (quick, ~20 events per page)
 
-Every Luma page embeds a `<script id="__NEXT_DATA__" type="application/json">` tag with all event data including dates. Parse this JSON to get confirmed dates for ALL events in one call.
+**LIMITATION**: `featured_items` only contains the first ~20 events rendered server-side. For comprehensive coverage (all events on a calendar), use Strategy 3 (Playwright scroll).
+
+Every Luma page embeds a `<script id="__NEXT_DATA__" type="application/json">` tag...
 
 ```bash
 curl -s "https://luma.com/{page}" | python3 -c "
@@ -298,10 +300,53 @@ https://luma.com/claudecommunity       — Claude/Anthropic events
 Use WebFetch on `https://lu.ma/{event-id}` to get the full description, speaker names, and venue address.
 The description text contains the agenda and speaker info. Format: markdown.
 
-### Strategy 2: Browser automation (for exhaustive search)
-```bash
-python3 ~/project/luma/scrape_luma.py
+### Strategy 3: Playwright infinite scroll (comprehensive — gets ALL events)
+
+For full coverage beyond the ~20-event `__NEXT_DATA__` limit. Navigate to a calendar page, scroll until no new events load, then extract.
+
+```python
+# playwright_scroll.py — save to ~/project/luma/
+import asyncio
+from playwright.async_api import async_playwright
+
+async def scroll_and_extract(calendar_url, output_file):
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page()
+        await page.goto(calendar_url, wait_until="networkidle", timeout=30000)
+        await page.wait_for_timeout(3000)
+        
+        prev = 0
+        for i in range(40):
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            await page.wait_for_timeout(1500)
+            links = await page.evaluate(
+                "document.querySelectorAll('a[href^=\"/\"]').length")
+            if links == prev and i > 5: break
+            prev = links
+        
+        # Extract all unique event URLs with visible text
+        data = await page.evaluate('''() => {
+            const seen = new Set();
+            return Array.from(document.querySelectorAll('a[href^="/"]'))
+                .map(a => ({url: a.href, text: a.closest("div")?.innerText?.slice(0,200)||""}))
+                .filter(x => x.url.includes("lu.ma/") && !seen.has(x.url) && seen.add(x.url));
+        }''')
+        
+        import json
+        with open(output_file, 'w') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        print(f"Saved {len(data)} events to {output_file}")
+        await browser.close()
+
+asyncio.run(scroll_and_extract("https://luma.com/genai-sf", "events.json"))
 ```
+
+Run: `python3 ~/project/luma/playwright_scroll.py`
+
+Then fetch individual event pages via `__NEXT_DATA__` for date confirmation.
+
+### Strategy 4: Calendar pages (fallback quick check)
 
 ## Preference Learning
 
