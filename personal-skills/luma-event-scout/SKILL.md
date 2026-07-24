@@ -230,62 +230,75 @@ Each rejected event must include a specific reason (e.g. "AI wrapper, no moat", 
 
 ## How to Scrape Luma
 
-Luma is a Next.js SPA — dates are client-rendered. Use these strategies in priority order:
+**CRITICAL**: Luma is a Next.js SPA. Dates and event names are NOT in the HTML source — they are client-rendered. WebFetch alone returns event cards without dates. The correct approach:
 
-### Strategy 0: Broad AI Category Search (MUST — highest priority)
+### Strategy 0: __NEXT_DATA__ JSON Extraction (MUST — primary method)
 
-Do NOT rely only on specific calendars. Search the full AI category across the ENTIRE Bay Area:
+Every Luma page embeds a `<script id="__NEXT_DATA__" type="application/json">` tag with all event data including dates. Parse this JSON to get confirmed dates for ALL events in one call.
+
+```bash
+curl -s "https://luma.com/{page}" | python3 -c "
+import sys, json, re
+html = sys.stdin.read()
+match = re.search(r'<script id=\"__NEXT_DATA__\" type=\"application/json\">(.*?)</script>', html)
+data = json.loads(match.group(1))
+fi = data['props']['pageProps']['initialData']['data']['featured_items']
+for item in fi:
+    ev = item.get('event', {})
+    name = ev.get('name', '?')
+    start = item.get('start_at', '?')
+    geo = ev.get('geo_address_json', {}) or {}
+    city = (geo.get('city', '') or '')
+    going = item.get('guest_count', '?')
+    url = ev.get('url', '')
+    cal = (item.get('calendar', {}) or {}).get('name', '')
+    print(f'{start[:10]} | {name} | {city} | {going} going | {cal}')
+    print(f'  https://lu.ma/{url}')
+"
+```
+
+**JSON field reference:**
+- `featured_items[].start_at` — ISO 8601 date (e.g., `2026-07-28T23:00:00.000Z`)
+- `featured_items[].event.name` — event title
+- `featured_items[].event.geo_address_json.city` — city
+- `featured_items[].event.geo_address_json.region` — state
+- `featured_items[].guest_count` — attendee count
+- `featured_items[].event.url` — URL slug
+- `featured_items[].event.description_short` — short description
+- `featured_items[].calendar.name` — host calendar/org
+
+### Strategy 0a: Broad AI Category Search (MUST)
+
+Search the full AI category and filter for Bay Area:
 
 ```
-https://luma.com/sf/ai              — SF AI events
-https://luma.com/sf                 — SF all events, filter for AI
-https://luma.com/san-jose/ai        — South Bay AI events
-https://luma.com/palo-alto/ai       — Peninsula AI events
-https://luma.com/mountain-view/ai   — Silicon Valley AI events
-https://luma.com/discover           — Luma's main discovery feed (all locations)
+https://luma.com/ai        — ALL AI events globally; filter by city
+https://luma.com/sf/ai     — SF AI events
 ```
 
-Also try these city-specific URLs (Luma may or may not have pages for all):
-- `https://luma.com/sunnyvale/ai`
-- `https://luma.com/menlo-park/ai`
-- `https://luma.com/santa-clara/ai`
-- `https://luma.com/cupertino/ai`
+**Bay Area city filter**: Parse the JSON, keep only events where `geo_address_json.city` matches:
+`San Francisco`, `Palo Alto`, `Mountain View`, `Menlo Park`, `Sunnyvale`, `Santa Clara`, `San Jose`, `Cupertino`, `Berkeley`, `Oakland`, `Redwood City`, `South San Francisco`, `Foster City`, `Los Altos`, `Campbell`, `Milpitas`, `Fremont`, `San Mateo`, `Burlingame`
 
-**CRITICAL**: Luma calendar list pages do NOT show event dates. For every promising event, ALWAYS fetch the individual event page to confirm the date falls within the search window. Skip events where the date cannot be confirmed.
+Also check the calendar's location field if geo_address_json.city is empty.
 
-### Strategy 1: WebFetch individual event pages
-Use the WebFetch tool on `https://lu.ma/{event-id}` (redirects to `luma.com/{event-id}`). The description text contains the agenda which often includes times. Format: markdown.
+### Strategy 0b: Specific calendar pages (fallback)
 
-### Strategy 2: Browse calendar pages
-Fetch `https://lu.ma/{calendar-url}` for these high-signal calendars:
+Use the same `__NEXT_DATA__` JSON extraction on calendar pages:
+```
+https://luma.com/genai-sf              — Bond AI (largest, 130k+)
+https://luma.com/sf-builders-collective — HackerSquad
+https://luma.com/ls                    — Latent Space
+https://luma.com/claudecommunity       — Claude/Anthropic events
+```
 
-**SF calendars:**
-| Calendar | URL | Focus |
-|----------|-----|-------|
-| Bond AI SF | genai-sf | Largest AI community, 130k+ |
-| SF Builders Collective | sf-builders-collective | Tech builders |
-| Latent Space | ls | AI paper club, meetups |
-| Claude Community | claudecommunity | Claude/Anthropic events |
-| South Park Commons | southparkcommons-events | -1 to 0 community |
+### Strategy 1: WebFetch individual event pages (for speaker detail)
+Use WebFetch on `https://lu.ma/{event-id}` to get the full description, speaker names, and venue address.
+The description text contains the agenda and speaker info. Format: markdown.
 
-**South Bay / Peninsula calendars:**
-| Calendar | URL | Focus |
-|----------|-----|-------|
-| Stanford AI | stanford-ai | Stanford AI events |
-| Palo Alto AI | palo-alto-ai | Peninsula AI meetups |
-| AGI House | agi-house | AGI research, Hillsborough |
-
-Also check: `sf`, `sf-ai`, `ai`, `south-bay`, `silicon-valley`, `palo-alto`, `mountain-view`
-
-### Strategy 3: For exhaustive search, use browser automation
-When the user explicitly asks for exhaustive search, recommend running:
+### Strategy 2: Browser automation (for exhaustive search)
 ```bash
 python3 ~/project/luma/scrape_luma.py
 ```
-(Provide a Playwright script that logs into Luma and scrapes event cards with dates.)
-
-### Strategy 4: Check known high-signal event pages directly
-When the user asks for "what's good right now", check specific event pages from the Bond AI calendar that appear on the `/genai-sf` page.
 
 ## Preference Learning
 
