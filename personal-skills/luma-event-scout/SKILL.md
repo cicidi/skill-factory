@@ -47,7 +47,7 @@ These are the default filters. Do not ask to reconfirm each time.
 - Lectures, talks, fireside chats, demos, paper discussions
 - NOT: pure networking mixers, parties, happy hours (unless there's a substantive talk)
 - NOT: beginner workshops ("Intro to...", "Learn Python/AI from scratch")
-- Hackathons — acceptable if topic is advanced and relevant
+- Hackathons — acceptable, same bar as talks. Topic must be advanced and relevant. Speaker/judge gate still applies.
 
 ### Speaker Quality — Hard Gate (MUST)
 
