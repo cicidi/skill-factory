@@ -68,7 +68,7 @@ When this skill is used in a **video/audio/multimedia production** project (e.g.
 In a production project, **initiatives** are templates/projects, not code features:
 
 ```
-docs/founder-story/               <- Founder Story initiative
+docs/initiatives/founder-story/               <- Founder Story initiative
 ├── spec/
 │   └── six-scene-structure-spec.md
 ├── test-plan/
@@ -76,13 +76,13 @@ docs/founder-story/               <- Founder Story initiative
 └── state/
     └── 2026-07-22-production-state.md
 
-docs/comedy-skit/                 <- Comedy Skit initiative
+docs/initiatives/comedy-skit/                 <- Comedy Skit initiative
 ├── spec/
 │   └── six-scene-structure-spec.md
 └── test-plan/
     └── acceptance-test-plan.md
 
-docs/pipeline/                    <- Pipeline Infrastructure initiative
+docs/initiatives/pipeline/                    <- Pipeline Infrastructure initiative
 ├── prd/
 │   └── video-gen-pipeline-prd.md
 ├── design/
@@ -93,7 +93,7 @@ docs/pipeline/                    <- Pipeline Infrastructure initiative
 ```
 
 When the user says "write a PRD" in a video production project, generate path as `docs/<template-name>/prd/<template-name>-prd.md`.
-When the user says "write a spec for scene X", generate path as `docs/<initiative>/spec/<scene-topic>-spec.md`.
+When the user says "write a spec for scene X", generate path as `docs/initiatives/<initiative>/spec/<scene-topic>-spec.md`.
 
 ### design vs spec — How to tell them apart
 
@@ -110,12 +110,12 @@ When the user says "write a spec for scene X", generate path as `docs/<initiativ
 **Example**:
 
 ```
-docs/payment-v2/design/
+docs/initiatives/payment-v2/design/
 ├── payment-flow-design.md              <- prose + embedded Mermaid diagrams
 ├── payment-flow-design.hld.md          <- system topology, service relationships, data flow
 └── payment-flow-design.lld.md          <- class diagrams, sequence diagrams, state machines
 
-docs/payment-v2/spec/
+docs/initiatives/payment-v2/spec/
 ├── payment-api-spec.md                 <- REST endpoints, request/response formats, auth rules
 ├── payment-db-schema-spec.md           <- table structures, field types, indexes, constraints
 └── payment-event-spec.md               <- Kafka message schema, topic definitions
@@ -128,16 +128,16 @@ docs/payment-v2/spec/
 **Evidence** — attach to any doc to provide supporting data:
 
 ```
-docs/dashboard-v2/design/caching-strategy-design.md
-docs/dashboard-v2/design/caching-strategy-design.evidence.md   ← benchmarks/screenshots
+docs/initiatives/dashboard-v2/design/caching-strategy-design.md
+docs/initiatives/dashboard-v2/design/caching-strategy-design.evidence.md   ← benchmarks/screenshots
 ```
 
 **Design detail** — attach to a design doc for HLD or LLD view:
 
 ```
-docs/dashboard-v2/design/caching-strategy-design.md                 ← main design doc
-docs/dashboard-v2/design/caching-strategy-design.hld.md             ← architecture overview
-docs/dashboard-v2/design/caching-strategy-design.lld.md             ← component detail
+docs/initiatives/dashboard-v2/design/caching-strategy-design.md                 ← main design doc
+docs/initiatives/dashboard-v2/design/caching-strategy-design.hld.md             ← architecture overview
+docs/initiatives/dashboard-v2/design/caching-strategy-design.lld.md             ← component detail
 ```
 
 Rules for both:
@@ -157,17 +157,18 @@ Project docs live in the project repo. Knowledge-repo is a **separate git repo**
 ~/project/<project-name>/
 ├── docs/
 │   ├── INDEX.md                     ← Auto-generated directory + move log
-│   ├── <initiative>/
-│   │   ├── raw/                     ← Temporary AI context dumps
-│   │   ├── prd/
-│   │   ├── design/
-│   │   ├── spec/
-│   │   ├── impl-plan/
-│   │   ├── test-plan/
-│   │   ├── decision-history/
-│   │   ├── retro/
-│   │   ├── how-to/
-│   │   └── state/
+│   ├── initiatives/
+│   │   └── <initiative>/
+│   │       ├── raw/                 <- Temporary AI context dumps
+│   │       ├── prd/
+│   │       ├── design/
+│   │       ├── spec/
+│   │       ├── impl-plan/
+│   │       ├── test-plan/
+│   │       ├── decision-history/
+│   │       ├── retro/
+│   │       ├── how-to/
+│   │       └── state/
 │   └── shared/                      ← Cross-initiative docs
 │       ├── glossary.md
 │       └── conventions.md
@@ -195,7 +196,7 @@ Project docs live in the project repo. Knowledge-repo is a **separate git repo**
 
 **Without date** (has Change Log, git tracks history):
 ```
-docs/<initiative>/<type>/<specific-topic>.md
+docs/initiatives/<initiative>/<type>/<specific-topic>.md
 ```
 All 8 main types: `prd`, `design`, `spec`, `impl-plan`, `test-plan`, `decision-history`, `retro`, `how-to`
 Date is in the file's Change Log — no need to repeat in filename.
@@ -203,7 +204,7 @@ Date is in the file's Change Log — no need to repeat in filename.
 
 **With date** (point-in-time captures, no Change Log):
 ```
-docs/<initiative>/<type>/YYYY-MM-DD-<specific-topic>.md
+docs/initiatives/<initiative>/<type>/YYYY-MM-DD-<specific-topic>.md
 ```
 `state/` files (progress snapshots), `raw/` files, `*.evidence.md`, `*.research.md`
 
@@ -218,7 +219,7 @@ Examples:
 
 ```
 # Product feature
-docs/user-profile-v2/
+docs/initiatives/user-profile-v2/
 ├── raw/
 │   └── 2026-07-01-agent-brainstorming.md      ← dated, AI discussion
 ├── prd/
@@ -239,7 +240,7 @@ docs/user-profile-v2/
     └── 2026-08-01-profile-v2-launch-retro.md         ← dated
 
 # Environment / Setup
-docs/dev-env-setup/
+docs/initiatives/dev-env-setup/
 ├── prd/
 │   └── dockerize-all-services-prd.md
 ├── design/
@@ -252,7 +253,7 @@ docs/dev-env-setup/
     └── new-hire-setup-how-to.md
 
 # Team Oncall
-docs/team-oncall/
+docs/initiatives/team-oncall/
 ├── decision-history/
 │   └── 2026-07-08-why-pagerduty-over-opsgenie-decision.md
 ├── how-to/
@@ -262,7 +263,7 @@ docs/team-oncall/
     └── 2026-07-15-july-oncall-handoff-retro.md
 
 # Refactoring / Migration
-docs/payment-refactor/
+docs/initiatives/payment-refactor/
 ├── design/
 │   └── new-payment-provider-design.md
 ├── impl-plan/
@@ -303,14 +304,14 @@ When a project matures, distill all initiatives into a **browsable documentation
 
 | Layer | Location | Content | Use when |
 |-------|----------|---------|----------|
-| **Source docs** | `docs/<initiative>/` | Full PRD/spec/design/how-to, unmodified | Tracing details, understanding why decisions were made |
+| **Source docs** | `docs/initiatives/<initiative>/` | Full PRD/spec/design/how-to, unmodified | Tracing details, understanding why decisions were made |
 | **Book** | `docs/book/` built to HTML | Condensed: only prd/design/spec/how-to, distilled highlights | Onboarding, quick reference, project overview |
 
 ### Book Content Principles
 
 - Include: PRD summaries, design highlights, spec essentials, how-to key steps
 - Include: decision-history condensed summaries (merged into design files)
-- Include: `-> Source: docs/<initiative>/` links at end of each chapter when consolidating from initiatives
+- Include: `-> Source: docs/initiatives/<initiative>/` links at end of each chapter when consolidating from initiatives
 - Exclude: full source text, raw/ content, state snapshots, research/impl-plan/test-plan/retro full text
 
 **Source docs remain in place** — Book is a distillation pointing back to source docs, not a replacement.
@@ -548,7 +549,7 @@ final_date: 2026-08-01
 
 1. **Identify initiative** — Ask if unclear. Check existing initiatives in `docs/`.
 2. **Determine type** — Match user's intent to one of the 10 types. Ask if ambiguous.
-3. **Generate path** — `docs/<initiative>/<type>/<topic>-<type>.md`
+3. **Generate path** — `docs/initiatives/<initiative>/<type>/<topic>-<type>.md`
 4. **Add state frontmatter** — `state: draft` (default for new docs)
 5. **Create file** — Use `write-doc` conventions for content.
 6. **Update INDEX.md** — Append new entry.
@@ -622,7 +623,7 @@ final_date: <latest final_date from source docs>
 
 ---
 
--> Source: [docs/<initiative>/](../<initiative>/)
+-> Source: [docs/initiatives/<initiative>/](../<initiative>/)
 ```
 
 **Step 4: Update mkdocs.yml**
@@ -663,7 +664,7 @@ nav:
 Each initiative has a `raw/` folder for unrefined, high-volume AI context:
 
 ```
-docs/<initiative>/
+docs/initiatives/<initiative>/
 ├── raw/                        ← Temporary, unrefined dumps
 │   ├── agent-discussion.md     ← Advocate agent transcripts
 │   ├── error-logs.md           ← Raw error output
