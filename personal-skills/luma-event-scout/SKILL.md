@@ -283,11 +283,19 @@ for e in bond_events:
     if e['cal_id']: sub_calendars.add(e['cal_id'])
 
 # Step 3: Also check these additional known calendars
+# IMPORTANT: maintain this list — add newly discovered calendars every run.
+# Every time you discover a new calendar from an event page URL, add it here
+# so it's included in future scouts.
 EXTRA_CALENDARS = [
     "cal-8lGTG3I2eA8rS2p",  # HackerSquad (SF Builders Collective)
     "cal-EVJ0XV6EJegxAT7",  # tokens& (SwarmHack)
     "cal-T3QXfRpK0pBwYqX",  # Founders Bay (You.com hackathons)
     "cal-NqnUgwDcAfKNXHN",  # Robotics & World Models Reading Club (Mountain View)
+    "cal-PuFzb115XJDoaYO",  # Reboot (Hack Nights @ Bright Data — Claude Code/Codex build nights)
+    "cal-apuuQlzSJIo1CMm",  # TatianaSF (OpenAI Codex Community Meetups — monthly)
+    "cal-Z1tslEBMjjCh4fd",  # WorkOS / Pieces (Builder Nights — agent infra demos)
+    "cal-jVCYJFvH7OA4SLT",  # Founders Bay (Brex pitch events, AI startup demos)
+    "cal-XJxg98XtByKAGjf",  # Qualcomm / Liquid AI (Edge AI Builders Meetups)
 ]
 sub_calendars.update(EXTRA_CALENDARS)
 
@@ -300,6 +308,51 @@ for cid in sub_calendars:
 ```
 
 **Calendar discovery is iterative**: each new calendar you fetch may reference new `calendar_api_id` values. Chain-discover until no new IDs appear.
+
+### Strategy 0c: URL-based calendar discovery (MUST — catches calendars missed by Bond AI chain)
+
+**The Bond AI chain misses many quality calendars** (Reboot, OpenAI Codex meetups, WorkOS Builder Nights, Qualcomm events). Every time you fetch a detail page for an event, extract any new calendar IDs and add them to the fetch list.
+
+```python
+import re
+
+def extract_calendar_ids_from_page(url):
+    """Fetch a Luma event page and extract all calendar_api_id values."""
+    req = urllib.request.Request(url)
+    req.add_header("User-Agent", "Mozilla/5.0")
+    html = urllib.request.urlopen(req, timeout=15).read().decode()
+    return set(re.findall(r'cal-[a-zA-Z0-9]+', html))
+
+# After Strategy 0a/0b, when you have bay_events, ALSO discover new calendars:
+new_calendars = set()
+# Check every event's detail page for new calendar IDs (sample ~20 top keyword-matching events)
+for e in bay_events[:20]:
+    try:
+        ids = extract_calendar_ids_from_page(e['url'])
+        new_calendars.update(ids)
+    except Exception:
+        pass
+
+# Filter out known non-calendar IDs
+NON_CALENDAR_IDS = {'cal-wrapper', 'cal-upload', 'cal-first'}
+new_calendars -= NON_CALENDAR_IDS
+new_calendars -= sub_calendars  # already have these
+
+# Fetch events from newly discovered calendars
+for cid in new_calendars:
+    for e in fetch_calendar(cid):
+        if e['url'] not in all_events:
+            all_events[e['url']] = e
+
+# IMPORTANT: after the run, add new_calendars to EXTRA_CALENDARS in this SKILL.md
+# so they persist for future scouts.
+```
+
+**Anti-pattern**: discovering a new calendar but NOT adding it to EXTRA_CALENDARS. Every new calendar found during a scout MUST be persisted to the skill file for future runs.
+
+### Strategy 0d: Keyword-match events ALWAYS get detail-fetched
+
+Events with strong keyword matches (agent, MCP, loop, memory, self-improv, multi-agent, Claude Code, Codex, tool-use) **MUST be detail-fetched regardless of guest_count**. The API's `guest_count` is 0 for approval-based events — 0 going does NOT mean the event is bad. Never skip a detail fetch just because going=0.
 
 ### Strategy 0b: Bay Area + date filtering
 
