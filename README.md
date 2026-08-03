@@ -1,5 +1,7 @@
 # the-super-lab
 
+![the-super-lab](pic/the-super-lab.png)
+
 A curated collection of AI agent skills (SKILL.md format), framework-agnostic, opencode-native.
 
 ## What's a skill?
@@ -12,31 +14,46 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 
 | Skill | Description |
 |-------|-------------|
-| [auto-tdd](walter-worker-skills/auto-tdd/) | Continuous multi-agent TDD loop with Agent-A (impl), Agent-B (test), Agent-C (arbitration), Agent-D (quality) |
-| [bug-hunt](walter-worker-skills/bug-hunt/) | Scientific debugging — hypothesis → test → confirm → fix |
-| [bug-report](walter-worker-skills/bug-report/) | Report bugs or problems with the AI coworker system to GitHub Issues |
-| [contrarian-review](walter-worker-skills/contrarian-review/) | Multi-agent adversarial document review with structured debate and judged resolution |
-| [devil-advocate](walter-worker-skills/devil-advocate/) | Multi-agent adversarial review for specs and design docs |
-| [doc-merge](walter-worker-skills/doc-merge/) | Merge two versions of a markdown document after upstream sync conflicts |
+| [auto-tdd](walter-worker-skills/auto-tdd/) | Test-driven development with multi-agent TDD loop — red-green-refactor or full continuous loop |
+| [bug](walter-worker-skills/bug/) | Debugging, bug reporting, and self-healing loop management |
+| [dashboard](walter-worker-skills/dashboard/) | Analytics dashboard — view sessions, import data, manage daemon |
+| [doc-organize](walter-worker-skills/doc-organize/) | Document placement, naming, INDEX.md maintenance, and merge conflict resolution |
+| [doc-review](walter-worker-skills/doc-review/) | Adversarial design/spec review or work completion verification |
 | [english-grammar-fix](walter-worker-skills/english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
-| [self-analyze](walter-worker-skills/self-analyze/) | Scan correction traces, find patterns, inject rules into CLAUDE.md |
-| [self-heal](walter-worker-skills/self-heal/) | Log user corrections to traces for pattern analysis |
-| [skill-create](walter-worker-skills/skill-create/) | 5-phase workflow to create new skills with source repo enforcement and deploy |
-| [skill-edit](walter-worker-skills/skill-edit/) | Safely edit existing skills with source repo enforcement and deploy |
-| [skill-import](walter-worker-skills/skill-import/) | Import external SKILL.md into the-super-lab preserving original authorship |
-| [work-review](walter-worker-skills/work-review/) | 2-agent gatekeeper for work acceptance sign-off |
+| [initiative](walter-worker-skills/initiative/) | Cross-project initiative management — create, edit, activate, deactivate |
+| [knowledge](walter-worker-skills/knowledge/) | Extract structured knowledge from past sessions into memory cards or knowledge base |
+| [memory](walter-worker-skills/memory/) | Search past session memories, knowledge cards, and code knowledge graph |
+| [multi-model-team](walter-worker-skills/multi-model-team/) | Decompose large tasks into subtasks executed by specialized workers |
+| [project](walter-worker-skills/project/) | Project catalog management — add, edit, remove, list, sync |
+| [research](walter-worker-skills/research/) | Surface unknowns before coding; go from vague idea to concrete design |
+| [skill](walter-worker-skills/skill/) | Skill lifecycle — create, edit, import, list skills in the skill-factory |
+| [status](walter-worker-skills/status/) | Show current coworker config status and active initiative progress |
 
 ### Personal Skills (`personal-skills/`)
 
 | Skill | Description |
 |-------|-------------|
+| [create-video-workflow](personal-skills/create-video-workflow/) | Convert research documents into audience-tailored content — presentations, videos, websites |
 | [doc-protect](personal-skills/doc-protect/) | Protect sections of documents from AI edits |
+| [luma-event-scout](personal-skills/luma-event-scout/) | Scout AI/tech events on Luma in the Bay Area with advanced filtering |
+| [pic-to-txt](personal-skills/pic-to-txt/) | Convert a folder of screenshot images into a clean text document via OCR |
+| [tmux-status-bar](personal-skills/tmux-status-bar/) | Set up tmux status bar with session, git, and initiative info |
+| [transcribe-audio](personal-skills/transcribe-audio/) | Convert audio files to text transcripts using local Whisper on GPU |
+| [video-production-pip-style](personal-skills/video-production-pip-style/) | Replicate the Andrei Jikh video production style with PiP citations |
+| [youtube-research-pipeline](personal-skills/youtube-research-pipeline/) | Turn any topic into a complete YouTube video package with research and interactive HTML |
+| [youtube-summarize](personal-skills/youtube-summarize/) | Download, transcribe, and summarize YouTube videos |
 
 ### Imported Skills (`import-skills/`)
 
 | Skill | Description |
 |-------|-------------|
-| [tdd](import-skills/tdd/) | Test-driven development with red-green-refactor cycles |
+| [domain-modeling](import-skills/domain-modeling/) | Build or sharpen a project's domain model with glossary and ADRs |
+| [grill-with-docs](import-skills/grill-with-docs/) | Relentless interview to sharpen a plan or design with inline documentation |
+| [implement](import-skills/implement/) | Implement work from a spec or tickets with TDD, typechecking, and code review |
+| [prototype](import-skills/prototype/) | Build throwaway prototypes to answer design questions |
+| [to-spec](import-skills/to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker |
+| [to-tickets](import-skills/to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges |
+| [wayfinder](import-skills/wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker |
 
 ## Workflow
 

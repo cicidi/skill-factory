@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-08-02 — Documentation Sync & README Refresh
+
+### README
+- Synced skill tables with actual directories — 14 factory-native, 9 personal, 7 imported (30 total)
+- Replaced stale skill entries with current skills
+- Updated imported skills from single `tdd` entry to all 7 mattpocock skills
+- Added project banner image (`pic/the-super-lab.png`)
+
+### Docs Reorganization
+- Moved `docs/specs/devil-advocate-design.md` → `docs/skill-factory/design/devil-advocate-design.md`
+- Moved `docs/specs/work-review-design.md` → `docs/skill-factory/design/work-review-design.md`
+- Renamed `docs/spec-driven-development/plan/` → `docs/spec-driven-development/impl-plan/`
+- Removed orphaned `docs/specs/` directory, `docs/skill-factory/raw/` JSON data, `docs/skill-factory/spec/*.html` artifact
+- Removed empty directories (`docs/spec-driven-development/prd/`, `docs/superpowers/specs/`, `docs/superpowers/`)
+- Cleaned up `.gitignore` (removed `docs/superpowers/` entry)
+
+### INDEX.md
+- Regenerated from actual file tree with correct filenames and headings
+
 ## 2026-06-24 — Contrarian Review & Skill-Factory Overhaul
 
 ### Repo Sync & Structure
