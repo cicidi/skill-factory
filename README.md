@@ -12,25 +12,25 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 
 > **walter-worker skills have moved to [walter-worker](https://github.com/cicidi/walter-worker)** — they now live alongside the project they serve.
 
-### General Skills
+### General Skills (`skills/`)
 
 | Skill | Description |
 |-------|-------------|
-| [auto-tdd](auto-tdd/) | Test-driven development with multi-agent TDD loop — red-green-refactor or full continuous loop |
-| [bug](bug/) | Debugging, bug reporting, and self-healing loop management |
-| [doc-organize](doc-organize/) | Document placement, naming, INDEX.md maintenance, and merge conflict resolution |
-| [doc-review](doc-review/) | Adversarial design/spec review or work completion verification |
-| [domain-modeling](domain-modeling/) | Build or sharpen a project's domain model with glossary and ADRs |
-| [english-grammar-fix](english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
-| [grill-with-docs](grill-with-docs/) | Relentless interview to sharpen a plan or design with inline documentation |
-| [implement](implement/) | Implement work from a spec or tickets with TDD, typechecking, and code review |
-| [multi-model-team](multi-model-team/) | Decompose large tasks into subtasks executed by specialized workers |
-| [prototype](prototype/) | Build throwaway prototypes to answer design questions |
-| [research](research/) | Surface unknowns before coding; go from vague idea to concrete design |
-| [skill](skill/) | Skill lifecycle — create, edit, import, list skills |
-| [to-spec](to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker |
-| [to-tickets](to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges |
-| [wayfinder](wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker |
+| [auto-tdd](skills/auto-tdd/) | Test-driven development with multi-agent TDD loop — red-green-refactor or full continuous loop |
+| [bug](skills/bug/) | Debugging, bug reporting, and self-healing loop management |
+| [doc-organize](skills/doc-organize/) | Document placement, naming, INDEX.md maintenance, and merge conflict resolution |
+| [doc-review](skills/doc-review/) | Adversarial design/spec review or work completion verification |
+| [domain-modeling](skills/domain-modeling/) | Build or sharpen a project's domain model with glossary and ADRs |
+| [english-grammar-fix](skills/english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
+| [grill-with-docs](skills/grill-with-docs/) | Relentless interview to sharpen a plan or design with inline documentation |
+| [implement](skills/implement/) | Implement work from a spec or tickets with TDD, typechecking, and code review |
+| [multi-model-team](skills/multi-model-team/) | Decompose large tasks into subtasks executed by specialized workers |
+| [prototype](skills/prototype/) | Build throwaway prototypes to answer design questions |
+| [research](skills/research/) | Surface unknowns before coding; go from vague idea to concrete design |
+| [skill](skills/skill/) | Skill lifecycle — create, edit, import, list skills |
+| [to-spec](skills/to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker |
+| [to-tickets](skills/to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges |
+| [wayfinder](skills/wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker |
 
 ### Personal Skills (`personal-skills/`)
 
@@ -45,18 +45,6 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 | [video-production-pip-style](personal-skills/video-production-pip-style/) | Replicate the Andrei Jikh video production style with PiP citations |
 | [youtube-research-pipeline](personal-skills/youtube-research-pipeline/) | Turn any topic into a complete YouTube video package with research and interactive HTML |
 | [youtube-summarize](personal-skills/youtube-summarize/) | Download, transcribe, and summarize YouTube videos |
-
-### Imported Skills (`import-skills/`)
-
-| Skill | Description |
-|-------|-------------|
-| [domain-modeling](import-skills/domain-modeling/) | Build or sharpen a project's domain model with glossary and ADRs |
-| [grill-with-docs](import-skills/grill-with-docs/) | Relentless interview to sharpen a plan or design with inline documentation |
-| [implement](import-skills/implement/) | Implement work from a spec or tickets with TDD, typechecking, and code review |
-| [prototype](import-skills/prototype/) | Build throwaway prototypes to answer design questions |
-| [to-spec](import-skills/to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker |
-| [to-tickets](import-skills/to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges |
-| [wayfinder](import-skills/wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker |
 
 ## Workflow
 
