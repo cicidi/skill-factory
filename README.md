@@ -10,24 +10,7 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 
 ## Available Skills
 
-### Factory-Native Skills (`walter-worker-skills/`)
-
-| Skill | Description |
-|-------|-------------|
-| [auto-tdd](walter-worker-skills/auto-tdd/) | Test-driven development with multi-agent TDD loop — red-green-refactor or full continuous loop |
-| [bug](walter-worker-skills/bug/) | Debugging, bug reporting, and self-healing loop management |
-| [dashboard](walter-worker-skills/dashboard/) | Analytics dashboard — view sessions, import data, manage daemon |
-| [doc-organize](walter-worker-skills/doc-organize/) | Document placement, naming, INDEX.md maintenance, and merge conflict resolution |
-| [doc-review](walter-worker-skills/doc-review/) | Adversarial design/spec review or work completion verification |
-| [english-grammar-fix](walter-worker-skills/english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
-| [initiative](walter-worker-skills/initiative/) | Cross-project initiative management — create, edit, activate, deactivate |
-| [knowledge](walter-worker-skills/knowledge/) | Extract structured knowledge from past sessions into memory cards or knowledge base |
-| [memory](walter-worker-skills/memory/) | Search past session memories, knowledge cards, and code knowledge graph |
-| [multi-model-team](walter-worker-skills/multi-model-team/) | Decompose large tasks into subtasks executed by specialized workers |
-| [project](walter-worker-skills/project/) | Project catalog management — add, edit, remove, list, sync |
-| [research](walter-worker-skills/research/) | Surface unknowns before coding; go from vague idea to concrete design |
-| [skill](walter-worker-skills/skill/) | Skill lifecycle — create, edit, import, list skills in the skill-factory |
-| [status](walter-worker-skills/status/) | Show current coworker config status and active initiative progress |
+> **walter-worker skills have moved to [walter-worker](https://github.com/cicidi/walter-worker)** — they now live alongside the project they serve.
 
 ### Personal Skills (`personal-skills/`)
 
