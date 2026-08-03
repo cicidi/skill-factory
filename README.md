@@ -12,6 +12,26 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 
 > **walter-worker skills have moved to [walter-worker](https://github.com/cicidi/walter-worker)** — they now live alongside the project they serve.
 
+### General Skills
+
+| Skill | Description |
+|-------|-------------|
+| [auto-tdd](auto-tdd/) | Test-driven development with multi-agent TDD loop — red-green-refactor or full continuous loop |
+| [bug](bug/) | Debugging, bug reporting, and self-healing loop management |
+| [doc-organize](doc-organize/) | Document placement, naming, INDEX.md maintenance, and merge conflict resolution |
+| [doc-review](doc-review/) | Adversarial design/spec review or work completion verification |
+| [domain-modeling](domain-modeling/) | Build or sharpen a project's domain model with glossary and ADRs |
+| [english-grammar-fix](english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
+| [grill-with-docs](grill-with-docs/) | Relentless interview to sharpen a plan or design with inline documentation |
+| [implement](implement/) | Implement work from a spec or tickets with TDD, typechecking, and code review |
+| [multi-model-team](multi-model-team/) | Decompose large tasks into subtasks executed by specialized workers |
+| [prototype](prototype/) | Build throwaway prototypes to answer design questions |
+| [research](research/) | Surface unknowns before coding; go from vague idea to concrete design |
+| [skill](skill/) | Skill lifecycle — create, edit, import, list skills |
+| [to-spec](to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker |
+| [to-tickets](to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges |
+| [wayfinder](wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker |
+
 ### Personal Skills (`personal-skills/`)
 
 | Skill | Description |
