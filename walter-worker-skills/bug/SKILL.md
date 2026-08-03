@@ -31,7 +31,7 @@ analyze patterns for prevention).
 ## When to Use
 
 - Encountering an error or unexpected behavior that needs investigation
-- Wanting to file a bug report for the ai-coworker system itself
+- Wanting to file a bug report for the walter-worker system itself
 - The AI keeps making the same mistake and needs pattern-based prevention
 - User corrected the AI and wants that correction remembered
 
@@ -49,7 +49,7 @@ Ask the user ONE question:
 
 > "What do you need?"
 > - **Hunt** — find and fix a bug (systematic root cause investigation)
-> - **Report** — file a GitHub issue for the ai-coworker system
+> - **Report** — file a GitHub issue for the walter-worker system
 > - **Heal** — record a correction and analyze patterns to prevent future mistakes
 
 ---
@@ -97,14 +97,14 @@ Once a hypothesis is CONFIRMED:
 
 ## Branch B: Report — File a GitHub Issue
 
-For bugs in the ai-coworker system itself (not project-specific bugs).
+For bugs in the walter-worker system itself (not project-specific bugs).
 
 ### Steps
 
 1. **Describe:** what the AI did wrong, what was expected, which skill/rule was involved
 2. **Draft the issue:** use title prefix `[coworker]`, sections for what happened,
    expected behavior, affected component, reproduction steps, suggested fix
-3. **Create:** target repo `cicidi/ai-coworker`, labels `coworker-bug` or `coworker-improvement`
+3. **Create:** target repo `cicidi/walter-worker`, labels `coworker-bug` or `coworker-improvement`
 4. **Link:** if this was an AI mistake, also run the heal branch to log a trace
 
 ---

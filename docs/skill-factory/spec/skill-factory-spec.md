@@ -10,7 +10,7 @@
 
 | Date | Change | Reference |
 |------|--------|-----------|
-| 2026-06-10 | Public open source repository; directory structure with three skill categories (ai-coworker-skills, import-skills, personal-skills); naming convention with prefix | various decisions |
+| 2026-06-10 | Public open source repository; directory structure with three skill categories (walter-worker-skills, import-skills, personal-skills); naming convention with prefix | various decisions |
 | 2026-06-10 | Repository initialization with `skill-create` as bootstrap entry point | git-commit 5d9747e9 |
 | 2026-06-11 | Three-directory structure finalized + prefix naming | git-commit a2e47245 |
 | 2026-06-11 | `skill-create` Phase 0 multi-source search (GitHub ≥10 repos, web search, import-vs-inspire decision) | git-commit d30f01c0 |
@@ -19,9 +19,9 @@
 | 2026-06-11 | `skill-create` quality gate improvements | git-commit 33e48d2e |
 | 2026-06-11 | TDD skill imported from mattpocock/skills | git-commit eed365ce |
 | 2026-06-11 | 5 migrated coworker skills added | git-commit a5dcc4e9 |
-| 2026-06-12 | `ai-coworker-devil-advocate` — multi-agent adversarial review | git-commit 70ccdc4a |
-| 2026-06-12 | `ai-coworker-work-review` — 2-agent gatekeeper | git-commit 01f533c9 |
-| 2026-06-18 | `ai-coworker-contrarian-review` — 5-agent adversarial review | git-commit 3a54ffc6 |
+| 2026-06-12 | `walter-worker-devil-advocate` — multi-agent adversarial review | git-commit 70ccdc4a |
+| 2026-06-12 | `walter-worker-work-review` — 2-agent gatekeeper | git-commit 01f533c9 |
+| 2026-06-18 | `walter-worker-contrarian-review` — 5-agent adversarial review | git-commit 3a54ffc6 |
 | 2026-06-23 | Multiple skill additions, removals, and renaming; simplified naming convention | git-commit 3395648c |
 | 2026-06-23 | `self-heal` and `self-analyze` skills added | git-commit dce0d79c |
 | 2026-06-23 | `self-patch` renamed to `english-grammar-fix` | git-commit 7226d537 |
@@ -43,7 +43,7 @@ The **skill-factory** is a skill management and creation system for the OpenCode
 
 ```
 <project-root>/
-├── ai-coworker-skills/          # Native (first-party) skills
+├── walter-worker-skills/          # Native (first-party) skills
 ├── import-skills/               # Imported third-party skills
 ├── personal-skills/             # Private user skills (gitignored)
 ├── docs/
@@ -80,7 +80,7 @@ All skills must have exactly these five frontmatter fields:
 
 | Field | Description | Rules |
 |-------|-------------|-------|
-| `name` | Skill name | kebab-case; ai-coworker- prefix for native/personal |
+| `name` | Skill name | kebab-case; walter-worker- prefix for native/personal |
 | `description` | One-line purpose | Must start with "Use when..." |
 | `license` | License type | Default: MIT |
 | `compatibility` | Compatible platforms | Default: "opencode, claude-code" |
@@ -89,7 +89,7 @@ All skills must have exactly these five frontmatter fields:
 **Example:**
 ```yaml
 ---
-name: ai-coworker-dev-advocate
+name: walter-worker-dev-advocate
 description: Use when you need adversarial review of specs or design docs
 license: MIT
 compatibility: opencode, claude-code

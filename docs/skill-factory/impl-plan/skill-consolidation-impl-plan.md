@@ -6,7 +6,7 @@
 
 ## Overview
 
-38 ai-coworker-skills → 10 merged + 3 independent = 13 total.
+38 walter-worker-skills → 10 merged + 3 independent = 13 total.
 Implementation is phased: create new merged SKILL.md files, verify with tests,
 then delete old directories.
 
@@ -21,10 +21,10 @@ Do NOT delete old directories yet.
 
 | # | Create | Absorbs |
 |---|--------|---------|
-| 1 | `ai-coworker-skills/initiative/SKILL.md` | 7 initiative-* |
-| 2 | `ai-coworker-skills/dashboard/SKILL.md` | 5 analytics-* |
-| 3 | `ai-coworker-skills/project/SKILL.md` | 6 project-* |
-| 4 | `ai-coworker-skills/skill/SKILL.md` | 4 skill-* |
+| 1 | `walter-worker-skills/initiative/SKILL.md` | 7 initiative-* |
+| 2 | `walter-worker-skills/dashboard/SKILL.md` | 5 analytics-* |
+| 3 | `walter-worker-skills/project/SKILL.md` | 6 project-* |
+| 4 | `walter-worker-skills/skill/SKILL.md` | 4 skill-* |
 
 These are thin wrappers — each subcommand maps to the existing CLI command.
 Structure:
@@ -76,12 +76,12 @@ they want to do.
 
 | # | Create | Absorbs |
 |---|--------|---------|
-| 5 | `ai-coworker-skills/doc-review/SKILL.md` | devil-advocate + contrarian-review + work-review |
-| 6 | `ai-coworker-skills/bug/SKILL.md` | bug-hunt + bug-report + self-heal + self-analyze |
-| 7 | `ai-coworker-skills/knowledge/SKILL.md` | session-memory + knowledge-skill |
-| 8 | `ai-coworker-skills/auto-tdd/SKILL.md` | auto-tdd + import-skills/tdd |
-| 9 | `ai-coworker-skills/research/SKILL.md` | find-my-unknown + superpowers:brainstorming |
-| 10 | `ai-coworker-skills/doc-organize/SKILL.md` | doc-merge + doc-organize（逻辑互补，自动判断支） |
+| 5 | `walter-worker-skills/doc-review/SKILL.md` | devil-advocate + contrarian-review + work-review |
+| 6 | `walter-worker-skills/bug/SKILL.md` | bug-hunt + bug-report + self-heal + self-analyze |
+| 7 | `walter-worker-skills/knowledge/SKILL.md` | session-memory + knowledge-skill |
+| 8 | `walter-worker-skills/auto-tdd/SKILL.md` | auto-tdd + import-skills/tdd |
+| 9 | `walter-worker-skills/research/SKILL.md` | find-my-unknown + superpowers:brainstorming |
+| 10 | `walter-worker-skills/doc-organize/SKILL.md` | doc-merge + doc-organize（逻辑互补，自动判断支） |
 
 **For each:** Read the absorbed SKILL.md files in full. Understand the logic,
 then write a single fused SKILL.md that:
@@ -111,10 +111,10 @@ for dir in \
   doc-merge doc-organize \
   session-memory knowledge-skill \
   find-my-unknown; do
-  if [ -d "ai-coworker-skills/$dir" ]; then
-    echo "FAIL: ai-coworker-skills/$dir still exists"
+  if [ -d "walter-worker-skills/$dir" ]; then
+    echo "FAIL: walter-worker-skills/$dir still exists"
   else
-    echo "PASS: ai-coworker-skills/$dir removed"
+    echo "PASS: walter-worker-skills/$dir removed"
   fi
 done
 
@@ -127,16 +127,16 @@ fi
 
 # 10 new directories must exist
 for skill in initiative dashboard project skill doc-review doc-organize bug knowledge auto-tdd research; do
-  if [ -f "ai-coworker-skills/$skill/SKILL.md" ]; then
-    echo "PASS: ai-coworker-skills/$skill/SKILL.md exists"
+  if [ -f "walter-worker-skills/$skill/SKILL.md" ]; then
+    echo "PASS: walter-worker-skills/$skill/SKILL.md exists"
   else
-    echo "FAIL: ai-coworker-skills/$skill/SKILL.md missing"
+    echo "FAIL: walter-worker-skills/$skill/SKILL.md missing"
   fi
 done
 
 # 3 independent skills must exist
 for skill in english-grammar-fix multi-model-team status; do
-  if [ -f "ai-coworker-skills/$skill/SKILL.md" ]; then
+  if [ -f "walter-worker-skills/$skill/SKILL.md" ]; then
     echo "PASS: independent skill $skill exists"
   else
     echo "FAIL: independent skill $skill missing"
@@ -158,7 +158,7 @@ fi
 cd ~/project/skill-factory
 
 for skill in initiative dashboard project skill doc-review doc-organize bug knowledge auto-tdd research; do
-  file="ai-coworker-skills/$skill/SKILL.md"
+  file="walter-worker-skills/$skill/SKILL.md"
   echo "=== $skill ==="
 
   # name field matches directory
@@ -260,17 +260,17 @@ Only after all tests pass:
 cd ~/project/skill-factory
 
 # Category 3 — CRUD sets
-rm -rf ai-coworker-skills/initiative-{create,edit,activate,deactivate,list,show,remove}
-rm -rf ai-coworker-skills/analytics-{create-db,daemon,dashboard,import,once}
-rm -rf ai-coworker-skills/project-{add,edit,remove,list,show,sync}
-rm -rf ai-coworker-skills/skill-{create,edit,import,list}
+rm -rf walter-worker-skills/initiative-{create,edit,activate,deactivate,list,show,remove}
+rm -rf walter-worker-skills/analytics-{create-db,daemon,dashboard,import,once}
+rm -rf walter-worker-skills/project-{add,edit,remove,list,show,sync}
+rm -rf walter-worker-skills/skill-{create,edit,import,list}
 
 # Category 1/2 — merged
-rm -rf ai-coworker-skills/{devil-advocate,contrarian-review,work-review}
-rm -rf ai-coworker-skills/{bug-hunt,bug-report,self-analyze,self-heal}
-rm -rf ai-coworker-skills/{doc-merge,doc-organize}
-rm -rf ai-coworker-skills/{session-memory,knowledge-skill}
-rm -rf ai-coworker-skills/find-my-unknown
+rm -rf walter-worker-skills/{devil-advocate,contrarian-review,work-review}
+rm -rf walter-worker-skills/{bug-hunt,bug-report,self-analyze,self-heal}
+rm -rf walter-worker-skills/{doc-merge,doc-organize}
+rm -rf walter-worker-skills/{session-memory,knowledge-skill}
+rm -rf walter-worker-skills/find-my-unknown
 rm -rf import-skills/tdd
 ```
 
@@ -332,7 +332,7 @@ For each merged skill, check:
 
 ## Directory Layout
 
-All files are under `ai-coworker-skills/`:
+All files are under `walter-worker-skills/`:
 
 ### To review (merged skills):
 

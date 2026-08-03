@@ -25,8 +25,8 @@
 
 #### Key Deliverables
 - `opencode` configuration with `variant: thinking-high` for build agent
-- Three‑directory structure: `ai-coworker-skills/`, `import-skills/`, `personal-skills/`
-- Naming convention: `ai-coworker-` prefix for own skills, no prefix for imports
+- Three‑directory structure: `walter-worker-skills/`, `import-skills/`, `personal-skills/`
+- Naming convention: `walter-worker-` prefix for own skills, no prefix for imports
 - `CONVENTIONS.md` updated to allow name ≠ folder name
 - `CLAUDE.md` with 1–3 clarifying questions rule (except ≥90% confidence)
 - Initial `skill-create` module as bootstrap skill
@@ -39,7 +39,7 @@
 
 #### Key Commits
 - `5d9747e9` — feat: initialize skill-factory project with skill-create
-- `54496dad` — refactor: move skills into ai-coworker-skills namespace
+- `54496dad` — refactor: move skills into walter-worker-skills namespace
 - `5dcb52c7` — docs: add skill-factory bootstrap design spec
 - `8ce5ae73` — docs: implementation plan for skill-factory bootstrap
 - `8cb87bec` — chore: remove ai-worker-skills, fix skill-create description and references
@@ -93,7 +93,7 @@
 - `d98ed8d3` — fix(tdd): optimize description and overview per skill-factory conventions
 - `3c058b5e` — docs: final verification logs and bootstrap summary
 - `d30f01c0` — feat(skill-create): Phase 0 multi-source search — GitHub (>=10 repos), web search, import-vs-inspire decision
-- `a2e47245` — refactor: three-directory structure with ai-coworker- prefix naming
+- `a2e47245` — refactor: three-directory structure with walter-worker- prefix naming
 
 ---
 
@@ -102,7 +102,7 @@
 **Objective:** Seed the project with a set of coworker skills.
 
 #### Key Deliverables
-- Migrate 5 skills from previous `ai-coworker` set using `skill-edit` / `skill-import` process
+- Migrate 5 skills from previous `walter-worker` set using `skill-edit` / `skill-import` process
 - Ensure all skills conform to naming convention and quality gates
 
 #### Dependencies
@@ -118,9 +118,9 @@
 **Objective:** Build multi‑agent skills for design review and work acceptance.
 
 #### Key Deliverables
-- `ai-coworker-devil-advocate`: 3‑agent architecture (con, pro, judge); max 5 rounds with majority vote; output `discussion.md` + `report.md` to `docs/devil-advocate/`; triggers: `review spec`, `杠精`, `devil advocate`, `adversarial review`
-- `ai-coworker-work-review`: 2‑agent (Collector → Reviewer); Collector writes test plan; Reviewer executes tests (existing UT/FT, Playwright for E2E, curl for manual); output `acceptance.md` + `report.md` to `docs/work-review/`; triggers: `work review`, `acceptance`, `sign off`, `verify work`
-- `ai-coworker-contrarian-review`: 5‑agent adversarial document review
+- `walter-worker-devil-advocate`: 3‑agent architecture (con, pro, judge); max 5 rounds with majority vote; output `discussion.md` + `report.md` to `docs/devil-advocate/`; triggers: `review spec`, `杠精`, `devil advocate`, `adversarial review`
+- `walter-worker-work-review`: 2‑agent (Collector → Reviewer); Collector writes test plan; Reviewer executes tests (existing UT/FT, Playwright for E2E, curl for manual); output `acceptance.md` + `report.md` to `docs/work-review/`; triggers: `work review`, `acceptance`, `sign off`, `verify work`
+- `walter-worker-contrarian-review`: 5‑agent adversarial document review
 
 #### Dependencies
 - Both skills depend on agent orchestration patterns established in skill-create
@@ -132,9 +132,9 @@
 3. `contrarian-review` (5‑agent, built later)
 
 #### Key Commits
-- `70ccdc4a` — skill: add ai-coworker-devil-advocate — multi-agent adversarial review for specs and design docs
-- `01f533c9` — skill: add ai-coworker-work-review — 2-agent gatekeeper for work acceptance sign-off
-- `3a54ffc6` — skill: add ai-coworker-contrarian-review — 5-agent adversarial document review
+- `70ccdc4a` — skill: add walter-worker-devil-advocate — multi-agent adversarial review for specs and design docs
+- `01f533c9` — skill: add walter-worker-work-review — 2-agent gatekeeper for work acceptance sign-off
+- `3a54ffc6` — skill: add walter-worker-contrarian-review — 5-agent adversarial document review
 
 ---
 
@@ -143,7 +143,7 @@
 **Objective:** Restructure repository to scale: rename, move, deduplicate, and clean up skills.
 
 #### Key Deliverables
-- Rename all 21 ai‑coworker skills to simplified naming (e.g., `self-patch` → `english-grammar-fix`)
+- Rename all 21 walter-worker skills to simplified naming (e.g., `self-patch` → `english-grammar-fix`)
 - Remove deprecated skills (`initiative-create`, `initiative-edit`, `session-memory`, `gate-*`, `flow-*`, `connect-*`, `doc-review`, `bug-sleuth`, `bug-create`)
 - Add new skills: `auto-tdd`, `session-memory`, `initiative-create/edit` (later moved out)
 - Add self‑heal / self‑analyze skills
@@ -158,19 +158,19 @@
 - `7bfe010f` — feat: add auto-tdd, session-memory, initiative-create/edit skills; add contrarian-review Mode 1
 - `add4f31e` — chore: remove docs/superpowers from tracking, add to gitignore
 - `3395648c` — refactor: rename skills to simplified naming, migrate 21 AI coworker skills
-- `4d02f4cd` — chore: remove initiative-create/edit (moved to ai-coworker)
-- `fca74392` — chore: remove session-memory (moved to ai-coworker)
+- `4d02f4cd` — chore: remove initiative-create/edit (moved to walter-worker)
+- `fca74392` — chore: remove session-memory (moved to walter-worker)
 - `dce0d79c` — feat: add self-heal and self-analyze skills
-- `887a719b` — chore: remove self-init (ai-coworker skills/init/ is more current)
-- `82c4563a` — chore: remove gate-* skills (not in ai-coworker scope)
-- `1b48039a` — chore: remove skills deleted from ai-coworker (flow-*, connect-*, doc-review, bug-sleuth, bug-create)
+- `887a719b` — chore: remove self-init (walter-worker skills/init/ is more current)
+- `82c4563a` — chore: remove gate-* skills (not in walter-worker scope)
+- `1b48039a` — chore: remove skills deleted from walter-worker (flow-*, connect-*, doc-review, bug-sleuth, bug-create)
 - `7226d537` — refactor: rename self-patch to english-grammar-fix
 - `c329159c` — fix: add english-grammar-fix (was untracked)
 - `06a4e020` — chore: remove self-strain
-- `bd9bb024` — chore: remove self-heal/self-analyze from personal-skills (in ai-coworker-skills)
+- `bd9bb024` — chore: remove self-heal/self-analyze from personal-skills (in walter-worker-skills)
 - `559834af` — chore: contrarian review overhaul — source repo enforcement, naming cleanup, tests, docs
 - `cca25cd5` — fix: re-apply skill fixes lost during rebase (frontmatter + sections)
-- `bc4d6cc0` — fix: remove ai-coworker- prefix from 4 skill frontmatter names
+- `bc4d6cc0` — fix: remove walter-worker- prefix from 4 skill frontmatter names
 
 ---
 

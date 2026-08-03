@@ -15,14 +15,14 @@
 - **Rationale**: Thinking effort is controlled via variant field; existing config had no variant for build agent, so added thinking-high variant
 - **Confidence**: high
 
-### 2. 重建三个平级的 skill 目录：ai-coworker-skills、import-skills、personal-skills
+### 2. 重建三个平级的 skill 目录：walter-worker-skills、import-skills、personal-skills
 - **Source**: opencode
 - **Context**: 原仓库结构混乱，用户明确要求三个独立目录存放不同来源的技能
 - **Rationale**: 分离原生、导入和个人技能，便于管理和前缀规则实施
-- **Alternatives rejected**: 原先的 ai-coworker-skills/import/ 子目录
+- **Alternatives rejected**: 原先的 walter-worker-skills/import/ 子目录
 - **Confidence**: high
 
-### 3. ai-coworker-skills 和 personal-skills 下的 skill 在 name 字段加 ai-coworker- 前缀，文件夹名不改；import-skills 不加前缀；修
+### 3. walter-worker-skills 和 personal-skills 下的 skill 在 name 字段加 walter-worker- 前缀，文件夹名不改；import-skills 不加前缀；修
 - **Source**: opencode
 - **Context**: 用户要求所有自身技能显示前缀，但文件夹保持原名
 - **Rationale**: 满足显示需求同时避免大量文件夹重命名操作
@@ -50,11 +50,11 @@
 - **Alternatives rejected**: 不记录来源
 - **Confidence**: high
 
-### 7. 导入的 skill 放入独立的 import-skills/ 目录，而非 ai-coworker-skills/import/
+### 7. 导入的 skill 放入独立的 import-skills/ 目录，而非 walter-worker-skills/import/
 - **Source**: opencode
 - **Context**: 用户明确要求三个平级目录，导入 skill 不应混合在工厂原生目录内
 - **Rationale**: 保持目录职责清晰，避免混淆
-- **Alternatives rejected**: ai-coworker-skills/import/ 子目录
+- **Alternatives rejected**: walter-worker-skills/import/ 子目录
 - **Confidence**: high
 
 ### 8. 保留并修复 skill-create 作为自举起点，而非从头重建

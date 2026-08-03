@@ -9,7 +9,7 @@
 
 ## Decisions
 
-### 1. skill: add ai-coworker-work-review — 2-agent gatekeeper for work acceptance sign-off
+### 1. skill: add walter-worker-work-review — 2-agent gatekeeper for work acceptance sign-off
 - **Source**: git-commit
 - **Timestamp**: 2026-06-12T01:31:08-07:00
 - **Context**: git commit 01f533c9

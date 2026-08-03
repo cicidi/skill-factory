@@ -5,7 +5,7 @@
 
 ## Scope
 
-Verify 38 ai-coworker-skills → 10 merged skills correctly implemented.
+Verify 38 walter-worker-skills → 10 merged skills correctly implemented.
 - 10 new merged SKILL.md files created
 - 35 old skill directories deleted
 - 3 independent skills untouched (english-grammar-fix, multi-model-team, status)
@@ -71,44 +71,44 @@ done
 
 ```bash
 # Category 3 — CRUD sets (22 removed)
-test ! -d ai-coworker-skills/initiative-create
-test ! -d ai-coworker-skills/initiative-edit
-test ! -d ai-coworker-skills/initiative-activate
-test ! -d ai-coworker-skills/initiative-deactivate
-test ! -d ai-coworker-skills/initiative-list
-test ! -d ai-coworker-skills/initiative-show
-test ! -d ai-coworker-skills/initiative-remove
+test ! -d walter-worker-skills/initiative-create
+test ! -d walter-worker-skills/initiative-edit
+test ! -d walter-worker-skills/initiative-activate
+test ! -d walter-worker-skills/initiative-deactivate
+test ! -d walter-worker-skills/initiative-list
+test ! -d walter-worker-skills/initiative-show
+test ! -d walter-worker-skills/initiative-remove
 
-test ! -d ai-coworker-skills/analytics-create-db
-test ! -d ai-coworker-skills/analytics-daemon
-test ! -d ai-coworker-skills/analytics-dashboard
-test ! -d ai-coworker-skills/analytics-import
-test ! -d ai-coworker-skills/analytics-once
+test ! -d walter-worker-skills/analytics-create-db
+test ! -d walter-worker-skills/analytics-daemon
+test ! -d walter-worker-skills/analytics-dashboard
+test ! -d walter-worker-skills/analytics-import
+test ! -d walter-worker-skills/analytics-once
 
-test ! -d ai-coworker-skills/project-add
-test ! -d ai-coworker-skills/project-edit
-test ! -d ai-coworker-skills/project-remove
-test ! -d ai-coworker-skills/project-list
-test ! -d ai-coworker-skills/project-show
-test ! -d ai-coworker-skills/project-sync
+test ! -d walter-worker-skills/project-add
+test ! -d walter-worker-skills/project-edit
+test ! -d walter-worker-skills/project-remove
+test ! -d walter-worker-skills/project-list
+test ! -d walter-worker-skills/project-show
+test ! -d walter-worker-skills/project-sync
 
-test ! -d ai-coworker-skills/skill-create
-test ! -d ai-coworker-skills/skill-edit
-test ! -d ai-coworker-skills/skill-import
-test ! -d ai-coworker-skills/skill-list
+test ! -d walter-worker-skills/skill-create
+test ! -d walter-worker-skills/skill-edit
+test ! -d walter-worker-skills/skill-import
+test ! -d walter-worker-skills/skill-list
 
 # Category 1/2 — merged skills (12 removed, doc-organize overwritten in-place)
-test ! -d ai-coworker-skills/devil-advocate
-test ! -d ai-coworker-skills/contrarian-review
-test ! -d ai-coworker-skills/work-review
-test ! -d ai-coworker-skills/bug-hunt
-test ! -d ai-coworker-skills/bug-report
-test ! -d ai-coworker-skills/self-analyze
-test ! -d ai-coworker-skills/self-heal
-test ! -d ai-coworker-skills/doc-merge
-test ! -d ai-coworker-skills/session-memory
-test ! -d ai-coworker-skills/knowledge-skill
-test ! -d ai-coworker-skills/find-my-unknown
+test ! -d walter-worker-skills/devil-advocate
+test ! -d walter-worker-skills/contrarian-review
+test ! -d walter-worker-skills/work-review
+test ! -d walter-worker-skills/bug-hunt
+test ! -d walter-worker-skills/bug-report
+test ! -d walter-worker-skills/self-analyze
+test ! -d walter-worker-skills/self-heal
+test ! -d walter-worker-skills/doc-merge
+test ! -d walter-worker-skills/session-memory
+test ! -d walter-worker-skills/knowledge-skill
+test ! -d walter-worker-skills/find-my-unknown
 
 # import-skills absorbed
 test ! -d import-skills/tdd
@@ -119,7 +119,7 @@ test ! -d import-skills/tdd
 
 ```bash
 for skill in initiative dashboard project skill doc-review doc-organize bug knowledge auto-tdd research; do
-  test -f ai-coworker-skills/$skill/SKILL.md || echo "MISSING: $skill"
+  test -f walter-worker-skills/$skill/SKILL.md || echo "MISSING: $skill"
 done
 ```
 
@@ -127,9 +127,9 @@ done
 > 3 skills must still exist unchanged:
 
 ```bash
-test -f ai-coworker-skills/english-grammar-fix/SKILL.md
-test -f ai-coworker-skills/multi-model-team/SKILL.md
-test -f ai-coworker-skills/status/SKILL.md
+test -f walter-worker-skills/english-grammar-fix/SKILL.md
+test -f walter-worker-skills/multi-model-team/SKILL.md
+test -f walter-worker-skills/status/SKILL.md
 ```
 
 ### T2.4 — Personal-skills untouched

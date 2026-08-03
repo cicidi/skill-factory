@@ -8,13 +8,13 @@
 | St | Type | File | What It Contains |
 |----|------|------|-----------------|
 | ✅ | decision-history | [2026-06-10-fix-skill-create-quality-gate-improvements-from-r-decision.md](decision-history/2026-06-10-fix-skill-create-quality-gate-improvements-from-r-decision.md) | Decision Record — 2026-06-10 |
-| ✅ | decision-history | [2026-06-11-skill-add-ai-coworker-devil-advocate--multi-agen-decision.md](decision-history/2026-06-11-skill-add-ai-coworker-devil-advocate--multi-agen-decision.md) | Decision Record — 2026-06-11 |
-| ✅ | decision-history | [2026-06-12-skill-add-ai-coworker-work-review--2-agent-gatek-decision.md](decision-history/2026-06-12-skill-add-ai-coworker-work-review--2-agent-gatek-decision.md) | Decision Record — 2026-06-12 |
-| ✅ | decision-history | [2026-06-18-skill-add-ai-coworker-contrarian-review--5-agent-decision.md](decision-history/2026-06-18-skill-add-ai-coworker-contrarian-review--5-agent-decision.md) | Decision Record — 2026-06-18 |
+| ✅ | decision-history | [2026-06-11-skill-add-walter-worker-devil-advocate--multi-agen-decision.md](decision-history/2026-06-11-skill-add-walter-worker-devil-advocate--multi-agen-decision.md) | Decision Record — 2026-06-11 |
+| ✅ | decision-history | [2026-06-12-skill-add-walter-worker-work-review--2-agent-gatek-decision.md](decision-history/2026-06-12-skill-add-walter-worker-work-review--2-agent-gatek-decision.md) | Decision Record — 2026-06-12 |
+| ✅ | decision-history | [2026-06-18-skill-add-walter-worker-contrarian-review--5-agent-decision.md](decision-history/2026-06-18-skill-add-walter-worker-contrarian-review--5-agent-decision.md) | Decision Record — 2026-06-18 |
 | ✅ | decision-history | [2026-06-23-chore-remove-self-healself-analyze-from-personal-decision.md](decision-history/2026-06-23-chore-remove-self-healself-analyze-from-personal-decision.md) | Decision Record — 2026-06-23 |
 | ✅ | decision-history | [2026-06-24-fix-re-apply-skill-fixes-lost-during-rebase-fron-decision.md](decision-history/2026-06-24-fix-re-apply-skill-fixes-lost-during-rebase-fron-decision.md) | Decision Record — 2026-06-24 |
 | ✅ | decision-history | [2026-07-01-skill-add-tmux-status-bar--tmux-bar-with-project-decision.md](decision-history/2026-07-01-skill-add-tmux-status-bar--tmux-bar-with-project-decision.md) | Decision Record — 2026-07-01 |
-| ✅ | decision-history | [2026-07-02-fix-remove-ai-coworker--prefix-from-4-skill-front-decision.md](decision-history/2026-07-02-fix-remove-ai-coworker--prefix-from-4-skill-front-decision.md) | Decision Record — 2026-07-02 |
+| ✅ | decision-history | [2026-07-02-fix-remove-walter-worker--prefix-from-4-skill-front-decision.md](decision-history/2026-07-02-fix-remove-walter-worker--prefix-from-4-skill-front-decision.md) | Decision Record — 2026-07-02 |
 | ✅ | decision-history | [2026-07-14-skill-add-multi-model-team--glm-52-architect---decision.md](decision-history/2026-07-14-skill-add-multi-model-team--glm-52-architect---decision.md) | Decision Record — 2026-07-14 |
 | ✅ | decision-history | [2026-07-17-fix-knowledge-repo-is-separate-repo-at-different--decision.md](decision-history/2026-07-17-fix-knowledge-repo-is-separate-repo-at-different--decision.md) | Decision Record — 2026-07-17 |
 | ✅ | decision-history | [2026-07-18-skill-add-image-review-gate--scatterbrain-design-decision.md](decision-history/2026-07-18-skill-add-image-review-gate--scatterbrain-design-decision.md) | Decision Record — 2026-07-18 |

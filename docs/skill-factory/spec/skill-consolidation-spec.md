@@ -5,7 +5,7 @@
 
 ## Goal
 
-Reduce ai-coworker-skills from 38 to 13 by merging skills that are near-duplicates,
+Reduce walter-worker-skills from 38 to 13 by merging skills that are near-duplicates,
 complementary, or naturally grouped. Each merged skill uses conversation-driven
 branching (Option A pattern): ask clarifying questions upfront, then route to the
 right logic path.
@@ -85,16 +85,16 @@ description: Use when the user wants to ... (describe trigger, not workflow)
 
 | File | Change |
 |------|--------|
-| `ai-coworker-skills/initiative/SKILL.md` | New merged skill (replaces 7) |
-| `ai-coworker-skills/dashboard/SKILL.md` | New merged skill (replaces 5) |
-| `ai-coworker-skills/project/SKILL.md` | New merged skill (replaces 6) |
-| `ai-coworker-skills/skill/SKILL.md` | New merged skill (replaces 4) |
-| `ai-coworker-skills/doc-review/SKILL.md` | New merged skill (replaces 3) |
-| `ai-coworker-skills/doc-organize/SKILL.md` | Merged skill (replaces 2) |
-| `ai-coworker-skills/bug/SKILL.md` | New merged skill (replaces 4) |
-| `ai-coworker-skills/knowledge/SKILL.md` | Merged skill (replaces 2) |
-| `ai-coworker-skills/auto-tdd/SKILL.md` | Merged skill (replaces 2) |
-| `ai-coworker-skills/research/SKILL.md` | New merged skill (replaces 2) |
+| `walter-worker-skills/initiative/SKILL.md` | New merged skill (replaces 7) |
+| `walter-worker-skills/dashboard/SKILL.md` | New merged skill (replaces 5) |
+| `walter-worker-skills/project/SKILL.md` | New merged skill (replaces 6) |
+| `walter-worker-skills/skill/SKILL.md` | New merged skill (replaces 4) |
+| `walter-worker-skills/doc-review/SKILL.md` | New merged skill (replaces 3) |
+| `walter-worker-skills/doc-organize/SKILL.md` | Merged skill (replaces 2) |
+| `walter-worker-skills/bug/SKILL.md` | New merged skill (replaces 4) |
+| `walter-worker-skills/knowledge/SKILL.md` | Merged skill (replaces 2) |
+| `walter-worker-skills/auto-tdd/SKILL.md` | Merged skill (replaces 2) |
+| `walter-worker-skills/research/SKILL.md` | New merged skill (replaces 2) |
 
 Old skill directories to delete: 35 total (38 - 3 independents kept + import-skills/tdd).
 

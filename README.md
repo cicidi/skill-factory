@@ -8,23 +8,23 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 
 ## Available Skills
 
-### Factory-Native Skills (`ai-coworker-skills/`)
+### Factory-Native Skills (`walter-worker-skills/`)
 
 | Skill | Description |
 |-------|-------------|
-| [auto-tdd](ai-coworker-skills/auto-tdd/) | Continuous multi-agent TDD loop with Agent-A (impl), Agent-B (test), Agent-C (arbitration), Agent-D (quality) |
-| [bug-hunt](ai-coworker-skills/bug-hunt/) | Scientific debugging — hypothesis → test → confirm → fix |
-| [bug-report](ai-coworker-skills/bug-report/) | Report bugs or problems with the AI coworker system to GitHub Issues |
-| [contrarian-review](ai-coworker-skills/contrarian-review/) | Multi-agent adversarial document review with structured debate and judged resolution |
-| [devil-advocate](ai-coworker-skills/devil-advocate/) | Multi-agent adversarial review for specs and design docs |
-| [doc-merge](ai-coworker-skills/doc-merge/) | Merge two versions of a markdown document after upstream sync conflicts |
-| [english-grammar-fix](ai-coworker-skills/english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
-| [self-analyze](ai-coworker-skills/self-analyze/) | Scan correction traces, find patterns, inject rules into CLAUDE.md |
-| [self-heal](ai-coworker-skills/self-heal/) | Log user corrections to traces for pattern analysis |
-| [skill-create](ai-coworker-skills/skill-create/) | 5-phase workflow to create new skills with source repo enforcement and deploy |
-| [skill-edit](ai-coworker-skills/skill-edit/) | Safely edit existing skills with source repo enforcement and deploy |
-| [skill-import](ai-coworker-skills/skill-import/) | Import external SKILL.md into skill-factory preserving original authorship |
-| [work-review](ai-coworker-skills/work-review/) | 2-agent gatekeeper for work acceptance sign-off |
+| [auto-tdd](walter-worker-skills/auto-tdd/) | Continuous multi-agent TDD loop with Agent-A (impl), Agent-B (test), Agent-C (arbitration), Agent-D (quality) |
+| [bug-hunt](walter-worker-skills/bug-hunt/) | Scientific debugging — hypothesis → test → confirm → fix |
+| [bug-report](walter-worker-skills/bug-report/) | Report bugs or problems with the AI coworker system to GitHub Issues |
+| [contrarian-review](walter-worker-skills/contrarian-review/) | Multi-agent adversarial document review with structured debate and judged resolution |
+| [devil-advocate](walter-worker-skills/devil-advocate/) | Multi-agent adversarial review for specs and design docs |
+| [doc-merge](walter-worker-skills/doc-merge/) | Merge two versions of a markdown document after upstream sync conflicts |
+| [english-grammar-fix](walter-worker-skills/english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
+| [self-analyze](walter-worker-skills/self-analyze/) | Scan correction traces, find patterns, inject rules into CLAUDE.md |
+| [self-heal](walter-worker-skills/self-heal/) | Log user corrections to traces for pattern analysis |
+| [skill-create](walter-worker-skills/skill-create/) | 5-phase workflow to create new skills with source repo enforcement and deploy |
+| [skill-edit](walter-worker-skills/skill-edit/) | Safely edit existing skills with source repo enforcement and deploy |
+| [skill-import](walter-worker-skills/skill-import/) | Import external SKILL.md into skill-factory preserving original authorship |
+| [work-review](walter-worker-skills/work-review/) | 2-agent gatekeeper for work acceptance sign-off |
 
 ### Personal Skills (`personal-skills/`)
 
@@ -54,7 +54,7 @@ Source Repo (~/project/skill-factory/) → git push → Deployed Copy → IDE Co
 git clone https://github.com/cicidi/skill-factory.git ~/project/skill-factory
 ```
 
-To deploy skills to your IDEs, use the ai-coworker install script or `coworker sync`.
+To deploy skills to your IDEs, use the walter-worker install script or `coworker sync`.
 
 ## Testing
 

@@ -9,7 +9,7 @@
 
 ## Decisions
 
-### 1. fix: remove ai-coworker- prefix from 4 skill frontmatter names
+### 1. fix: remove walter-worker- prefix from 4 skill frontmatter names
 - **Source**: git-commit
 - **Timestamp**: 2026-07-02T12:22:15-07:00
 - **Context**: git commit bc4d6cc0

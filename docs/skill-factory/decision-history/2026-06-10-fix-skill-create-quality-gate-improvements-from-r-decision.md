@@ -57,7 +57,7 @@
 - **Commit**: `5dcb52c7`
 - **Confidence**: high
 
-### 7. refactor: move skills into ai-coworker-skills namespace
+### 7. refactor: move skills into walter-worker-skills namespace
 - **Source**: git-commit
 - **Timestamp**: 2026-06-10T21:14:15-07:00
 - **Context**: git commit 54496dad

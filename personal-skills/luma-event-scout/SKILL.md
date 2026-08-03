@@ -117,7 +117,7 @@ Must be advanced or intermediate-advanced. Reject these signals of beginner cont
 - Agenda covers installing tools, hello-world examples
 
 Preferred topics (in priority order):
-1. AI agents, autonomous workflows, deterministic agent systems **(highest — Cicidi builds ai-coworker)**
+1. AI agents, autonomous workflows, deterministic agent systems **(highest — Cicidi builds walter-worker)**
 2. LLM architecture, model routing, token economics, inference optimization
 3. Agent memory, tool use, MCP, agent-computer interfaces
 4. Software engineering + AI (code generation, SWE-bench, deterministic code)

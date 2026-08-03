@@ -81,7 +81,7 @@
 - **Commit**: `951491e8`
 - **Confidence**: high
 
-### 10. feat: add 22 skills migrated from ai-coworker
+### 10. feat: add 22 skills migrated from walter-worker
 - **Source**: git-commit
 - **Timestamp**: 2026-07-17T09:51:05-07:00
 - **Context**: git commit aaa06765

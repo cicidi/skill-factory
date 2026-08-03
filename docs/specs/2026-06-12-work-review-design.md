@@ -1,4 +1,4 @@
-# ai-coworker-work-review Design
+# walter-worker-work-review Design
 
 Date: 2026-06-12
 
@@ -117,12 +117,12 @@ Acceptance.md is appended with `[SIGNED]` next to each passed criterion.
 
 ## Skill Structure
 
-File: `ai-coworker-skills/work-review/SKILL.md`
+File: `walter-worker-skills/work-review/SKILL.md`
 
 Frontmatter:
 ```yaml
 ---
-name: ai-coworker-work-review
+name: walter-worker-work-review
 description: |
   Use when completed work needs acceptance review against scope,
   design, and PRD. Use when a feature branch is ready for sign-off

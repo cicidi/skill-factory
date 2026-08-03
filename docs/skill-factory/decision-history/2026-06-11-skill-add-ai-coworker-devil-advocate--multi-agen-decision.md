@@ -9,7 +9,7 @@
 
 ## Decisions
 
-### 1. skill: add ai-coworker-devil-advocate — multi-agent adversarial review for specs and design docs
+### 1. skill: add walter-worker-devil-advocate — multi-agent adversarial review for specs and design docs
 - **Source**: git-commit
 - **Timestamp**: 2026-06-11T22:52:46-07:00
 - **Context**: git commit 70ccdc4a
@@ -33,7 +33,7 @@
 - **Commit**: `d30f01c0`
 - **Confidence**: high
 
-### 4. refactor: three-directory structure with ai-coworker- prefix naming
+### 4. refactor: three-directory structure with walter-worker- prefix naming
 - **Source**: git-commit
 - **Timestamp**: 2026-06-11T00:14:52-07:00
 - **Context**: git commit a2e47245

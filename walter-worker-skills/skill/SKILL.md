@@ -60,7 +60,7 @@ List current skills and ask what the user wants to do.
    - Frontmatter: name, description ("Use when...", third person), license, compatibility
    - Body: # heading + overview, When to Use, When NOT to Use, Process, Quality Gates
 5. Present the draft for review
-6. On approval: save to `ai-coworker-skills/<name>/SKILL.md`
+6. On approval: save to `walter-worker-skills/<name>/SKILL.md`
 
 ### edit workflow
 

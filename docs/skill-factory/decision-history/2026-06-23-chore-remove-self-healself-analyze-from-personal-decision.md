@@ -9,7 +9,7 @@
 
 ## Decisions
 
-### 1. chore: remove self-heal/self-analyze from personal-skills (in ai-coworker-skills)
+### 1. chore: remove self-heal/self-analyze from personal-skills (in walter-worker-skills)
 - **Source**: git-commit
 - **Timestamp**: 2026-06-23T23:29:10-07:00
 - **Context**: git commit bd9bb024
@@ -41,7 +41,7 @@
 - **Commit**: `7226d537`
 - **Confidence**: high
 
-### 5. chore: remove skills deleted from ai-coworker (flow-*, connect-*, doc-review, bug-sleuth, bug-create
+### 5. chore: remove skills deleted from walter-worker (flow-*, connect-*, doc-review, bug-sleuth, bug-create
 - **Source**: git-commit
 - **Timestamp**: 2026-06-23T23:25:08-07:00
 - **Context**: git commit 1b48039a
@@ -49,7 +49,7 @@
 - **Commit**: `1b48039a`
 - **Confidence**: high
 
-### 6. chore: remove gate-* skills (not in ai-coworker scope)
+### 6. chore: remove gate-* skills (not in walter-worker scope)
 - **Source**: git-commit
 - **Timestamp**: 2026-06-23T23:24:43-07:00
 - **Context**: git commit 82c4563a
@@ -57,7 +57,7 @@
 - **Commit**: `82c4563a`
 - **Confidence**: high
 
-### 7. chore: remove self-init (ai-coworker skills/init/ is more current)
+### 7. chore: remove self-init (walter-worker skills/init/ is more current)
 - **Source**: git-commit
 - **Timestamp**: 2026-06-23T23:23:30-07:00
 - **Context**: git commit 887a719b
@@ -73,7 +73,7 @@
 - **Commit**: `dce0d79c`
 - **Confidence**: high
 
-### 9. chore: remove session-memory (moved to ai-coworker)
+### 9. chore: remove session-memory (moved to walter-worker)
 - **Source**: git-commit
 - **Timestamp**: 2026-06-23T22:59:08-07:00
 - **Context**: git commit fca74392
@@ -81,7 +81,7 @@
 - **Commit**: `fca74392`
 - **Confidence**: high
 
-### 10. chore: remove initiative-create/edit (moved to ai-coworker)
+### 10. chore: remove initiative-create/edit (moved to walter-worker)
 - **Source**: git-commit
 - **Timestamp**: 2026-06-23T22:58:43-07:00
 - **Context**: git commit 4d02f4cd

@@ -9,7 +9,7 @@ metadata:
     - fix grammar
     - correct english
   when_to_use: When the user wants to auto-correct minor English grammar errors in AI-generated text.
-  audience: ai-coworker
+  audience: walter-worker
 ---
 
 # English Grammar Fix

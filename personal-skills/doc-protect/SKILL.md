@@ -13,7 +13,7 @@ metadata:
     - never edit this block
 ---
 
-# ai-coworker-doc-protect
+# walter-worker-doc-protect
 
 Manage PROTECTED blocks in documents. AI must never modify content inside
 blocks marked with PROTECTED and END PROTECTED tags.

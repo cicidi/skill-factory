@@ -42,7 +42,7 @@
 
 - **All skills** must pass the MUST gates defined in their own `Quality Gates` section.
 - **Import skills** must have a complete `META.yaml` (source, upstream_commit, license, imported_at, imported_by, note).
-- **Naming**: `ai-coworker-` prefix for own skills; no prefix for imports; folder names unchanged.
+- **Naming**: `walter-worker-` prefix for own skills; no prefix for imports; folder names unchanged.
 - **Line count**: body ≤150 lines (NICE), enforced as soft target.
 - **Description**: ≤500 chars.
 - **Sections**: must include Anti-Patterns, Quality Gates (MUST/NICE), Philosophy‑driven overview.
@@ -86,7 +86,7 @@
 
 ### 2.4 Agent‑Based Skills
 
-#### Devil‑Advocate (`ai-coworker-devil-advocate`)
+#### Devil‑Advocate (`walter-worker-devil-advocate`)
 
 | ID | Scenario | Expected Outcome |
 |----|----------|------------------|
@@ -94,7 +94,7 @@
 | DA‑02 | Debate reaches 5‑round limit | Fallback to 3‑agent majority vote; vote recorded in report. |
 | DA‑03 | Trigger: “杠精” / “devil advocate” / “adversarial review” | Skill activates and follows same process. |
 
-#### Work‑Review (`ai-coworker-work-review`)
+#### Work‑Review (`walter-worker-work-review`)
 
 | ID | Scenario | Expected Outcome |
 |----|----------|------------------|
@@ -109,7 +109,7 @@
 |----|----------|------------------|
 | MT‑01 | GLM 5.2 architect + DeepSeek v4 Pro worker orchestration | Two‑agent collaboration produces coherent output. |
 
-#### Contrarian Review (`ai-coworker-contrarian-review`)
+#### Contrarian Review (`walter-worker-contrarian-review`)
 
 | ID | Scenario | Expected Outcome |
 |----|----------|------------------|
@@ -120,7 +120,7 @@
 
 | ID | Scenario | Expected Outcome |
 |----|----------|------------------|
-| NC‑01 | All own skills in `ai-coworker-skills/` | Folder exists; skills inside have `ai-coworker-` prefix in name field. |
+| NC‑01 | All own skills in `walter-worker-skills/` | Folder exists; skills inside have `walter-worker-` prefix in name field. |
 | NC‑02 | Imported skills in `import-skills/` | Folder exists; skills have original names (no prefix). |
 | NC‑03 | Private skills in `personal-skills/` | Folder exists; symlinked locally, gitignored, not in marketplace. |
 | NC‑04 | Flat vs nested structure | Both validated; flat structure allowed. |
@@ -167,14 +167,14 @@ All skills and tools in the skill‑factory project must meet the following crit
 |------|------|----------|
 | META.yaml complete | MUST | Contains `source`, `upstream_commit`, `license`, `imported_at`, `imported_by`, `note`. |
 | Original author preserved | MUST | `source_author` and `source_url` present in metadata. |
-| No prefix added | MUST | Imported skill name does not get `ai-coworker-` prefix. |
+| No prefix added | MUST | Imported skill name does not get `walter-worker-` prefix. |
 
 ### 3.3 Naming & Directory
 
 | Gate | Type | Criteria |
 |------|------|----------|
-| Own skills in `ai-coworker-skills/` | MUST | Skills created by the factory reside in `ai-coworker-skills/`. |
-| Prefix applied to own skill name | MUST | Skill name field includes `ai-coworker-` prefix. |
+| Own skills in `walter-worker-skills/` | MUST | Skills created by the factory reside in `walter-worker-skills/`. |
+| Prefix applied to own skill name | MUST | Skill name field includes `walter-worker-` prefix. |
 | Import skills in `import-skills/` | MUST | Third‑party skills go to `import-skills/`. |
 | Personal skills in `personal-skills/` | MUST | Private skills go to `personal-skills/` (gitignored). |
 | No generic filenames | MUST | File names must include type suffix (e.g., `-decision-YYYY-MM-DD.md`). |

@@ -1,4 +1,4 @@
-# ai-coworker-devil-advocate Design
+# walter-worker-devil-advocate Design
 
 Date: 2026-06-11
 
@@ -110,12 +110,12 @@ Triggered only when 5 rounds complete with unresolved items.
 
 ## Skill Structure
 
-File: `ai-coworker-skills/devil-advocate/SKILL.md`
+File: `walter-worker-skills/devil-advocate/SKILL.md`
 
 Frontmatter:
 ```yaml
 ---
-name: ai-coworker-devil-advocate
+name: walter-worker-devil-advocate
 description: |
   Use when reviewing a spec, design doc, or proposal that needs
   adversarial stress-testing. Use when you want to find hidden
@@ -137,7 +137,7 @@ metadata:
   when_not_to_use: |
     For simple changes that don't warrant structured debate. For
     reviews where all stakeholders are already aligned. For code
-    reviews (use ai-coworker-issue-report instead).
+    reviews (use walter-worker-issue-report instead).
 ---
 ```
 
@@ -152,7 +152,7 @@ Body sections:
 
 ### MUST
 - [ ] Frontmatter 5 fields complete
-- [ ] name matches folder name (ai-coworker-devil-advocate)
+- [ ] name matches folder name (walter-worker-devil-advocate)
 - [ ] description starts with "Use when..."
 - [ ] No workflow summary in description
 - [ ] No references to non-existent skills or directories

@@ -66,13 +66,13 @@
 
 - 2026-07-17T12:01:07 🔀 fix: split naming — dated vs dateless types
 
-- 2026-07-17T09:51:05 🔀 feat: add 22 skills migrated from ai-coworker
+- 2026-07-17T09:51:05 🔀 feat: add 22 skills migrated from walter-worker
 
 - 2026-07-17T09:49:29 🔀 feat: add doc-organize skill (9 doc types, 6 stages, INDEX.md)
 
 - 2026-07-14T12:36:08 🔀 skill: add multi-model-team — GLM 5.2 architect + DeepSeek v4 Pro worker orchestration
 
-- 2026-07-02T12:22:15 🔀 fix: remove ai-coworker- prefix from 4 skill frontmatter names
+- 2026-07-02T12:22:15 🔀 fix: remove walter-worker- prefix from 4 skill frontmatter names
 
 - 2026-07-01T22:05:37 🔀 skill: add tmux-status-bar — tmux bar with project, git, and initiative context
 
@@ -80,7 +80,7 @@
 
 - 2026-06-24T00:26:28 🔀 chore: contrarian review overhaul — source repo enforcement, naming cleanup, tests, docs
 
-- 2026-06-23T23:29:10 🔀 chore: remove self-heal/self-analyze from personal-skills (in ai-coworker-skills)
+- 2026-06-23T23:29:10 🔀 chore: remove self-heal/self-analyze from personal-skills (in walter-worker-skills)
 
 - 2026-06-23T23:28:01 🔀 chore: remove self-strain
 
@@ -88,17 +88,17 @@
 
 - 2026-06-23T23:26:27 🔀 refactor: rename self-patch to english-grammar-fix
 
-- 2026-06-23T23:25:08 🔀 chore: remove skills deleted from ai-coworker (flow-*, connect-*, doc-review, bug-sleuth, bug-create)
+- 2026-06-23T23:25:08 🔀 chore: remove skills deleted from walter-worker (flow-*, connect-*, doc-review, bug-sleuth, bug-create)
 
-- 2026-06-23T23:24:43 🔀 chore: remove gate-* skills (not in ai-coworker scope)
+- 2026-06-23T23:24:43 🔀 chore: remove gate-* skills (not in walter-worker scope)
 
-- 2026-06-23T23:23:30 🔀 chore: remove self-init (ai-coworker skills/init/ is more current)
+- 2026-06-23T23:23:30 🔀 chore: remove self-init (walter-worker skills/init/ is more current)
 
 - 2026-06-23T23:11:04 🔀 feat: add self-heal and self-analyze skills
 
-- 2026-06-23T22:59:08 🔀 chore: remove session-memory (moved to ai-coworker)
+- 2026-06-23T22:59:08 🔀 chore: remove session-memory (moved to walter-worker)
 
-- 2026-06-23T22:58:43 🔀 chore: remove initiative-create/edit (moved to ai-coworker)
+- 2026-06-23T22:58:43 🔀 chore: remove initiative-create/edit (moved to walter-worker)
 
 - 2026-06-23T22:18:22 🔀 refactor: rename skills to simplified naming, migrate 21 AI coworker skills
 
@@ -106,17 +106,17 @@
 
 - 2026-06-23T21:36:13 🔀 feat: add auto-tdd, session-memory, initiative-create/edit skills; add contrarian-review Mode 1
 
-- 2026-06-18T21:26:45 🔀 skill: add ai-coworker-contrarian-review — 5-agent adversarial document review
+- 2026-06-18T21:26:45 🔀 skill: add walter-worker-contrarian-review — 5-agent adversarial document review
 
-- 2026-06-12T01:31:08 🔀 skill: add ai-coworker-work-review — 2-agent gatekeeper for work acceptance sign-off
+- 2026-06-12T01:31:08 🔀 skill: add walter-worker-work-review — 2-agent gatekeeper for work acceptance sign-off
 
-- 2026-06-11T22:52:46 🔀 skill: add ai-coworker-devil-advocate — multi-agent adversarial review for specs and design docs
+- 2026-06-11T22:52:46 🔀 skill: add walter-worker-devil-advocate — multi-agent adversarial review for specs and design docs
 
 - 2026-06-11T01:03:50 🔀 skill: add 5 migrated coworker skills
 
 - 2026-06-11T00:19:02 🔀 feat(skill-create): Phase 0 multi-source search — GitHub (>=10 repos), web search, import-vs-inspire decision
 
-- 2026-06-11T00:14:52 🔀 refactor: three-directory structure with ai-coworker- prefix naming
+- 2026-06-11T00:14:52 🔀 refactor: three-directory structure with walter-worker- prefix naming
 
 - 2026-06-11T00:05:11 🔀 fix(skill-import): add author preservation, import/ subdirectory, and anti-pattern for lost authorship
 
@@ -138,7 +138,7 @@
 
 - 2026-06-10T23:43:57 🔀 docs: add skill-factory bootstrap design spec
 
-- 2026-06-10T21:14:15 🔀 refactor: move skills into ai-coworker-skills namespace
+- 2026-06-10T21:14:15 🔀 refactor: move skills into walter-worker-skills namespace
 
 - 2026-06-10T21:10:17 🔀 feat: initialize skill-factory project with skill-create
 
@@ -164,9 +164,9 @@
 
 -  💬 Add 'variant': 'thinking-high' to the build agent in opencode config
 
--  💬 重建三个平级的 skill 目录：ai-coworker-skills、import-skills、personal-skills
+-  💬 重建三个平级的 skill 目录：walter-worker-skills、import-skills、personal-skills
 
--  💬 ai-coworker-skills 和 personal-skills 下的 skill 在 name 字段加 ai-coworker- 前缀，文件夹名不改；import-skills 不加前缀；修改 CONVENTIONS.md 取消 
+-  💬 walter-worker-skills 和 personal-skills 下的 skill 在 name 字段加 walter-worker- 前缀，文件夹名不改；import-skills 不加前缀；修改 CONVENTIONS.md 取消 
 
 -  💬 在 skill-create 的 Phase 0 增加 GitHub 搜索（≥10 repo）和 Web 搜索，并提供 import/吸收灵感/自建三种决策分支
 
@@ -174,7 +174,7 @@
 
 -  💬 为 skill-import 增加 metadata.source_author 和 metadata.source_url 字段，并在 Quality Gates 中验证
 
--  💬 导入的 skill 放入独立的 import-skills/ 目录，而非 ai-coworker-skills/import/
+-  💬 导入的 skill 放入独立的 import-skills/ 目录，而非 walter-worker-skills/import/
 
 -  💬 保留并修复 skill-create 作为自举起点，而非从头重建
 

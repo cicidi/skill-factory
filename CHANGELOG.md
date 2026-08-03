@@ -4,9 +4,9 @@
 
 ### Repo Sync & Structure
 - Backported 9 skills from deployed copy to source repo (auto-tdd, bug-hunt, bug-report, contrarian-review, doc-merge, english-grammar-fix, self-analyze, self-heal, doc-protect)
-- Removed 5 old duplicate skills with deprecated `ai-coworker-` prefix naming
+- Removed 5 old duplicate skills with deprecated `walter-worker-` prefix naming
 - Cleaned orphaned `session-memory/` directory (had only `.pyc` cache, no SKILL.md)
-- Updated CONVENTIONS.md: removed `ai-coworker-` prefix requirement, added source-repo-vs-deployed-copy documentation
+- Updated CONVENTIONS.md: removed `walter-worker-` prefix requirement, added source-repo-vs-deployed-copy documentation
 
 ### Skill Workflow Fixes
 - **skill-create**: Added source repo detection + enforcement, Phase 0 duplicate name check, Phase 5 deploy step, removed prefix naming requirement
@@ -28,5 +28,5 @@
 - Added workflow documentation (source repo → deploy)
 - Added testing instructions
 
-### CLAUDE.md (ai-coworker)
+### CLAUDE.md (walter-worker)
 - Fixed broken references to non-existent `templates/team-common/` paths

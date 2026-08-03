@@ -9,7 +9,7 @@
 
 ## Decisions
 
-### 1. skill: add ai-coworker-contrarian-review — 5-agent adversarial document review
+### 1. skill: add walter-worker-contrarian-review — 5-agent adversarial document review
 - **Source**: git-commit
 - **Timestamp**: 2026-06-18T21:26:45-07:00
 - **Context**: git commit 3a54ffc6

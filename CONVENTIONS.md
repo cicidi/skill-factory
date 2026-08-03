@@ -5,7 +5,7 @@ Project-wide rules for every skill in this repository.
 ## File Structure
 
 ```
-ai-coworker-skills/<skill-folder>/SKILL.md      # Factory-native skills (required)
+walter-worker-skills/<skill-folder>/SKILL.md      # Factory-native skills (required)
 personal-skills/<skill-folder>/SKILL.md          # Personal custom skills (required)
 import-skills/<skill-folder>/SKILL.md            # Externally imported skills (required)
 ```
@@ -14,7 +14,7 @@ Three directories serve different purposes:
 
 | Directory | Purpose | Naming |
 |-----------|---------|--------|
-| `ai-coworker-skills/` | Factory-native skills | `{verb}-{object}` or `{domain}-{action}`, kebab-case |
+| `walter-worker-skills/` | Factory-native skills | `{verb}-{object}` or `{domain}-{action}`, kebab-case |
 | `personal-skills/` | User's personal skills | `{verb}-{object}` or `{domain}-{action}`, kebab-case |
 | `import-skills/` | Externally imported skills | Preserve original name (no prefix) |
 
