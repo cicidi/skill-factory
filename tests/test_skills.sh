@@ -67,7 +67,7 @@ fi
 echo ""
 echo -e "${BOLD}[1] Directory Structure Check${NC}"
 
-for subdir in ai-coworker-skills personal-skills import-skills; do
+for subdir in walter-worker-skills personal-skills import-skills; do
     if [[ -d "$SOURCE_REPO/$subdir" ]]; then
         pass_msg "Directory '$subdir/' exists"
     else
@@ -77,7 +77,7 @@ done
 
 # ── Collect all skill directories ──────────────────────────────────────
 ALL_SKILLS=()
-for subdir in ai-coworker-skills personal-skills import-skills; do
+for subdir in walter-worker-skills personal-skills import-skills; do
     if [[ -d "$SOURCE_REPO/$subdir" ]]; then
         for d in "$SOURCE_REPO/$subdir"/*/; do
             [[ -d "$d" ]] || continue
@@ -371,7 +371,7 @@ fi
 
 # ── 8. Directory-name consistency check ────────────────────────────────
 echo ""
-echo -e "${BOLD}[8] Directory-Name Consistency (dir matches skill name after stripping ai-coworker- prefix)${NC}"
+echo -e "${BOLD}[8] Directory-Name Consistency (dir matches skill name after stripping walter-worker- prefix)${NC}"
 
 for entry in "${ALL_SKILLS[@]}"; do
     category="${entry%%|*}"
@@ -385,8 +385,8 @@ for entry in "${ALL_SKILLS[@]}"; do
         continue
     fi
 
-    # Strip "ai-coworker-" prefix if present to get canonical dir name
-    canonical="${fname#ai-coworker-}"
+    # Strip "walter-worker-" prefix if present to get canonical dir name
+    canonical="${fname#walter-worker-}"
 
     if [[ "$canonical" == "$dirname" ]]; then
         pass_msg "Name consistency: '$category/$dirname' matches name '$fname'"
@@ -400,7 +400,7 @@ echo ""
 echo -e "${BOLD}[9] Empty Directory Check${NC}"
 
 EMPTY_FOUND=false
-for subdir in ai-coworker-skills personal-skills import-skills; do
+for subdir in walter-worker-skills personal-skills import-skills; do
     if [[ -d "$SOURCE_REPO/$subdir" ]]; then
         for d in "$SOURCE_REPO/$subdir"/*/; do
             [[ -d "$d" ]] || continue
