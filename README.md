@@ -1,4 +1,4 @@
-# skill-factory
+# the-super-lab
 
 A curated collection of AI agent skills (SKILL.md format), framework-agnostic, opencode-native.
 
@@ -23,7 +23,7 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 | [self-heal](walter-worker-skills/self-heal/) | Log user corrections to traces for pattern analysis |
 | [skill-create](walter-worker-skills/skill-create/) | 5-phase workflow to create new skills with source repo enforcement and deploy |
 | [skill-edit](walter-worker-skills/skill-edit/) | Safely edit existing skills with source repo enforcement and deploy |
-| [skill-import](walter-worker-skills/skill-import/) | Import external SKILL.md into skill-factory preserving original authorship |
+| [skill-import](walter-worker-skills/skill-import/) | Import external SKILL.md into the-super-lab preserving original authorship |
 | [work-review](walter-worker-skills/work-review/) | 2-agent gatekeeper for work acceptance sign-off |
 
 ### Personal Skills (`personal-skills/`)
@@ -43,15 +43,15 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 Skills are created and edited in this source code repo, then deployed to IDE configs:
 
 ```
-Source Repo (~/project/skill-factory/) → git push → Deployed Copy → IDE Configs
+Source Repo (~/project/the-super-lab/) → git push → Deployed Copy → IDE Configs
 ```
 
-**Never create or edit skills directly in the deployed copy** (`~/.config/opencode/skills/skill-factory/`) or IDE config directories (`~/.claude/commands/`, `~/.opencode/instructions/`). Changes in deployed copies are lost on next install.
+**Never create or edit skills directly in the deployed copy** (`~/.config/opencode/skills/the-super-lab/`) or IDE config directories (`~/.claude/commands/`, `~/.opencode/instructions/`). Changes in deployed copies are lost on next install.
 
 ## Install
 
 ```bash
-git clone https://github.com/cicidi/skill-factory.git ~/project/skill-factory
+git clone https://github.com/cicidi/the-super-lab.git ~/project/the-super-lab
 ```
 
 To deploy skills to your IDEs, use the walter-worker install script or `coworker sync`.
@@ -62,7 +62,7 @@ To deploy skills to your IDEs, use the walter-worker install script or `coworker
 bash tests/test_skills.sh
 ```
 
-Validates all skills against skill-factory conventions: frontmatter completeness, required sections, prohibited patterns, duplicate names, and more.
+Validates all skills against the-super-lab conventions: frontmatter completeness, required sections, prohibited patterns, duplicate names, and more.
 
 ## Conventions
 

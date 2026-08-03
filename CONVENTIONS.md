@@ -1,4 +1,4 @@
-# skill-factory Conventions
+# the-super-lab Conventions
 
 Project-wide rules for every skill in this repository.
 
@@ -63,13 +63,13 @@ metadata:               # arbitrary string-to-string map for extensions
 
 ## Source Repo vs Deployed Copies
 
-The **source code repo** (`~/project/skill-factory/`) is the canonical location.
+The **source code repo** (`~/project/the-super-lab/`) is the canonical location.
 All skill creation and editing MUST happen in the source repo. After commit and
 push, skills are deployed to:
 
 | Location | Purpose |
 |----------|---------|
-| `~/.config/opencode/skills/skill-factory/` | OpenCode skill-factory plugin (git cloned) |
+| `~/.config/opencode/skills/the-super-lab/` | OpenCode the-super-lab plugin (git cloned) |
 | `~/.claude/commands/` | Claude Code custom commands (flattened .md files) |
 | `~/.opencode/instructions/` | OpenCode instruction files (flattened .md files) |
 
