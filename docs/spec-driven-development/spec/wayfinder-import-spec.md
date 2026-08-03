@@ -1,3 +1,8 @@
+---
+state: final
+final_date: 2026-08-02
+---
+
 # Wayfinder Import & Adaptation — Design Spec
 
 > Import Matt Pocock's Wayfinder skill into skill-factory with key adaptations:

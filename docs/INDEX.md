@@ -51,3 +51,11 @@
 | St | Type | File | What It Contains |
 |----|------|------|-----------------|
 | ✅ | test-plan | [skill-factory-test-plan.md](test-plan/skill-factory-test-plan.md) | ```markdown |
+
+### spec-driven-development
+
+| St | Type | File | What It Contains |
+|----|------|------|-----------------|
+| ✅ | spec | [wayfinder-import-spec.md](spec-driven-development/spec/wayfinder-import-spec.md) | Wayfinder Import & Adaptation — Design Spec. 7 adaptations: brief terminology, pluggable interfaces, review gates, doc-organize, doc-review checkpoint. |
+| ✅ | test-plan | [wayfinder-import-test-plan.md](spec-driven-development/test-plan/wayfinder-import-test-plan.md) | 12 test cases covering frontmatter compliance, terminology, pluggable interfaces, review gates, deployment. |
+| ✅ | plan | [wayfinder-import-plan.md](spec-driven-development/plan/wayfinder-import-plan.md) | 9-task implementation plan for importing 4 Matt Pocock skills with adaptations. |

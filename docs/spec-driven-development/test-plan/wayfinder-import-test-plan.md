@@ -1,3 +1,8 @@
+---
+state: final
+final_date: 2026-08-02
+---
+
 # Wayfinder Import — Test Plan
 
 > Covers 4 imported skills: wayfinder (adapted), grill-with-docs, domain-modeling, prototype.

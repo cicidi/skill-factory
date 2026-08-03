@@ -206,6 +206,13 @@ N briefs (decisions) -> 1 spec (PRD, a Jira ticket) -> M Jira tickets (build)
   Tickets:  M issues, label ready-for-agent (created by to-tickets)
 ```
 
+## Pipeline
+
+```
+wayfinder -> to-spec -> doc-review -> to-tickets -> auto-tdd
+ (decide)    (write)    (verify)      (ticket)     (build)
+```
+
 ## Invocation
 
 Two modes. Either way, **never resolve more than one brief per session** — with the exception of research briefs.
