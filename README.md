@@ -20,17 +20,19 @@ A **skill** is a self-contained directory with a `SKILL.md` file. It packages "h
 | [bug](skills/bug/) | Debugging, bug reporting, and self-healing loop management |
 | [doc-organize](skills/doc-organize/) | Document placement, naming, INDEX.md maintenance, and merge conflict resolution |
 | [doc-review](skills/doc-review/) | Adversarial design/spec review or work completion verification |
-| [domain-modeling](skills/domain-modeling/) | Build or sharpen a project's domain model with glossary and ADRs |
+| [domain-modeling](skills/domain-modeling/) | Build or sharpen a project's domain model with glossary and ADRs | 🔗 |
 | [english-grammar-fix](skills/english-grammar-fix/) | Auto-correct minor English grammar errors in AI responses |
-| [grill-with-docs](skills/grill-with-docs/) | Relentless interview to sharpen a plan or design with inline documentation |
-| [implement](skills/implement/) | Implement work from a spec or tickets with TDD, typechecking, and code review |
+| [grill-with-docs](skills/grill-with-docs/) | Relentless interview to sharpen a plan or design with inline documentation | 🔗 |
+| [implement](skills/implement/) | Implement work from a spec or tickets with TDD, typechecking, and code review | 🔗 |
 | [multi-model-team](skills/multi-model-team/) | Decompose large tasks into subtasks executed by specialized workers |
-| [prototype](skills/prototype/) | Build throwaway prototypes to answer design questions |
+| [prototype](skills/prototype/) | Build throwaway prototypes to answer design questions | 🔗 |
 | [research](skills/research/) | Surface unknowns before coding; go from vague idea to concrete design |
 | [skill](skills/skill/) | Skill lifecycle — create, edit, import, list skills |
-| [to-spec](skills/to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker |
-| [to-tickets](skills/to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges |
-| [wayfinder](skills/wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker |
+| [to-spec](skills/to-spec/) | Synthesize current conversation into a spec (PRD) for the issue tracker | 🔗 |
+| [to-tickets](skills/to-tickets/) | Break a plan into tracer-bullet tickets with declared blocking edges | 🔗 |
+| [wayfinder](skills/wayfinder/) | Plan work too large for one agent session via decision briefs on the issue tracker | 🔗 |
+
+🔗 = imported from [mattpocock/skills](https://github.com/mattpocock/skills)
 
 ### Personal Skills (`personal-skills/`)
 
