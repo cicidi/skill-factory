@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>skill-factory Technical Specification</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 20px 40px; background: #08090b; color: #e8eaed; line-height: 1.7; font-size: 14px; }
+  h1 { font-size: 28px; border-bottom: 2px solid #1e2230; padding-bottom: 12px; margin-top: 8px; color: #00bcd4; }
+  h2 { font-size: 20px; margin-top: 32px; color: #82aaff; border-bottom: 1px solid #1e2230; padding-bottom: 6px; }
+  h3 { font-size: 16px; margin-top: 24px; color: #c792ea; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 13px; }
+  th { background: #151820; text-align: left; padding: 8px 12px; color: #5c6173; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid #1e2230; }
+  td { padding: 8px 12px; border-bottom: 1px solid rgba(30,34,48,0.6); }
+  pre { background: #0d0f14; border: 1px solid #1e2230; border-radius: 4px; padding: 14px 18px; overflow-x: auto; font-size: 12px; }
+  code { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; background: #151820; padding: 2px 6px; border-radius: 3px; }
+  pre code { background: none; padding: 0; }
+  a { color: #00bcd4; }
+  blockquote { border-left: 3px solid #ffc857; padding-left: 16px; color: #9aa0b0; margin-left: 0; }
+  hr { border: none; border-top: 1px solid #1e2230; margin: 24px 0; }
+  .change-log { font-size: 11px; color: #5c6173; }
+  .change-log table { font-size: 11px; }
+</style>
+</head>
+<body>
+<h1>skill-factory Technical Specification</h1>
+<p><strong>Version:</strong> 1.0<br />
+<strong>Status:</strong> Implemented<br />
+<strong>Last Updated:</strong> 2026-07-23</p>
+<hr />
+<h2>Change Log</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Change</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-06-10</td>
+<td>Public open source repository; directory structure with three skill categories (ai-coworker-skills, import-skills, personal-skills); naming convention with prefix</td>
+<td>various decisions</td>
+</tr>
+<tr>
+<td>2026-06-10</td>
+<td>Repository initialization with <code>skill-create</code> as bootstrap entry point</td>
+<td>git-commit 5d9747e9</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td>Three-directory structure finalized + prefix naming</td>
+<td>git-commit a2e47245</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-create</code> Phase 0 multi-source search (GitHub ≥10 repos, web search, import-vs-inspire decision)</td>
+<td>git-commit d30f01c0</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-import</code> with author preservation, import/ subdirectory</td>
+<td>git-commit 773594b9</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-edit</code> and <code>skill-import</code> PASS quality gates</td>
+<td>git-commit d9baa432</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td><code>skill-create</code> quality gate improvements</td>
+<td>git-commit 33e48d2e</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td>TDD skill imported from mattpocock/skills</td>
+<td>git-commit eed365ce</td>
+</tr>
+<tr>
+<td>2026-06-11</td>
+<td>5 migrated coworker skills added</td>
+<td>git-commit a5dcc4e9</td>
+</tr>
+<tr>
+<td>2026-06-12</td>
+<td><code>ai-coworker-devil-advocate</code> — multi-agent adversarial review</td>
+<td>git-commit 70ccdc4a</td>
+</tr>
+<tr>
+<td>2026-06-12</td>
+<td><code>ai-coworker-work-review</code> — 2-agent gatekeeper</td>
+<td>git-commit 01f533c9</td>
+</tr>
+<tr>
+<td>2026-06-18</td>
+<td><code>ai-coworker-contrarian-review</code> — 5-agent adversarial review</td>
+<td>git-commit 3a54ffc6</td>
+</tr>
+<tr>
+<td>2026-06-23</td>
+<td>Multiple skill additions, removals, and renaming; simplified naming convention</td>
+<td>git-commit 3395648c</td>
+</tr>
+<tr>
+<td>2026-06-23</td>
+<td><code>self-heal</code> and <code>self-analyze</code> skills added</td>
+<td>git-commit dce0d79c</td>
+</tr>
+<tr>
+<td>2026-06-23</td>
+<td><code>self-patch</code> renamed to <code>english-grammar-fix</code></td>
+<td>git-commit 7226d537</td>
+</tr>
+<tr>
+<td>2026-07-01</td>
+<td><code>tmux-status-bar</code> skill added</td>
+<td>git-commit 5cc3d4bc</td>
+</tr>
+<tr>
+<td>2026-07-02</td>
+<td>Frontmatter name fixes (prefix removed from 4 skills)</td>
+<td>git-commit bc4d6cc0</td>
+</tr>
+<tr>
+<td>2026-07-14</td>
+<td><code>multi-model-team</code> skill (GLM 5.2 + DeepSeek v4 Pro orchestration)</td>
+<td>git-commit 56f3e001</td>
+</tr>
+<tr>
+<td>2026-07-17</td>
+<td><code>doc-organize</code> skill (9 doc types, 6 stages, INDEX.md)</td>
+<td>git-commit ee7c7087</td>
+</tr>
+<tr>
+<td>2026-07-18</td>
+<td><code>youtube-summarize</code>, <code>pic-to-txt</code>, <code>youtube-research-pipeline</code> skills</td>
+<td>multiple commits</td>
+</tr>
+<tr>
+<td>2026-07-22</td>
+<td><code>skill-create</code> Phase 3 enhancement; <code>create-video-workflow</code> v3; <code>transcribe-audio</code></td>
+<td>multiple commits</td>
+</tr>
+<tr>
+<td>2026-07-23</td>
+<td><code>luma-event-scout</code> skill with API scraping, speaker gate, form filling</td>
+<td>multiple commits</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>1. System Architecture Overview</h2>
+<p>The <strong>skill-factory</strong> is a skill management and creation system for the OpenCode/Claude Code ecosystem. It organizes skills into three isolated directories, provides creation, editing, and import workflows, and enforces quality gates through a defined specification format.</p>
+<h3>1.1 High-Level Structure</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nx">project</span><span class="o">-</span><span class="nx">root</span><span class="p">&gt;</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">ai</span><span class="o">-</span><span class="nx">coworker</span><span class="o">-</span><span class="nx">skills</span><span class="o">/</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="nx">Native</span><span class="w"> </span><span class="p">(</span><span class="nx">first</span><span class="o">-</span><span class="nx">party</span><span class="p">)</span><span class="w"> </span><span class="nx">skills</span>
+<span class="err">├──</span><span class="w"> </span><span class="kn">import</span><span class="o">-</span><span class="nx">skills</span><span class="o">/</span><span class="w">               </span><span class="err">#</span><span class="w"> </span><span class="nx">Imported</span><span class="w"> </span><span class="nx">third</span><span class="o">-</span><span class="nx">party</span><span class="w"> </span><span class="nx">skills</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">personal</span><span class="o">-</span><span class="nx">skills</span><span class="o">/</span><span class="w">             </span><span class="err">#</span><span class="w"> </span><span class="nx">Private</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="nx">skills</span><span class="w"> </span><span class="p">(</span><span class="nx">gitignored</span><span class="p">)</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">docs</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">devil</span><span class="o">-</span><span class="nx">advocate</span><span class="o">/</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="nx">Devil</span><span class="err">&#39;</span><span class="nx">s</span><span class="w"> </span><span class="nx">advocate</span><span class="w"> </span><span class="nx">debate</span><span class="w"> </span><span class="nx">outputs</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">work</span><span class="o">-</span><span class="nx">review</span><span class="o">/</span><span class="w">             </span><span class="err">#</span><span class="w"> </span><span class="nx">Work</span><span class="w"> </span><span class="nx">review</span><span class="w"> </span><span class="nx">acceptance</span><span class="w"> </span><span class="nx">outputs</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span><span class="w">                      </span><span class="err">#</span><span class="w"> </span><span class="nx">Other</span><span class="w"> </span><span class="nx">doc</span><span class="w"> </span><span class="nx">types</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">CONVENTIONS</span><span class="p">.</span><span class="nx">md</span><span class="w">               </span><span class="err">#</span><span class="w"> </span><span class="nx">Project</span><span class="w"> </span><span class="nx">conventions</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">CLAUDE</span><span class="p">.</span><span class="nx">md</span><span class="w">                    </span><span class="err">#</span><span class="w"> </span><span class="nx">Agent</span><span class="w"> </span><span class="nx">behavior</span><span class="w"> </span><span class="nx">rules</span>
+<span class="err">└──</span><span class="w"> </span><span class="p">.</span><span class="nx">gitignore</span><span class="w">                   </span><span class="err">#</span><span class="w"> </span><span class="nx">Excludes</span><span class="w"> </span><span class="nx">personal</span><span class="o">-</span><span class="nx">skills</span><span class="o">/</span>
+</code></pre></div>
+
+<h3>1.2 Skill Lifecycle</h3>
+<ul>
+<li><strong>Create</strong>: via <code>skill-create</code> (self-bootstrapping process: Phase 0→1→2→3→4)</li>
+<li><strong>Edit</strong>: via <code>skill-edit</code> (Step 1→2→3→4→5→6→7)</li>
+<li><strong>Import</strong>: via <code>skill-import</code> (fetch → convert → audit → register)</li>
+<li><strong>Publish</strong>: via conventional commit + quality gate validation</li>
+<li><strong>Personal</strong>: via symlink (gitignored, not in marketplace)</li>
+</ul>
+<h3>1.3 Runtime Environment</h3>
+<ul>
+<li>Skills execute within <strong>Claude Code</strong> (CLI) and <strong>OpenCode</strong> (GUI) environments</li>
+<li>OpenCode installation: git plugin + project-level symlink</li>
+<li>Claude Code: local marketplace via <code>extraKnownMarketplaces</code></li>
+<li>Skills can be triggered via trigger keywords defined in skill frontmatter</li>
+</ul>
+<hr />
+<h2>2. Key Interfaces / APIs</h2>
+<h3>2.1 SKILL.md Frontmatter Format (5-field)</h3>
+<p>All skills must have exactly these five frontmatter fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Skill name</td>
+<td>kebab-case; ai-coworker- prefix for native/personal</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>One-line purpose</td>
+<td>Must start with "Use when..."</td>
+</tr>
+<tr>
+<td><code>license</code></td>
+<td>License type</td>
+<td>Default: MIT</td>
+</tr>
+<tr>
+<td><code>compatibility</code></td>
+<td>Compatible platforms</td>
+<td>Default: "opencode, claude-code"</td>
+</tr>
+<tr>
+<td><code>trigger</code></td>
+<td>Activation keywords</td>
+<td>Comma-separated; inferred from description+body</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ai-coworker-dev-advocate</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use when you need adversarial review of specs or design docs</span>
+<span class="nt">license</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MIT</span>
+<span class="nt">compatibility</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">opencode, claude-code</span>
+<span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">review spec, 杠精, devil advocate, adversarial review</span>
+<span class="nn">---</span>
+</code></pre></div>
+
+<h3>2.2 META.yaml Schema (Import Only)</h3>
+<p>Required for every imported skill in <code>import-skills/</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;URL or repo&gt;</span><span class="w">                     </span><span class="c1"># Required</span>
+<span class="nt">upstream_commit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;commit hash&gt;</span><span class="w">            </span><span class="c1"># Required</span>
+<span class="nt">license</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;SPDX identifier&gt;</span><span class="w">               </span><span class="c1"># Required</span>
+<span class="nt">imported_at</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;ISO 8601 timestamp&gt;</span><span class="w">         </span><span class="c1"># Required</span>
+<span class="nt">imported_by</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;author/github handle&gt;</span><span class="w">       </span><span class="c1"># Required</span>
+<span class="nt">note</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;free text&gt;</span><span class="w">                         </span><span class="c1"># Optional</span>
+</code></pre></div>
+
+<h3>2.3 Skill Workflow Interfaces</h3>
+<h4>2.3.1 <code>skill-create</code> (Self-Bootstrapping Process)</h4>
+<p><strong>Entry</strong>: No target exists<br />
+<strong>Phases</strong>:
+| Phase | Action | Output |
+|-------|--------|--------|
+| 0 | Multi-source search (GitHub ≥10 repo results, web search) | Decision: import / absorb inspiration / build from scratch |
+| 1 | Interview (user role simulation) | Requirements |
+| 2 | Build SKILL.md following 5-field frontmatter + CONVENTIONS.md body | Draft SKILL.md (≤150 lines) |
+| 3 | Precision &amp; Examples with legal-clause bounds + 2-3 example spectrum | Refined SKILL.md |
+| 4 | Quality gates validation + commit + publish | Final SKILL.md |</p>
+<p><strong>Quality Gates (MUST — block commit)</strong>:
+- <code>description ≤ 500 characters</code>
+- <code>Body &lt; 150 lines</code> (hardened from 500)
+- <code>No deploy/ concept</code> (prevent invalid structures)
+- <code>Quality Gates section present with MUST/NICE checkboxes</code>
+- <code>Anti-Patterns section present</code>
+- <code>Philosophy-driven overview</code></p>
+<p><strong>Quality Gates (NICE — warn only)</strong>:
+- <code>description ≤ 500 chars</code>
+- <code>Anti-Patterns section present</code>
+- <code>Quality Gates section present</code>
+- <code>Philosophy-driven overview</code>
+- <code>Body &lt; 150 lines</code></p>
+<h4>2.3.2 <code>skill-edit</code> (Modification Workflow)</h4>
+<p><strong>Entry</strong>: Target exists and change &lt; 80% rewrite<br />
+<strong>Steps</strong>:
+1. <strong>Check existence</strong>: If not exists → redirect to <code>skill-create</code>
+2. <strong>Fetch source</strong>: Use <code>webfetch</code> (preferred) or <code>curl</code>
+3. <strong>Assess scope</strong>: If ≥80% rewrite → redirect to <code>skill-create</code>
+4. <strong>Present diff summary</strong> → get user approval
+5. <strong>Make targeted edits</strong> (Edit tool only, never Write entire file, never create new file)
+6. <strong>Run quality gates</strong> (MUST gates block commit)
+7. <strong>Publish</strong> with conventional commit message</p>
+<h4>2.3.3 <code>skill-import</code> (Third-Party Conversion)</h4>
+<p><strong>Entry</strong>: External source URL/repo<br />
+<strong>Steps</strong>:
+1. <strong>Fetch source</strong> SKILL.md using webfetch/curl
+2. <strong>Auto-convert frontmatter</strong>:
+   - <code>name</code> → kebab-case
+   - <code>description</code> → begins with "Use when..."
+   - <code>license</code> → MIT (default)
+   - <code>compatibility</code> → "opencode, claude-code" (default)
+   - <code>triggers</code> → inferred from description and body
+3. <strong>Auto-adapt body sections</strong>:
+   - Philosophy → overview
+   - Anti-Pattern → Anti-Patterns
+   - Workflow → Process
+   - Checklist → Quality Gates
+   - Remove: Changelog, Convention Notes
+4. <strong>Write META.yaml</strong> with source, upstream_commit, license, imported_at, imported_by
+5. <strong>Place in</strong> <code>import-skills/&lt;name&gt;/SKILL.md</code>
+6. <strong>Validate quality gates</strong> → commit</p>
+<p><strong>Ambiguity Triggers</strong>: Ask user one question at a time only when:
+- No license specified
+- Triggers are unclear
+- Unknown body section encountered</p>
+<h4>2.3.4 <code>devil-advocate</code> (Adversarial Review)</h4>
+<p><strong>Architecture</strong>: Main agent orchestration with 3 stateless subagents per round<br />
+<strong>Process</strong>:
+1. Con agent → presents arguments against
+2. Pro agent → defends position
+3. Judge agent → summarizes and identifies unresolved points
+4. <strong>Limit</strong>: Max 5 rounds; unresolved points resolved by 3-agent majority vote</p>
+<p><strong>Output</strong>: <code>{project-path}/docs/devil-advocate/YYYY-MM-DD-&lt;topic&gt;/</code>
+- <code>discussion.md</code> — full debate transcript
+- <code>report.md</code> — human-readable summary</p>
+<p><strong>Triggers</strong>: <code>review spec</code>, <code>杠精</code>, <code>devil advocate</code>, <code>adversarial review</code></p>
+<h4>2.3.5 <code>work-review</code> (Acceptance Gatekeeper)</h4>
+<p><strong>Architecture</strong>: Sequential 2-agent (Collector → Reviewer), no auto-retry<br />
+<strong>Agent 1 (Collector)</strong>:
+- Writes test plan (scenarios, types, steps)
+- <strong>Does NOT</strong> write executable test code</p>
+<p><strong>Agent 2 (Reviewer)</strong>:
+- Executes test plan
+- Runs existing UT/FT
+- Writes Playwright tests for E2E
+- Uses curl/httpie for manual tests
+- Validates each acceptance criterion</p>
+<p><strong>Output</strong>: <code>{project-path}/docs/work-review/YYYY-MM-DD-&lt;topic&gt;/</code>
+- <code>acceptance.md</code> — test plan
+- <code>report.md</code> — execution results</p>
+<p><strong>Triggers</strong>: <code>work review</code>, <code>acceptance</code>, <code>sign off</code>, <code>verify work</code></p>
+<hr />
+<h2>3. Data Models / Schemas</h2>
+<h3>3.1 Skill Definition (SKILL.md)</h3>
+<p><strong>Structure</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span><span class="w">                        </span><span class="c1"># 5-field frontmatter</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span><span class="w">                 </span><span class="c1"># Must start &quot;Use when...&quot;</span>
+<span class="nt">license</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span><span class="w">                     </span><span class="c1"># Default: MIT</span>
+<span class="nt">compatibility</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span><span class="w">               </span><span class="c1"># Default: &quot;opencode, claude-code&quot;</span>
+<span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span><span class="w">                     </span><span class="c1"># Comma-separated</span>
+<span class="nn">---</span>
+
+<span class="c1"># Overview</span>
+<span class="l l-Scalar l-Scalar-Plain">&lt;philosophy-driven description&gt;</span><span class="w">        </span><span class="c1"># Mapped from Philosophy</span>
+
+<span class="c1">## Process</span>
+<span class="l l-Scalar l-Scalar-Plain">&lt;workflow description&gt;</span><span class="w">                 </span><span class="c1"># Mapped from Workflow</span>
+
+<span class="c1">## Anti-Patterns</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;list of common mistakes&gt;</span><span class="w">           </span><span class="c1"># Required section</span>
+
+<span class="c1">## Quality Gates</span>
+<span class="c1">### MUST (block)</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;gate description&gt;</span>
+<span class="c1">### NICE (warn)</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;gate description&gt;</span>
+</code></pre></div>
+
+<p><strong>Constraints</strong>:
+- Body (excluding frontmatter): ≤150 lines (target; soft limit)
+- File must end with newline</p>
+<h3>3.2 Import Metadata (META.yaml)</h3>
+<p>```yaml
+source: <url>
+upstream_commit: &lt;</p>
+</body>
+</html>
